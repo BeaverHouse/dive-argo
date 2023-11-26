@@ -1,13 +1,5 @@
-# 🦖 Docusaurus Template
+# Dive to Argo
 
-This template is using [Docusaurus 3](https://docusaurus.io/).
+Base structure from [docusaurus-template][ref0]
 
-<br>
-
-#### ⚒ Customized
-
-- i18n (ko, en)
-- Delete Blog (because I already have one w/ [Hugo][hugo])
-- Some minor fixes...
-
-[hugo]: https://gohugo.io/
+[ref0]: https://github.com/BeaverHouse/docusaurus-template
