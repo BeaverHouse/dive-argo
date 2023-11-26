@@ -1,0 +1,10 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.1. Hello Argo!": {
+    "message": "1. Hello Argo!",
+    "description": "The label for category 1. Hello Argo! in sidebar tutorialSidebar"
+  }
+}
