@@ -49,7 +49,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: "img/social-card-sample.jpg",
+    image: "img/diveargo-social-card.jpg",
     navbar: {
       title: "Dive to Argo",
       logo: {
