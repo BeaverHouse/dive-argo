@@ -4,14 +4,14 @@ sidebar_position: 4
 
 # Hello, Argo Workflow!
 
-이 문서에서는 helm chart로 기본 Argo Workflow 앱을 배포해 보겠습니다.
+In this section, we'll deploy basic Argo Workflow application by using official helm chart.
 
-## Argo helm chart 다운로드
+## Download Argo helm chart
 
-다음 Repository에서 helm chart를 다운로드합니다.  
+Download helm chart from following link:  
 https://github.com/argoproj/argo-helm/tree/main
 
-다운로드받은 Chart를 적당한 곳에 위치시킵니다. 여기서는 다음과 같이 배치했습니다.
+Move the chart to the folder you want. For example:
 
 ```
 k3s-argo-helm
@@ -21,9 +21,9 @@ k3s-argo-helm
 |- ...
 ```
 
-## helm chart로 설치하기
+## Installing helm chart
 
-Chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.
+Type the command below on the folder where chart exists.
 
 ```
 helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
@@ -31,7 +31,7 @@ helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
 
 ![helm install](./img/1-4-helm-install.png)
 
-정상적으로 설치가 되었습니다. `kubectl get all -n argo-wf` 명령어로 리소스를 확인합니다.
+It is installed successfully. Check K8S objects with `kubectl get all -n argo-wf`.
 
 ```
 C:\Users\HU\DevWin\k3s-argo-helm>kubectl get all -n argo-wf
@@ -51,18 +51,18 @@ replicaset.apps/my-argowf-argo-workflows-workflow-controller-ffc5b5c4d   1      
 replicaset.apps/my-argowf-argo-workflows-server-774d4bf6dd               1         1         1       2m21s
 ```
 
-Argo 앱에 접근도 해 봅시다. 짧게 확인하기 위해 `kubectl port-forward` 명령어를 사용하겠습니다.
+Let's get access to Argo application too. We'll use `kubectl port-forward` this time for short check.
 
 ```
 kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
 ```
 
-이제 브라우저를 열고 `localhost:8000`에 접속해 봅니다.
+Now open the browser and navigate to `localhost:8000`.
 
 ![Argo access](./img/1-4-argo.png)
 
-지금은 로그인을 할 수 없지만, 잘 실행되었습니다!  
-배포된 앱을 삭제하려면 다음 명령어를 입력합니다.
+By now we cannot log in to Argo, but it works!  
+To undeploy Argo, type the command below.
 
 ```
 helm uninstall my-argowf -n argo-wf
