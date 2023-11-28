@@ -62,7 +62,7 @@ kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
 ![Argo access](./img/1-4-argo.png)
 
 지금은 로그인을 할 수 없지만, 잘 실행되었습니다!  
-앱을 종료시키려면 다음 명령어를 입력합니다.
+배포된 앱을 삭제하려면 다음 명령어를 입력합니다.
 
 ```
 helm uninstall my-argowf -n argo-wf
