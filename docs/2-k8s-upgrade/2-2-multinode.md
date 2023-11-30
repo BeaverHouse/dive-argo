@@ -54,6 +54,8 @@ k3s-worker-2   Ready    <none>                 27s     v1.27.7+k3s2
 k3s-master     Ready    control-plane,master   23m     v1.27.7+k3s2
 ```
 
+<br/>
+
 [^1]: https://docs.k3s.io/quick-start#install-script  
 [^2]: [1. Hello Argo! - K3S 설치하기][step1-3]를 참조해 주세요.
 
