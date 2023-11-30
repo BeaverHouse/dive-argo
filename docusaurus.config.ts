@@ -88,7 +88,7 @@ const config: Config = {
           position: "right",
         },
         {
-          href: "https://github.com/BeaverHouse/docusaurus-template",
+          href: "https://github.com/BeaverHouse/dive-argo",
           label: "GitHub",
           position: "right",
         },

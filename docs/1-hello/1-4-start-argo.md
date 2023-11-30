@@ -23,6 +23,7 @@ k3s-argo-helm
 
 ## helm chart로 설치하기
 
+이제 Argo Workflow를 배포해 봅시다.  
 Chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.
 
 ```
@@ -51,7 +52,7 @@ replicaset.apps/my-argowf-argo-workflows-workflow-controller-ffc5b5c4d   1      
 replicaset.apps/my-argowf-argo-workflows-server-774d4bf6dd               1         1         1       2m21s
 ```
 
-Argo 앱에 접근도 해 봅시다. 짧게 확인하기 위해 `kubectl port-forward` 명령어를 사용하겠습니다.
+Argo Workflow 앱에 접근도 해 봅시다. 짧게 확인하기 위해 `kubectl port-forward` 명령어를 사용하겠습니다.
 
 ```
 kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
