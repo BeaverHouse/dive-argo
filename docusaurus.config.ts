@@ -29,6 +29,21 @@ const config: Config = {
     locales: ["en", "ko"],
   },
 
+  plugins: [
+    [
+      "content-docs",
+      /** @type {import('@docusaurus/plugin-content-docs').Options} */
+      {
+        id: "extra",
+        path: "extra",
+        routeBasePath: "extra",
+        editUrl: "https://github.com/BeaverHouse/dive-argo/tree/main",
+        editLocalizedFiles: true,
+        sidebarPath: require.resolve("./sidebarsExtra.js"),
+      },
+    ],
+  ],
+
   presets: [
     [
       "classic",
@@ -62,6 +77,11 @@ const config: Config = {
           sidebarId: "tutorialSidebar",
           position: "left",
           label: "Docs",
+        },
+        {
+          to: "/extra/alias",
+          position: "left",
+          label: "Extra",
         },
         {
           type: "localeDropdown",
