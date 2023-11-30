@@ -40,6 +40,8 @@ const config: Config = {
         editUrl: "https://github.com/BeaverHouse/dive-argo/tree/main",
         editLocalizedFiles: true,
         sidebarPath: require.resolve("./sidebarsExtra.js"),
+        showLastUpdateAuthor: true,
+        showLastUpdateTime: true,
       },
     ],
   ],
@@ -54,6 +56,8 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/BeaverHouse/dive-argo/tree/main",
           editLocalizedFiles: true,
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
         },
         theme: {
           customCss: "./src/css/custom.css",
