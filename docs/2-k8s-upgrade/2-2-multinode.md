@@ -16,7 +16,7 @@ multipass shell k3s-master
 ```
 
 Worker node를 생성하기 위해서는 Master node의 IP 주소와 token이 필요합니다.[^1]   
-URL은 이미 알고 있는 상태고, token은 다음 명령어로 확인이 가능합니다.
+URL은 이미 알고 있는 상태고[^2], token은 다음 명령어로 확인이 가능합니다.
 
 ```
 sudo cat /var/lib/rancher/k3s/server/node-token
@@ -55,3 +55,6 @@ k3s-master     Ready    control-plane,master   23m     v1.27.7+k3s2
 ```
 
 [^1]: https://docs.k3s.io/quick-start#install-script
+[^2] : [1. Hello Argo! - K3S 설치하기][step1-3]를 참조해 주세요.
+
+[step1-3]: https://beaverhouse.github.io/dive-argo/docs/hello/1-3-k3s/#vm%EC%9D%98-k8s-%ED%99%98%EA%B2%BD%EC%9D%84-%ED%98%B8%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EC%A0%9C%EC%96%B4%ED%95%98%EA%B8%B0
