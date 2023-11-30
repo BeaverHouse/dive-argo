@@ -15,7 +15,8 @@ sidebar_position: 2
 multipass shell k3s-master
 ```
 
-Worker node를 생성하기 위해서는 Master node의 IP 주소와 token이 필요합니다.[^1] URL은 이미 알고 있는 상태고, token은 다음 명령어로 확인이 가능합니다.
+Worker node를 생성하기 위해서는 Master node의 IP 주소와 token이 필요합니다.[^1]   
+URL은 이미 알고 있는 상태고, token은 다음 명령어로 확인이 가능합니다.
 
 ```
 sudo cat /var/lib/rancher/k3s/server/node-token
@@ -25,7 +26,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 
 ## Worker node 생성하기
 
-Worker node는 별도의 VM에 생성하도록 하겠습니다.
+Worker node는 별도의 VM에 생성하도록 하겠습니다.   
 Worker node를 위한 새로운 VM을 생성하여 Shell에 접속합니다.
 
 ```
@@ -34,7 +35,7 @@ multipass launch jammy --name k3s-worker-1 --memory 2G --disk 50G --cpus 2
 multipass shell k3s-worker-1
 ```
 
-Shell에서 다음 명령어로 k3s를 설치합니다. Master node의 IP와 token을 여기서 사용합니다.
+Shell에서 다음 명령어로 `k3s`를 설치합니다. Master node의 IP와 token을 여기서 사용합니다.
 
 ```
 curl -sfL https://get.k3s.io | K3S_URL=https://<master-ip>:6443 \
