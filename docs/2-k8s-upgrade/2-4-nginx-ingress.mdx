@@ -1,0 +1,88 @@
+---
+sidebar_position: 4
+---
+
+# NGINX Ingress Controller 설치하기
+
+## NGINX Ingress Controller 다운로드
+
+다음 Repository에서 helm chart를 다운로드합니다.  
+https://github.com/kubernetes/ingress-nginx/
+
+helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
+
+기본으로 LoadBalancer type으로 생성됨
+
+### IP가 고정이 아닌데 고정으로 하려면
+
+values.yaml에서 `controller.service.loadBalancerIP`를 고정값으로 변경
+`192.168.0.222`
+
+helm upgrade ingress-nginx -n ingress-nginx ./ingress-nginx
+
+![nginx-ingress-svc](./img/2-4-svc.png)
+
+## Ingress 생성하기
+
+kubectl create ns example
+
+kubectl apply -f ./nginx-sample.yaml -n example
+
+kubectl expose pod nginx -n example --name=lb-nginx --port=80
+
+```yaml title="custom-ingress.yaml"
+kind: Service
+apiVersion: v1
+metadata:
+  name: example-svc
+  namespace: my-ingress
+spec:
+  type: ExternalName
+  externalName: lb-nginx.example.svc.cluster.local
+  # service-name.namespace-name.svc.cluster.local
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: custom-ingress
+  namespace: my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - http:
+        paths:
+          - path: /example
+            pathType: Prefix
+            backend:
+              service:
+                name: example-svc
+                port:
+                  number: 80
+```
+
+Ingress에서 강조된 2개 항목은 반드시 올바르게 설정해 주어야 합니다.  
+여기서 `spec.ingressClassName` 에 `nginx` 를 입력한 이유는 기본값이기 때문입니다.
+
+```
+> k get IngressClass --all-namespaces
+NAME      CONTROLLER                      PARAMETERS   AGE
+traefik   traefik.io/ingress-controller   <none>       77m
+nginx     k8s.io/ingress-nginx            <none>       39m
+```
+
+```
+kubectl create ns my-ingress
+kubectl apply -f ./custom-ingress.yaml
+```
+
+`ingress-nginx-controller` 에 할당된 서비스에 접속하면 접속은 가능하지만, 홈에 연결된 서비스가 없기 때문에 404 Not Found가 출력됩니다.
+
+![Alt text](./img/2-4-ingress-test.png)
+
+이제 `/example` 주소로 이동해 보면, nginx 페이지를 확인할 수 있습니다.
+
+![Alt text](./img/2-4-ingress-test2.png)
+
+[^1]: https://stackoverflow.com/a/59845018
