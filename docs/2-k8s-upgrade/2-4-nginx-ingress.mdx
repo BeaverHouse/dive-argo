@@ -9,26 +9,40 @@ sidebar_position: 4
 다음 Repository에서 helm chart를 다운로드합니다.  
 https://github.com/kubernetes/ingress-nginx/
 
+```
 helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
+```
 
 기본으로 LoadBalancer type으로 생성됨
 
-### IP가 고정이 아닌데 고정으로 하려면
+:::note IP를 고정으로 하려면
 
 values.yaml에서 `controller.service.loadBalancerIP`를 고정값으로 변경
 `192.168.0.222`
 
+```
 helm upgrade ingress-nginx -n ingress-nginx ./ingress-nginx
+```
+
+:::
 
 ![nginx-ingress-svc](./img/2-4-svc.png)
 
 ## Ingress 생성하기
 
+테스트를 위해 다시 nginx 앱을 생성하고 노출하겠습니다.  
+대신 이번에는 `example`이라는 새로운 namespace에 생성하고, 서비스에 LoadBalancer 타입도 설정하지 않았습니다.
+
+```
 kubectl create ns example
 
 kubectl apply -f ./nginx-sample.yaml -n example
 
 kubectl expose pod nginx -n example --name=lb-nginx --port=80
+```
+
+이를 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
+ExternalName 타입을 사용하면 다른 namespace의 Service도 연결할 수 있습니다.[^1]
 
 ```yaml title="custom-ingress.yaml"
 kind: Service
@@ -72,17 +86,22 @@ traefik   traefik.io/ingress-controller   <none>       77m
 nginx     k8s.io/ingress-nginx            <none>       39m
 ```
 
+이제 설정한 Service와 Ingress를 생성합니다.
+
 ```
 kubectl create ns my-ingress
 kubectl apply -f ./custom-ingress.yaml
 ```
 
-`ingress-nginx-controller` 에 할당된 서비스에 접속하면 접속은 가능하지만, 홈에 연결된 서비스가 없기 때문에 404 Not Found가 출력됩니다.
+브라우저로 이제 `ingress-nginx-controller` 에 할당된 IP에 접속합니다.  
+접속은 가능하지만, 홈 주소에 연결된 서비스가 없기 때문에 404 Not Found가 출력됩니다.
 
 ![Alt text](./img/2-4-ingress-test.png)
 
 이제 `/example` 주소로 이동해 보면, nginx 페이지를 확인할 수 있습니다.
 
 ![Alt text](./img/2-4-ingress-test2.png)
+
+<br />
 
 [^1]: https://stackoverflow.com/a/59845018
