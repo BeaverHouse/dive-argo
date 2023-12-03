@@ -6,5 +6,9 @@
   "sidebar.tutorialSidebar.category.1. Hello Argo!": {
     "message": "1. Hello Argo!",
     "description": "The label for category 1. Hello Argo! in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.2. K8S 환경 고도화하기": {
+    "message": "2. Advance K8S Environment",
+    "description": "The label for category 2. K8S 환경 고도화하기 in sidebar tutorialSidebar"
   }
 }
