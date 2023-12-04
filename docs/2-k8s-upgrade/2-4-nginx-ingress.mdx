@@ -2,23 +2,28 @@
 sidebar_position: 4
 ---
 
-# NGINX Ingress Controller 설치하기
+# Ingress NGINX Controller 설치하기
 
-## NGINX Ingress Controller 다운로드
+## Ingress NGINX Controller helm chart 다운로드
 
 다음 Repository에서 helm chart를 다운로드합니다.  
 https://github.com/kubernetes/ingress-nginx/
+
+다운로드받은 chart를 `helm install` 명령어로 설치합니다.
 
 ```
 helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 ```
 
-기본으로 LoadBalancer type으로 생성됨
+`ingress-nginx-controller` 서비스는 기본으로 LoadBalancer type으로 설정되어 있기 때문에, 해당 타입으로 생성되면서 외부 IP까지 할당받은 것을 확인할 수 있습니다
 
-:::note IP를 고정으로 하려면
+![nginx-ingress-svc](./img/2-4-svc.png)
 
-values.yaml에서 `controller.service.loadBalancerIP`를 고정값으로 변경
-`192.168.0.222`
+:::note 고정 IP를 설정하려면
+
+`values.yaml`에서 `controller.service.loadBalancerIP`값을 MetalLB에서 설정한 범위 내의 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 같은 값을 입력하면 됩니다.
+
+이후 다음 명령어로 변경사항을 반영할 수 있습니다.
 
 ```
 helm upgrade ingress-nginx -n ingress-nginx ./ingress-nginx
@@ -26,12 +31,10 @@ helm upgrade ingress-nginx -n ingress-nginx ./ingress-nginx
 
 :::
 
-![nginx-ingress-svc](./img/2-4-svc.png)
-
-## Ingress 생성하기
+## 라우팅을 위한 Ingress 생성하기
 
 테스트를 위해 다시 nginx 앱을 생성하고 노출하겠습니다.  
-대신 이번에는 `example`이라는 새로운 namespace에 생성하고, 서비스에 LoadBalancer 타입도 설정하지 않았습니다.
+대신 이번에는 `example`이라는 새로운 Namespace에 생성하고, 서비스에 LoadBalancer 타입도 설정하지 않았습니다.
 
 ```
 kubectl create ns example
@@ -41,10 +44,10 @@ kubectl apply -f ./nginx-sample.yaml -n example
 kubectl expose pod nginx -n example --name=lb-nginx --port=80
 ```
 
-이를 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
-ExternalName 타입을 사용하면 다른 namespace의 Service도 연결할 수 있습니다.[^1]
+nginx 서비스를 Ingress Controller에 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
+ExternalName 타입을 사용하면 다른 Namespace의 Service도 연결할 수 있습니다.[^1]
 
-```yaml title="custom-ingress.yaml"
+```yaml title="custom-ingress.yaml" {16,18}
 kind: Service
 apiVersion: v1
 metadata:
@@ -77,7 +80,7 @@ spec:
 ```
 
 Ingress에서 강조된 2개 항목은 반드시 올바르게 설정해 주어야 합니다.  
-여기서 `spec.ingressClassName` 에 `nginx` 를 입력한 이유는 기본값이기 때문입니다.
+여기서 `spec.ingressClassName` 에 `nginx` 를 입력한 이유는 해당 값이 기본값이기 때문입니다.
 
 ```
 > k get IngressClass --all-namespaces
@@ -93,7 +96,7 @@ kubectl create ns my-ingress
 kubectl apply -f ./custom-ingress.yaml
 ```
 
-브라우저로 이제 `ingress-nginx-controller` 에 할당된 IP에 접속합니다.  
+브라우저로 `ingress-nginx-controller` 에 할당된 IP에 접속합니다.  
 접속은 가능하지만, 홈 주소에 연결된 서비스가 없기 때문에 404 Not Found가 출력됩니다.
 
 ![Alt text](./img/2-4-ingress-test.png)
