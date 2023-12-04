@@ -4,6 +4,9 @@ sidebar_position: 4
 
 # Ingress NGINX Controller 설치하기
 
+MetalLB에 이어 Ingress NGINX Controller를 설치하고 테스트해 보겠습니다.  
+Ingress NGINX Controller는 K8S 환경에서 NGINX를 reverse proxy와 load balancer로 사용하게 해 줍니다. 클라이언트의 요청을 안정적으로 받아 라우팅까지 할 수 있어 최근에 높은 관심을 받고 있는 MSA Architecture를 구성하는 데 효과적입니다.
+
 ## Ingress NGINX Controller helm chart 다운로드
 
 다음 Repository에서 helm chart를 다운로드합니다.  
@@ -15,7 +18,8 @@ https://github.com/kubernetes/ingress-nginx/
 helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 ```
 
-`ingress-nginx-controller` 서비스는 기본으로 LoadBalancer type으로 설정되어 있기 때문에, 해당 타입으로 생성되면서 외부 IP까지 할당받은 것을 확인할 수 있습니다
+`ingress-nginx-controller` 서비스는 기본으로 LoadBalancer type으로 설정되어 있기 때문에,   
+해당 타입으로 생성되면서 외부 IP까지 할당받은 것을 확인할 수 있습니다.
 
 ![nginx-ingress-svc](./img/2-4-svc.png)
 
@@ -44,10 +48,11 @@ kubectl apply -f ./nginx-sample.yaml -n example
 kubectl expose pod nginx -n example --name=lb-nginx --port=80
 ```
 
-nginx 서비스를 Ingress Controller에 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
+이제 nginx 서비스를 Ingress Controller에 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
+목표는 nginx 서비스를 `/example` 주소로 할당하는 것입니다.  
 ExternalName 타입을 사용하면 다른 Namespace의 Service도 연결할 수 있습니다.[^1]
 
-```yaml title="custom-ingress.yaml" {16,18}
+```yaml title="custom-ingress.yaml" {17,19}
 kind: Service
 apiVersion: v1
 metadata:
@@ -95,6 +100,8 @@ nginx     k8s.io/ingress-nginx            <none>       39m
 kubectl create ns my-ingress
 kubectl apply -f ./custom-ingress.yaml
 ```
+
+<br />
 
 브라우저로 `ingress-nginx-controller` 에 할당된 IP에 접속합니다.  
 접속은 가능하지만, 홈 주소에 연결된 서비스가 없기 때문에 404 Not Found가 출력됩니다.
