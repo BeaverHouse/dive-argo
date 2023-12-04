@@ -4,12 +4,12 @@ sidebar_position: 5
 
 # Argo Workflow 재배포 + 로그인하기
 
-필요한 설정이 끝났으니, Argo Workflow를 수정해 다시 배포하고 로그인까지 수행해 보겠습니다.
+필요한 설정이 끝났으니, Argo Workflow를 수정해 다시 배포하고 로그인까지 진행해 보겠습니다.
 
 ## helm chart 수정
 
 이전에는 따로 수정 없이 helm chart를 배포했었습니다.  
-이번에는 간단하게 helm chart를 수정해 보도록 합시다.
+이번에는 간단하게 helm chart를 수정해 보겠습니다.
 
 1. `fullnameOverride` 를 원하는 이름으로 변경합니다.  
 여기서는 `myargo` 로 설정하겠습니다.
@@ -18,11 +18,11 @@ sidebar_position: 5
    `controller.nodeSelector` 와 `server.nodeSelector`에 다음 label을 추가합니다.   
    `node-role.kubernetes.io/master: "true"`
 
-   다른 label 설정을 원하시거나, Master node가 아닌 다른 곳에 배포하고 싶다면 설정을 변경하셔도 무방합니다.  
+   다른 label 설정을 원하시거나, Master node가 아닌 다른 곳에 배포하고 싶다면 설정을 변경하셔도 됩니다.  
    Node에 설정된 label은 다음 명령어로 확인할 수 있습니다.
 
    ```
-   k get nodes --show-labels
+   kubectl get nodes --show-labels
    ```
 
    라벨 설정과 관련된 내용은 여기서 다루지 않겠습니다.
@@ -63,15 +63,17 @@ server:
 
 ## 로그인을 위한 Account 설정하기
 
-SSO 방식을 사용해 타 OAuth 서비스와 연동하여 로그인을 구성할 수도 있지만, 여기서는 token 로그인 방식[^1]을 적용하겠습니다.
+SSO 방식을 사용해 타 OAuth 서비스와 연동하여 로그인을 구성할 수도 있지만, 
+여기서는 token 로그인 방식[^1]을 적용하겠습니다.
 
 token은 기본 계정 외에 새로 계정을 만들어 발행하겠습니다.  
 (기본 계정에서 token 추출이 가능할 수도 있지만, 이 문서에서는 설명하지 않습니다)
 
 새로운 계정 설정을 위해 RoleBinding, ServiceAccount, Secret 총 3개의 설정 파일을 작성해야 합니다.  
-제가 설정한 `huadmin` 이름은 알맞게 변경해 주세요.  
-그리고 여기서는 Argo에서 기본 생성하는 ClusterRole을 이용하였습니다.   
-Role도 따로 생성하고 싶다면 이에 해당하는 `yaml` 파일을 하나 더 작성해서 RoleBinding에서 연결해주시면 됩니다.
+제가 설정한 이름 `huadmin` 은 알맞게 변경해 주세요. `values.yaml`로 따로 분리해서 관리하는 것도 좋습니다.  
+
+그리고 여기서는 Argo helm chart에서 기본 생성하는 ClusterRole을 사용하였습니다.   
+Role도 따로 생성하고 싶다면 이에 해당하는 `yaml` 파일을 하나 더 작성해서 RoleBinding에서 연결해 주시면 됩니다.
 
 ```yaml title="rb-admin.yaml"
 apiVersion: rbac.authorization.k8s.io/v1
@@ -118,9 +120,9 @@ helm chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.
 helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
 ```
 
-이제 로그인을 위한 토큰을 확인해야 합니다.  
-아래의 명령어로 토큰을 확인할 수 있습니다.  
-Linux는 그대로 확인하면 되고, Windows의 경우 master VM Shell에 들어가서 확인하시면 됩니다. 그 외 다른 방법을 사용하셔도 됩니다.
+이제 로그인을 위한 토큰을 확인해야 합니다. 아래의 명령어로 토큰을 확인할 수 있습니다.  
+Linux는 그대로 확인하면 되고, Windows의 경우 master VM Shell에 들어가서 확인하시면 됩니다.  
+그 외 다른 방법을 사용하셔도 됩니다.
 
 ```
 ARGO_TOKEN="Bearer $(sudo k3s kubectl get secret huadmin-secret -n argo-wf -o=jsonpath='{.data.token}' | base64 --decode)"
@@ -131,8 +133,8 @@ token 값은 로그인에 필요하기 때문에 저장해 둡니다.
 
 ![kubectl check](./img/2-5-kubectl.png)
 
-정상적으로 고정 IP가 할당되었고, helm chart에서 바꾼 이름 `myargo`를 기반으로 리소스가 생성된 것을 확인할 수 있습니다.  
-브라우저로 해당 IP에 접속하면 로그인 화면이 나옵니다.
+정상적으로 IP가 할당되었고, helm chart에서 바꾼 이름 `myargo`를 기반으로 리소스가 생성된 것을 확인할 수 있습니다.  
+이제 브라우저로 해당 IP에 접속하면 로그인 화면이 나옵니다.
 
 ![login page](./img/2-5-argo-1.png)
 
