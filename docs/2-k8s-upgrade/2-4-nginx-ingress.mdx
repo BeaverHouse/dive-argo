@@ -25,7 +25,7 @@ helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 
 :::note 고정 IP를 설정하려면
 
-`values.yaml`에서 `controller.service.loadBalancerIP`값을 MetalLB에서 설정한 범위 내의 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 같은 값을 입력하면 됩니다.
+`values.yaml`에서 `controller.service.loadBalancerIP` 값을 MetalLB에서 설정한 범위 내의 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 같은 값을 입력하면 됩니다.
 
 이후 다음 명령어로 변경사항을 반영할 수 있습니다.
 
