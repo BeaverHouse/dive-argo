@@ -5,7 +5,7 @@ sidebar_position: 3
 # MetalLB 설치하기
 
 MetalLB는 bare metal 환경의 K8S 환경에서 사용 가능한 Load-Balancer입니다.  
-MetalLB를 사용하면 클라우드 공급자(GCP, AWS 등)의 도움 없이도 서비스를 외부에 공개하기 용이합니다.
+MetalLB를 사용하면 클라우드 공급자(GCP, AWS, Azure 등)의 도움 없이도 서비스를 외부에 공개하기 용이합니다.
 
 ## MetalLB helm chart 다운로드
 
@@ -75,7 +75,7 @@ helm install metallb -n metallb-system ./metallb
 다음으로는 앱 생성시 Service에 외부 고정 IP를 할당받도록 layer 2 config를 설정합니다.
 
 아래 링크를 참조하여 다음과 같은 설정 파일을 생성합니다.  
-ip는 허용 범위 내에서 자유롭게 변경하시면 됩니다.  
+IP는 허용 범위 내에서 자유롭게 변경하시면 됩니다.  
 https://metallb.universe.tf/configuration/#layer-2-configuration
 
 ```yaml title="metallb-ipconfig.yaml"

@@ -5,7 +5,7 @@ sidebar_position: 4
 # Ingress NGINX Controller 설치하기
 
 MetalLB에 이어 Ingress NGINX Controller를 설치하고 테스트해 보겠습니다.  
-Ingress NGINX Controller는 K8S 환경에서 NGINX를 reverse proxy와 load balancer로 사용하게 해 줍니다. 클라이언트의 요청을 안정적으로 받아 라우팅까지 할 수 있어 최근에 높은 관심을 받고 있는 MSA 환경을 구성하는 데 효과적입니다.
+Ingress NGINX Controller는 K8S 환경에서 NGINX를 reverse proxy와 load balancer로 사용하게 해 줍니다. 클라이언트의 요청을 안정적으로 받아 라우팅까지 할 수 있어 최근에 높은 관심을 받고 있는 MSA 환경을 구축하는 데 효과적입니다.
 
 ## Ingress NGINX Controller helm chart 다운로드
 
@@ -18,14 +18,14 @@ https://github.com/kubernetes/ingress-nginx/
 helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 ```
 
-`ingress-nginx-controller` 서비스는 기본으로 LoadBalancer type으로 설정되어 있기 때문에,   
+`ingress-nginx-controller` 서비스는 기본으로 LoadBalancer type으로 설정되어 있기 때문에,  
 해당 타입으로 생성되면서 외부 IP까지 할당받은 것을 확인할 수 있습니다.
 
 ![nginx-ingress-svc](./img/2-4-svc.png)
 
 :::note 고정 IP를 설정하려면
 
-`values.yaml`에서 `controller.service.loadBalancerIP` 값을 MetalLB에서 설정한 범위 내의 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 같은 값을 입력하면 됩니다.
+`values.yaml`에서 `controller.service.loadBalancerIP` 값을 MetalLB에서 설정한 범위 내의 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 같은 값을 입력합니다.
 
 이후 다음 명령어로 변경사항을 반영할 수 있습니다.
 
@@ -38,7 +38,7 @@ helm upgrade ingress-nginx -n ingress-nginx ./ingress-nginx
 ## 라우팅을 위한 Ingress 생성하기
 
 테스트를 위해 다시 nginx 앱을 생성하고 노출하겠습니다.  
-대신 이번에는 `example`이라는 새로운 Namespace에 생성하고, 서비스에 LoadBalancer 타입도 설정하지 않았습니다.
+대신 이번에는 `example` 이라는 새로운 Namespace에 생성하고, 서비스에 LoadBalancer 타입도 설정하지 않았습니다.
 
 ```
 kubectl create ns example
@@ -104,7 +104,7 @@ kubectl apply -f ./custom-ingress.yaml
 <br />
 
 브라우저로 `ingress-nginx-controller` 에 할당된 IP에 접속합니다.  
-접속은 가능하지만, 홈 주소에 연결된 서비스가 없기 때문에 404 Not Found가 출력됩니다.
+접속은 가능하지만, 홈 주소에 연결된 항목이 없기 때문에 404 Not Found가 출력됩니다.
 
 ![Alt text](./img/2-4-ingress-test.png)
 
