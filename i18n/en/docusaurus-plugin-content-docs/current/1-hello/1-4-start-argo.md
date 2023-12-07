@@ -21,7 +21,7 @@ k3s-argo-helm
 |- ...
 ```
 
-## Installing helm chart
+## Install helm chart
 
 Now let's deploy Argo Workflow.  
 Type the command below on the folder where chart exists.
