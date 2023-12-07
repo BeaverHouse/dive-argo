@@ -27,7 +27,7 @@ Store this token for later use as your way.
 ## Create worker nodes
 
 We'll create each worker node on another VM.   
-Launch new VM for worker node by Multipass and access to VM Shell.
+Launch new VM for worker node with Multipass and access to VM Shell.
 
 ```
 multipass launch jammy --name k3s-worker-1 --memory 2G --disk 50G --cpus 2
@@ -35,7 +35,7 @@ multipass launch jammy --name k3s-worker-1 --memory 2G --disk 50G --cpus 2
 multipass shell k3s-worker-1
 ```
 
-Type this command to install `k3s`. Master node's IP address and node token stored before need to be provided as a variable.
+Type this command to install `k3s`. Provide master node's IP address and node token stored before as a variable.
 
 ```
 curl -sfL https://get.k3s.io | K3S_URL=https://<master-ip>:6443 \
