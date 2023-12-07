@@ -5,8 +5,7 @@ Base structure from [docusaurus-template][ref0]
 | Part | KO | EN |
 |---|---|---|
 | Get Started | ⭕ | ⭕ | 
-| 1-1 | ⭕ | ⭕ | 
-| 1-2 | ⭕ | ⭕ | 
-| 1-3 | ⭕ | ⭕ | 
+| Pt.1 | ⭕ | ⭕ | 
+| 2-1 | ⭕ | ⭕ | 
 
 [ref0]: https://github.com/BeaverHouse/docusaurus-template
