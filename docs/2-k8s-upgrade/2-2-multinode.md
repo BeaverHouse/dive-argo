@@ -16,7 +16,7 @@ multipass shell k3s-master
 ```
 
 Worker node를 생성하기 위해서는 Master node의 IP 주소와 token이 필요합니다.[^1]   
-URL은 이미 알고 있는 상태고[^2], token은 다음 명령어로 확인이 가능합니다.
+IP 주소는 이미 알고 있는 상태고[^2], token은 다음 명령어로 확인이 가능합니다.
 
 ```
 sudo cat /var/lib/rancher/k3s/server/node-token
