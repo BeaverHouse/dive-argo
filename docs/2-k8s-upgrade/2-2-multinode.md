@@ -9,7 +9,7 @@ sidebar_position: 2
 
 ## Master node의 토큰 확인하기
 
-`k3s-master` VM shell에 접속합니다.
+`k3s-master` VM Shell에 접속합니다.
 
 ```
 multipass shell k3s-master
