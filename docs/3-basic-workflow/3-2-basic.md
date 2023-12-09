@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Workflow 기본
@@ -145,7 +145,7 @@ roleRef:
 
 ![Alt text](img/3-2-create8.png)
 
-## Workflow 저장하여 생성하기
+### Workflow 저장하여 생성하기
 
 Workflow Template 뿐만 아니라 Workflow도 저장을 할 수 있습니다.  
 Workflow Template 메뉴에서 **CREATE NEW WORKFLOW TEMPLATE**를 누르고,  
