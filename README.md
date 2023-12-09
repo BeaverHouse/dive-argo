@@ -14,5 +14,7 @@ Base structure from [docusaurus-template][ref0]
 | 2-2 | ⭕ | ⭕ | 
 | 2-3 | ⭕ | ➖ | 
 | 2-4 | ⭕ | ➖ | 
+| 2-5 | ⭕ | ➖ | 
+| 3-1 | ⭕ | ➖ | 
 
 [ref0]: https://github.com/BeaverHouse/docusaurus-template
