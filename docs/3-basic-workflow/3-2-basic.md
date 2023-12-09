@@ -8,7 +8,7 @@ Workflow UI를 둘러보고, 간단한 Workflow를 직접 생성하고 실행해
 
 ## Workflow 리스트 보기
 
-Argo Workflow에 로그인하면 첫 페이지에서 Workflow 리스트를 확인할 수 있습니다.  
+Argo Workflows에 로그인하면 첫 페이지에서 Workflow 리스트를 확인할 수 있습니다.  
 그런데 default로 설정되어 있을 수 있는 `undefined` 를 포함하여 `argo-wf` 외의 다른 Namespace가 선택되어 있으면 다음처럼 오류가 발생합니다.
 
 ![error](img/3-2-listerror.png)

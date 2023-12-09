@@ -2,9 +2,9 @@
 sidebar_position: 4
 ---
 
-# Hello, Argo Workflow!
+# Hello, Argo Workflows!
 
-In this section, we'll deploy basic Argo Workflow application by using official helm chart.
+In this section, we'll deploy basic Argo Workflows application by using official helm chart.
 
 ## Download Argo helm chart
 
@@ -23,7 +23,7 @@ k3s-argo-helm
 
 ## Install helm chart
 
-Now let's deploy Argo Workflow.  
+Now let's deploy Argo Workflows.  
 Type the command below on the folder where chart exists.
 
 ```
@@ -52,7 +52,7 @@ replicaset.apps/my-argowf-argo-workflows-workflow-controller-ffc5b5c4d   1      
 replicaset.apps/my-argowf-argo-workflows-server-774d4bf6dd               1         1         1       2m21s
 ```
 
-Let's get access to Argo Workflow application too. We'll use `kubectl port-forward` this time for short check.
+Let's get access to Argo Workflows application too. We'll use `kubectl port-forward` this time for short check.
 
 ```
 kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
