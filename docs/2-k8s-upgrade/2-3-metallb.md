@@ -143,7 +143,7 @@ kubectl get svc
 ![Alt text](./img/2-3-expose-test.png)
 
 정상적으로 외부 IP가 할당되었습니다.  
-브라우저로 접속해 보면, nginx 페이지를 확인할 수 있습니다.
+브라우저로 접속해 보면, NGINX 페이지를 확인할 수 있습니다.
 
 ![Alt text](./img/2-3-expose-test2.png)
 
