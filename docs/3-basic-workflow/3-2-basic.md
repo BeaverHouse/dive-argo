@@ -72,7 +72,7 @@ spec:
 Workflow도 생성해 보도록 하겠습니다.  
 Workflows 메뉴로 돌아가 **SUBMIT NEW WORKFLOW** 버튼을 누릅니다.
 
-![Alt text](img/3-2-create4.png)
+![wf submit](img/3-2-create4.png)
 
 Edit using full workflow options를 선택하고 아래 내용을 붙여넣습니다.
 
@@ -92,23 +92,23 @@ spec:
               template: whalesay
 ```
 
-![Alt text](img/3-2-create5.png)
+![wf run](img/3-2-create5.png)
 
 **CREATE** 버튼을 누르고 기다리면 Workflow가 실행되는 것을 확인할 수 있습니다.
 
 ### Workflow 로그 확인하기
 
-![Alt text](img/3-2-create6.png)
+![log error](img/3-2-create6.png)
 
 그런데 실행 확인을 위해 Logs를 클릭해 보면 아무 내용이 나오지 않습니다.  
 Workflow가 제대로 작동하지 않은 걸까요?
 
-![Alt text](img/3-2-create7.png)
+![kubectl check](img/3-2-create7.png)
 
 `kubectl` 로 확인해 보면 정상적으로 실행이 되었습니다.  
 실제로 개발자 도구로 확인 시 로그를 불러오는 API가 403 Forbidden을 반환하는 것이 문제임을 확인할 수 있습니다.
 
-![Alt text](img/3-2-logerror.png)
+![403 on dev tools](img/3-2-logerror.png)
 
 이는 현재 접속중인 ServiceAccount가 Pod에 관련된 권한을 가지고 있지 않기 때문입니다.  
 권한을 부여하기 위해 Role과 RoleBinding을 추가로 작성해 주어야 합니다.
@@ -143,7 +143,7 @@ roleRef:
 `helm upgrade` 등으로 변경사항을 반영합니다.  
 다시 Workflow를 만들어 실행하고 로그를 확인하면 이번에는 정상적으로 출력됩니다.
 
-![Alt text](img/3-2-create8.png)
+![log fixed](img/3-2-create8.png)
 
 ### Workflow 저장하여 생성하기
 
@@ -151,7 +151,7 @@ Workflow Template 뿐만 아니라 Workflow도 저장을 할 수 있습니다.
 Workflow Template 메뉴에서 **CREATE NEW WORKFLOW TEMPLATE**를 누르고,  
 이번에는 위에서 사용했던 Workflow의 내용을 붙여넣고 저장합니다.
 
-![Alt text](img/3-2-storewf.png)
+![store wf as template](img/3-2-storewf.png)
 
 :::info
 `metadata.generateName` 대신 `metadata.name` 을 사용하여 고정된 이름으로 저장할 수 있습니다.  
@@ -160,6 +160,6 @@ Workflow Template 메뉴에서 **CREATE NEW WORKFLOW TEMPLATE**를 누르고,
 
 만들어진 Workflow는 **SUBMIT** 버튼을 통해 간편하게 실행할 수 있습니다.
 
-![Alt text](img/3-2-storewf2.png)
+![submit from template](img/3-2-storewf2.png)
 
-![Alt text](img/3-2-storewf3.png)
+![submit result](img/3-2-storewf3.png)
