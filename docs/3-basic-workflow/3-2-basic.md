@@ -34,11 +34,14 @@ https://argoproj.github.io/argo-workflows/installation/#installation-options
 
 ### Workflow Template 저장하기
 
+Workflow Template로 Workflow의 일부 또는 전체를 저장할 수 있습니다.  
+먼저 template로 일부를 저장하고 이를 reference로 호출하여 사용해 보겠습니다.
+
 Workflow Template 메뉴에서 **CREATE NEW WORKFLOW TEMPLATE**를 누릅니다.
 
 ![create1](img/3-2-create1.png)
 
-Argo 문서의 샘플 Workflow를 약간 수정해서 사용하겠습니다.  
+Argo 문서의 샘플을 약간 수정해서 사용하겠습니다.  
 기존의 데이터를 지우고 아래 내용을 붙여넣습니다.
 
 ```yaml
@@ -147,9 +150,14 @@ roleRef:
 
 ### Workflow 저장하여 생성하기
 
-Workflow Template 뿐만 아니라 Workflow도 저장을 할 수 있습니다.  
+부분 template 뿐만 아니라 전체 Workflow도 저장을 할 수 있습니다.  
 Workflow Template 메뉴에서 **CREATE NEW WORKFLOW TEMPLATE**를 누르고,  
 이번에는 위에서 사용했던 Workflow의 내용을 붙여넣고 저장합니다.
+
+:::info  
+여기서는 위 내용을 그대로 복사해 Workflow 형식으로 저장했는데,  
+당연히 WorkflowTemplate 형식으로 저장해도 동일하게 작동합니다.
+:::
 
 ![store wf as template](img/3-2-storewf.png)
 
