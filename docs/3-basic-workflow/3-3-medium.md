@@ -65,3 +65,52 @@ spec:
 ![input as 5](img/3-3-script-w-variable.png)
 
 ![result](img/3-3-script-w-variable-result.png)
+
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: shell-with-sleep
+spec:
+  entrypoint: total-wf
+  arguments:
+    parameters:
+    - name: number-from-workflow
+  templates:
+  - name: total-wf
+    steps:
+    - - name: sleep
+        template: suspend-sleep
+        arguments:
+          parameters:
+          - name: sleep-time
+            value: "{{workflow.parameters.number-from-workflow}}"
+    - - name: echo
+        template: echo-num
+        arguments:
+          parameters:
+          - name: number
+            value: "{{workflow.parameters.number-from-workflow}}"
+
+  - name: suspend-sleep
+    inputs:
+      parameters:
+      - name: sleep-time
+    suspend:
+      duration: "{{inputs.parameters.sleep-time}}s"
+
+  - name: echo-num
+    inputs:
+      parameters:
+      - name: number
+    script:
+      image: bash:latest
+      command: [bash]
+      source: |
+        echo {{inputs.parameters.number}}
+```
+
+![sleep 20](img/3-3-suspend-time.png)
+
+![log result](img/3-3-suspend-log.png)
