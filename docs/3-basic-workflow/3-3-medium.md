@@ -114,3 +114,77 @@ spec:
 ![sleep 20](img/3-3-suspend-time.png)
 
 ![log result](img/3-3-suspend-log.png)
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: dag-example
+spec:
+  entrypoint: total-wf
+  templates:
+  - name: total-wf
+    dag:
+      tasks:
+      - name: stepA
+        template: echo-sth
+        arguments:
+          parameters:
+          - name: word
+            value: "start"
+      - name: stepB-1
+        dependencies: [stepA]
+        template: suspend-sleep
+        arguments:
+          parameters:
+          - name: sleep-time
+            value: "120"
+      - name: stepB-2
+        dependencies: [stepB-1]
+        template: echo-sth
+        arguments:
+          parameters:
+          - name: word
+            value: "end of B"
+      - name: stepC-1
+        dependencies: [stepA]
+        template: suspend-sleep
+        arguments:
+          parameters:
+          - name: sleep-time
+            value: "180"
+      - name: stepC-2
+        dependencies: [stepC-1]
+        template: echo-sth
+        arguments:
+          parameters:
+          - name: word
+            value: "end of C"
+      - name: stepD
+        dependencies: [stepC-2, stepB-2]
+        template: echo-sth
+        arguments:
+          parameters:
+          - name: word
+            value: "end of all workflow"
+
+  - name: suspend-sleep
+    inputs:
+      parameters:
+      - name: sleep-time
+    suspend:
+      duration: "{{inputs.parameters.sleep-time}}s"
+
+  - name: echo-sth
+    inputs:
+      parameters:
+      - name: word
+    script:
+      image: bash:latest
+      command: [bash]
+      source: |
+        echo {{inputs.parameters.word}}
+```
+
+![dag result](img/3-3-dag.png)
+![dag result2](img/3-3-dag2.png)
