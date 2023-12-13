@@ -30,7 +30,7 @@ https://github.com/BeaverHouse/dive-argo-fastapi
 
 각각의 Step을 WorkflowTemplate으로 작성하고 합치겠습니다.
 
-### Git Clone
+## Docker Secret 생성
 
 https://helm.sh/docs/howto/charts_tips_and_tricks/#creating-image-pull-secrets
 
@@ -66,6 +66,8 @@ data:
 ```
 
 ![docker secret check](img/3-4-docker-secret-check.png)
+
+### Git Clone
 
 ```yaml title="git-clone.yaml"
 apiVersion: argoproj.io/v1alpha1
@@ -104,17 +106,20 @@ https://github.com/bitnami/charts/tree/main/bitnami/minio
 
 values에서 service.type과 service.loadBalancerIP 설정
 
+minIO는 argowf와 같은 namespace에 배포하는 것이 좋습니다.  
+다른 namespace에 배포하면 계정설정 secret를 공유하지 못해 따로 추가로 복사를 해야 하는 등 관리가 힘들어집니다.
+
 ```
 helm dependency update ./minio
-helm install minio ./minio -n minio --create-namespace
+helm install minio ./minio -n argo-wf
 ```
 
 `<SOME-IP>:9000`으로 접속 가능
 
 계정 정보
 ```
-export ROOT_USER=$(kubectl get secret --namespace minio minio -o jsonpath="{.data.root-user}" | base64 -d)
-   export ROOT_PASSWORD=$(kubectl get secret --namespace minio minio -o jsonpath="{.data.root-password}" | base64 -d)
+   export ROOT_USER=$(kubectl get secret --namespace argo-wf minio -o jsonpath="{.data.root-user}" | base64 -d)
+   export ROOT_PASSWORD=$(kubectl get secret --namespace argo-wf minio -o jsonpath="{.data.root-password}" | base64 -d)
 ```
 
 ![minio login](img/3-4-minio.png)
@@ -132,14 +137,227 @@ artifactRepository:
     # # the contents in the associated secret, as defined by the `name` attribute.
     accessKeySecret:
       name: minio
-      key: accesskey
+      key: root-user
     secretKeySecret:
       name: minio
-      key: secretkey
+      key: root-password
     # insecure will disable TLS. Primarily used for minio installs not configured with TLS
-    insecure: false
+    insecure: true
     bucket: argo-bucket
-    endpoint: minio.minio.svc.cluster.local:9000
+    endpoint: minio:9000
 ```
+
+helm upgrade my-argowf ./argo-workflows -n argo-wf
+
+```yaml {5,9}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Release.Namespace | quote }}
+  name: pod-controller
+rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "watch", "list", "patch"]
+```
+
+```yaml {11}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: huadmin-pod-rb
+  namespace: {{ .Release.Namespace | quote }}
+subjects:
+  - kind: ServiceAccount
+    name: huadmin
+roleRef:
+  kind: Role
+  name: pod-controller
+  apiGroup: rbac.authorization.k8s.io
+```
+
+kubectl delete rolebinding huadmin-pod-rb -n argo-wf
+helm upgrade my-argowf ./argo-workflows -n argo-wf
+
+```yaml title="git-clone.yaml"
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: git-clone
+spec:
+  serviceAccountName: huadmin
+  templates:
+  - name: checkout
+    inputs:
+      parameters:
+        - name: git-url
+        - name: revision
+          value: "main"
+      artifacts:
+      - name: source-code
+        path: /code
+        git:
+          repo: "{{inputs.parameters.git-url}}"
+          revision: "{{inputs.parameters.revision}}"
+    outputs:
+      artifacts:
+      - name: source-code
+        path: /code
+    container:
+      image: bash:latest
+      command: [ls]
+      args: ["/code"]
+```
+
+## Kaniko build
+
+```yaml title="image-build.yaml"
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: image-build
+spec:
+  serviceAccountName: huadmin
+  templates:
+  - name: build-push
+    inputs:
+      parameters:
+        - name: FROM_ARGO
+        - name: user_name
+          value: haulrest
+        - name: image_name
+        - name: image_tag
+      artifacts:
+      - name: source-code
+        path: /code
+    container:
+      name: kaniko
+      image: gcr.io/kaniko-project/executor:debug
+      command: ["/kaniko/executor"]
+      workingDir: '{{ inputs.artifacts.source-code.path }}'
+      args:
+      - "--dockerfile=Dockerfile"
+      - "--context=."
+      - "--destination={{inputs.parameters.user_name}}/{{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}"
+      - "--build-arg=FROM_ARGO={{inputs.parameters.FROM_ARGO}}"
+      volumeMounts:
+      - name: kaniko-secret
+        mountPath: /kaniko/.docker/
+    volumes:
+    - name: kaniko-secret
+      secret:
+        secretName: docker-secret
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+```
+
+context : 빌드할 때 참조하는 폴더인데 우리는 workingDir를 지정했으니 그냥 root 폴더로 하면 된다.
+
+
+```yaml title="argo-ci.yaml"
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: argo-ci
+spec:
+  serviceAccountName: huadmin
+  entrypoint: total-wf
+  arguments:
+    parameters:
+    - name: git-url
+    - name: FROM_ARGO
+    - name: image_name
+      value: fastapi-sample
+    - name: image_tag
+      value: v1
+  templates:
+  - name: total-wf
+    dag:
+      tasks:
+      - name: clone
+        arguments:
+          parameters:
+            - name: git-url
+              value: "{{workflow.parameters.git-url}}"
+        templateRef:
+          name: git-clone
+          template: checkout
+      - name: kaniko-process
+        dependencies: [clone]
+        arguments:
+          parameters:
+            - name: FROM_ARGO
+              value: "{{workflow.parameters.FROM_ARGO}}"
+            - name: image_name
+              value: "{{workflow.parameters.image_name}}"
+            - name: image_tag
+              value: "{{workflow.parameters.image_tag}}"
+          artifacts:
+          - name: source-code
+            from: "{{tasks.clone.outputs.artifacts.source-code}}"
+        templateRef:
+          name: image-build
+          template: build-push
+```
+
+https://github.com/argoproj/argo-workflows/blob/main/examples/artifact-passing.yaml
+
+![ci success](img/3-4-ci-success.png)
+![docker hub check](img/3-4-docker-hub.png)
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fastapi-test
+  labels:
+    env: test
+spec:
+  containers:
+    - name: fastapi
+      image: haulrest/fastapi-sample:v1
+      imagePullPolicy: Always
+  nodeSelector:
+    kubernetes.io/hostname: k3s-worker-1
+```
+
+```py title="main.py"
+import os
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+
+app = FastAPI()
+
+git_value = "github main branch"
+outer_value = os.environ.get("FROM_ARGO", "not from argo")
+
+@app.get("/")
+def read_root():
+    return RedirectResponse("/docs")
+
+
+@app.get("/value/git")
+def read_git():
+    return git_value
+
+
+@app.get("/value/argo")
+def read_git():
+    return outer_value
+```
+
+```
+kubectl apply -f fastapi-sample.yaml
+
+kubectl expose pod fastapi-test --name=lb-fastapi --port=8000  
+
+kubectl port-forward svc/lb-fastapi 8000:8000
+```
+
+![kubectl check](img/3-4-test-kubectl.png)
+![fastapi swagger](img/3-4-test-swagger.png)
+![git api](img/3-4-api-git.png)
+![argo api](img/3-4-api-argo.png)
 
 [^1]: https://about.gitlab.com/topics/ci-cd/
