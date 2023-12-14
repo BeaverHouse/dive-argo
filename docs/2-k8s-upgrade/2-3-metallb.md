@@ -14,7 +14,9 @@ https://github.com/metallb/metallb/tree/main
 
 ## Namespace 생성
 
-speaker Pod에 권한을 주기 위해[^1] 다음과 같이 Namespace 설정 파일을 생성합니다.
+MetalLB는 크게 2종류의 Pod를 생성하는데, external IP를 부여하고 관리하는 controller와 실제 외부 트래픽과 서비스를 연결해 주는 speaker가 있습니다.
+
+speaker Pod는 이 네트워크 기능을 위해 좀 더 높은 권한이 필요합니다. speaker에 권한을 주기 위해[^1] 다음과 같이 Namespace 설정 파일을 생성합니다.
 
 ```yaml title="metallb-ns.yaml"
 apiVersion: v1
@@ -73,7 +75,7 @@ helm install metallb -n metallb-system ./metallb
 
 ## Layer 2 Config 설정하기
 
-다음으로는 앱 생성시 Service에 외부 고정 IP를 할당받도록 Layer 2 config를 설정합니다.
+다음으로는 앱 생성시 Service에 외부 고정 IP를 할당받도록 Layer 2 config를 설정하겠습니다.
 
 :::caution
 MetalLB의 Layer 2 mode는 speaker 중 leader를 선출하여 그 곳에 external IP를 할당하는 방식입니다. 따라서 하나의 노드에 모든 트래픽이 집중되는 방식으로 진정한 Load Balancing이라고 할 수 없으며, leader node가 다운될 경우 다른 노드로 역할이 넘어가는 failover 방식을 채택하고 있습니다.  
@@ -143,7 +145,7 @@ kubectl get svc
 ![expose check](./img/2-3-expose-test.png)
 
 정상적으로 외부 IP가 할당되었습니다.  
-브라우저로 접속해 보면, NGINX 페이지를 확인할 수 있습니다.
+브라우저로 해당 주소에 접속해 보면, NGINX 페이지를 확인할 수 있습니다.
 
 ![browser access](./img/2-3-expose-test2.png)
 
