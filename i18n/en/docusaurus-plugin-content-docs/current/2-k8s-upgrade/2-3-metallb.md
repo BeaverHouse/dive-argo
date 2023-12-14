@@ -38,7 +38,7 @@ kubectl apply -f ./metallb-ns.yaml
 ## Install helm chart
 
 First we need to set version of MetalLB on helm chart.  
-As we loop up the chart, we need version tag for pulling controller and speaker images,  
+As we see the chart, we need version tag for pulling controller and speaker images,  
 and it uses `appVersion` on `Chart.yaml` as a default.  
 Let's change this with `v0.13.12`, the recent version.
 
@@ -70,8 +70,8 @@ helm install metallb -n metallb-system ./metallb
 
 ![speaker](./img/2-3-speaker.png)
 
-Basically speaker is deployed with DaemonSet, targeted for all nodes.  
-If we can see speaker pods with number of nodes like above, we can confirm that MetalLB is installed successfully.
+Basically speaker is deployed by DaemonSet, targeted for all nodes.  
+If we can see speaker pods with number equal to node count like above, we can confirm that MetalLB is installed successfully.
 
 ## Layer 2 Config
 
@@ -132,7 +132,7 @@ spec:
     kubernetes.io/hostname: k3s-worker-2
 ```
 
-Create pod with `kubectl`and expose with port 80.
+Create pod with `kubectl` and expose with port 80.
 
 ```
 kubectl apply -f ./nginx-sample.yaml
