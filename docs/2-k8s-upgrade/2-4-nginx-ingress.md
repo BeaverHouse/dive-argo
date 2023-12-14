@@ -9,7 +9,8 @@ Ingress NGINX Controller는 K8S 환경에서 NGINX를 reverse proxy와 load bala
 
 ## Ingress NGINX Controller helm chart 다운로드
 
-Kubernetes에서 공식적으로 helm chart와 Docs 등을 지원하고 있습니다.
+NGINX 진영에서 만든 [nginxinc/kubernetes-ingress][ref1]도 있습니다만,  
+여기서는 Kubernetes에서 공식적으로 지원하는 helm chart를 사용하겠습니다.
 
 다음 Repository에서 helm chart를 다운로드합니다.  
 https://github.com/kubernetes/ingress-nginx/
@@ -117,5 +118,7 @@ kubectl apply -f ./custom-ingress.yaml
 ![ing-test-2](./img/2-4-ingress-test2.png)
 
 <br />
+
+[ref1]: https://github.com/nginxinc/kubernetes-ingress
 
 [^1]: https://stackoverflow.com/a/59845018
