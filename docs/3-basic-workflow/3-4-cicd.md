@@ -134,7 +134,8 @@ MinIO는 AWS S3 서비스와 호환이 가능한 오픈소스 Storage입니다.
 다음 Repository에서 helm chart를 다운로드합니다.  
 https://github.com/bitnami/charts/tree/main/bitnami/minio
 
-다운로드받은 helm chart에서 Load Balancer 설정을 위해   `values.yaml` 에서 `service.type`과 `service.loadBalancerIP` 를 설정해 줍니다.
+다운로드받은 helm chart에서 Load Balancer 설정을 위해  
+`values.yaml` 에서 `service.type`과 `service.loadBalancerIP` 를 설정해 줍니다.
 
 사용할 MinIO는 Argo Workflows와 같은 Namespace에 배포하도록 하겠습니다.  
 다른 Namespace에 배포하면 계정설정 secret를 공유하지 못해 따로 추가로 복사를 해야 하는 등 관리가 힘들어집니다.
