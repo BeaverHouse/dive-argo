@@ -258,6 +258,9 @@ spec:
 
 ### Kaniko build
 
+위에서도 설명했듯이, Kaniko는 docker daemon 없이 안정적이고 빠르게 이미지를 빌드할 수 있는 도구입니다. Kaniko 외에도 Buildah나 Buildkit 같은 다른 도구들이 비슷한 기능을 수행할 수 있지만, 가장 범용적으로 사용하기 좋다고 판단하여 선택하게 되었습니다.  
+이미지 빌드 부분에 대한 Workflow Template는 다음과 같습니다.
+
 ```yaml title="image-build.yaml"
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -299,8 +302,19 @@ spec:
             path: config.json
 ```
 
-context : 빌드할 때 참조하는 폴더인데 우리는 workingDir를 지정했으니 그냥 root 폴더로 하면 된다.
+input에서 다른 부분은 계정이나 이미지 이름, 태그를 설정하는 부분입니다. 나머지 `FROM_ARGO` 변수에 대해 의문을 가지실 수 있는데 이 부분은 샘플로 만든 FastAPI 앱에 전달할 변수로 후술하겠습니다.  
+Kanico로 이미지를 빌드하고 Docker Hub로 푸시하기 위해 실행할 명령어와 Argument들을 지정해 주어야 합니다.
+주요 내용을 살펴보면 다음과 같습니다. 
+- 이전에 Git Clone한 Artifact를 사용하기 위해 추가 input으로 받습니다.
+- `workingDir` 옵션으로 작업할 폴더를 지정해 줍니다.
+- `--dockerfile` 옵션과 함께 `Dockerfile` 경로를 지정해 줍니다. 이미 `workingDir` 옵션이 설정되어 있기 때문에 남은 경로만 입력해 주면 됩니다.
+- `--context` 옵션은 빌드할 때 참조하게 될 폴더를 지정하는데 역시  `workingDir` 옵션을 설정했기 때문에 그냥 root 폴더를 지정하기 위해 `.` 를 입력하면 됩니다.
+- `--destination` 옵션은 Docker Hub에 저장할 목적지를 설정하는 부분입니다. 현재 개인 Docker Repository를 대상으로 하고 있기 때문에 user_name 옵션은 사용자 계정 이름으로 고정이고, 이름과 태그는 자유롭게 설정하시면 됩니다.  
+- Dockef Hub 접근을 위해 앞에서 생성했던 Secret 정보를 Kaniko에 마운트해 줍니다.
 
+### 실제 Workflow 구성하기
+
+이제 Git Clone과 Kaniko build-push, 2개의 Template이 준비되었습니다. 이 둘을 합쳐 실제로 실행할 Workflow를 구성합니다.
 
 ```yaml title="argo-ci.yaml"
 apiVersion: argoproj.io/v1alpha1
@@ -348,10 +362,19 @@ spec:
           template: build-push
 ```
 
+기존에 필요한 변수들은 모두 Argument로 값을 받아 Template에 넘기도록 했고, Kaniko에서 사용할 Artifact는 Git Clone에서 생성된 output을 넘길 수 있도록 하였습니다.  
+관련된 예시 코드는 아래에서 확인 가능합니다.
+
 https://github.com/argoproj/argo-workflows/blob/main/examples/artifact-passing.yaml
+
+## Workflow 실행 결과
+
+만들어진 Workflow를 사용하면 다음과 같이 실행되고, Docker Hub에 만들어진 이미지가 업로드된 것을 확인할 수 있습니다.
 
 ![ci success](img/3-4-ci-success.png)
 ![docker hub check](img/3-4-docker-hub.png)
+
+실제 만들어진 이미지 확인을 위해 테스트용 Pod를 생성해 보겠습니다.
 
 ```yaml
 apiVersion: v1
@@ -368,6 +391,20 @@ spec:
   nodeSelector:
     kubernetes.io/hostname: k3s-worker-1
 ```
+
+`kubectl` 로 Pod를 생성하고, 서비스를 노출합니다.
+
+```
+kubectl apply -f fastapi-sample.yaml
+
+kubectl expose pod fastapi-test --name=lb-fastapi --port=8000  
+
+kubectl port-forward svc/lb-fastapi 8000:8000
+```
+
+![kubectl check](img/3-4-test-kubectl.png)
+
+결과를 확인하기 전에, 샘플 FastAPI 앱의 구조를 잠시 살펴 보겠습니다.
 
 ```py title="main.py"
 import os
@@ -394,18 +431,25 @@ def read_git():
     return outer_value
 ```
 
-```
-kubectl apply -f fastapi-sample.yaml
+정말 간단하게 2개의 API를 구성해 두었습니다.  
+`GET /value/git` API는 `git_value`로 정의되어 있는 변수를 반환합니다. 이 값은 지금은 고정이지만, 나중에 Argo CD와 Argo Events를 도입한 다음 해당 변수를 바꾸어 가면서 Push 후 셜과를 확인할 것입니다.  
+`GET /value/argo` API는 `outer_value`로 정의되어 있는 변수를 반환합니다. 현재 샘플 앱에는 별도의 기본 환경변수 설정이 없기 때문에 아무 설정 없이 배포한다면 변수의 값은 `not from argo` 입니다. 하지만 이미지를 빌드하면서 환경변수를 주입하여 값을 변경할 수 있고, 그래서 위의 Kaniko build 과정에서 `FROM_ARGO` 값을 받아 환경 변수로 설정합니다.  
 
-kubectl expose pod fastapi-test --name=lb-fastapi --port=8000  
+실제로 제대로 이미지가 만들어졌는지 확인을 위해 FastAPI에 할당된 주소로 접속합니다.
 
-kubectl port-forward svc/lb-fastapi 8000:8000
-```
-
-![kubectl check](img/3-4-test-kubectl.png)
 ![fastapi swagger](img/3-4-test-swagger.png)
+
+그냥 IP로 접속해도 Redirect 설정을 해 두어 Swagger Docs로 이동합니다.
+
 ![git api](img/3-4-api-git.png)
+
+`GET /value/git` API를 호출했을 때는 코드에 있는 그대로 값이 출력됩니다.
+
 ![argo api](img/3-4-api-argo.png)
+
+`GET /value/argo` API를 호출했을 때는 기본값이 아닌, Argo Workflows에서 변수로 전달했던 `argo test` 가 출력되는 것을 확인할 수 있습니다.
+
+<br/>
 
 [kaniko]: https://github.com/GoogleContainerTools/kaniko
 [ref1]: https://kubernetes.io/ko/docs/tasks/configure-pod-container/pull-image-private-registry/
