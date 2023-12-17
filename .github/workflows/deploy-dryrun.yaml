@@ -1,0 +1,26 @@
+name: Dry-run for Deployment
+
+on:
+  push:
+    branches: ["**"]
+    paths-ignore:
+      - "README.md"
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: Dry-run for Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build website
+        run: yarn build
