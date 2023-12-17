@@ -11,12 +11,12 @@
     "message": "Docs",
     "description": "Navbar item with label Docs"
   },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  },
   "item.label.Extra": {
     "message": "Extra",
     "description": "Navbar item with label Extra"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
   }
 }

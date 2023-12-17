@@ -10,5 +10,9 @@
   "sidebar.tutorialSidebar.category.2. K8S 환경 고도화하기": {
     "message": "2. Advance K8S Environment",
     "description": "The label for category 2. K8S 환경 고도화하기 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.3. Argo Workflows": {
+    "message": "3. Argo Workflows",
+    "description": "The label for category 3. Argo Workflows in sidebar tutorialSidebar"
   }
 }
