@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Dry-run for Deployment
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy to GitHub Pages
+    name: Dry-run for Deployment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
