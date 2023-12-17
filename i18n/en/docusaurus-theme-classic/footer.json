@@ -28,7 +28,7 @@
     "description": "The label of footer link with label=GitHub linking to https://github.com/HU-Lee"
   },
   "copyright": {
-    "message": "Copyright © 2023 HU-Lee.",
+    "message": "Copyright © 2023 HU-Lee. Built with Docusaurus.",
     "description": "The footer copyright"
   }
 }
