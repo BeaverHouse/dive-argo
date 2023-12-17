@@ -10,48 +10,32 @@ type FeatureItem = {
   description: JSX.Element;
 };
 
+const sub1Title = "K8S 환경 구성";
+const sub1Desc =
+  "Argo 앱을 기동하고 접근하기 위한 기본적인 Kubernetes 환경을 구성해 봅니다.";
+const sub2Title = "Argo 체험하기";
+const sub2Desc =
+  "ArgoWorkflow와 ArgoCD를 중심으로 Argo의 여러 기능을 실제로 사용해 봅니다.";
+
 const FeatureList: FeatureItem[] = [
   {
     title: translate({
       id: "subject-1",
-      message: "K8S 환경 구성",
+      message: sub1Title,
       description: "Title for subject 1",
     }),
     Svg: require("@site/static/img/k8s.svg").default,
-    description: (
-      <Translate id="subject-description-1">
-        Argo 앱을 기동하고 접근하기 위한 기본적인 Kubernetes 환경을 구성해
-        봅니다.
-      </Translate>
-    ),
+    description: <Translate id="subject-description-1">{sub1Desc}</Translate>,
   },
   {
     title: translate({
       id: "subject-2",
-      message: "Argo 체험하기",
+      message: sub2Title,
       description: "Title for subject 2",
     }),
     Svg: require("@site/static/img/argo.svg").default,
-    description: (
-      <Translate id="subject-description-2">
-        ArgoWorkflow와 ArgoCD를 중심으로 Argo의 여러 기능을 실제로 사용해
-        봅니다.
-      </Translate>
-    ),
+    description: <Translate id="subject-description-2">{sub2Desc}</Translate>,
   },
-  // {
-  //   title: translate({
-  //     id: "subject-3",
-  //     message: "주제 3",
-  //     description: "Title for subject 3",
-  //   }),
-  //   Svg: require("@site/static/img/2.svg").default,
-  //   description: (
-  //     <Translate id="subject-description-3">
-  //       이것은 마지막 3번째 주제의 설명입니다.
-  //     </Translate>
-  //   ),
-  // },
 ];
 
 function Feature({ title, Svg, description }: FeatureItem) {

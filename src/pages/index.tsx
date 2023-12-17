@@ -10,14 +10,18 @@ import Translate from "@docusaurus/Translate";
 import React from "react";
 
 function HomepageHeader() {
+  // hard-coded to make i18n file
+  const prjTitle = "Dive to Argo";
+  const prjSubtitle = "내 컴퓨터에서 Argo 사용해 보기";
+
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
-          <Translate id="title">Dive to Argo</Translate>
+          <Translate id="title">{prjTitle}</Translate>
         </Heading>
         <p className="hero__subtitle">
-          <Translate id="subtitle">내 컴퓨터에서 Argo 사용해 보기</Translate>
+          <Translate id="subtitle">{prjSubtitle}</Translate>
         </p>
         <div className={styles.buttons}>
           <Link
