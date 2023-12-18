@@ -9,11 +9,13 @@ https://dive-argo.haulrest.me/
 <br>
 
 **Main Stack**  
-[![React.js](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)][react]
+[![React.js](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)][react]  
+It's licensed under the MIT License. see: https://github.com/facebook/react
 
 **Dependencies**
 
-- Docusaurus 3 (https://docusaurus.io/)
+- Docusaurus 3 (https://docusaurus.io/)  
+It's licensed under the MIT License. see: https://github.com/facebook/docusaurus
 
 <br/>
 
@@ -25,6 +27,25 @@ I started it to learn some [Argo][argo] application by hands-on practice and sha
 It's powered with [Docusaurus 3][docusaurus], well-known and powerful tools for documentation made by Facebook.
 
 Feel free to give me a feedback. Please make a Pull Request to contribute to this repository. 
+
+<br/>
+
+## On local environment
+
+**Install dependencies**
+```
+yarn
+```
+
+**Start in Korean (Default language)**
+```
+yarn start 
+```
+
+**Start in English**
+```
+yarn start --locale en
+```
 
 <br/>
 
