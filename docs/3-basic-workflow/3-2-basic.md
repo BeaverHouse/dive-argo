@@ -21,7 +21,7 @@ Namespace를 `argo-wf` 로 설정하면 에러가 사라집니다.
 
 :::info  
 Argo Workflows가 이렇게 동작하는 것은 기본적으로 클러스터 내의 모든 Namespace를 모니터링하도록 설정이 되어 있기 때문입니다. 하지만 ServiceAccount의 권한이 모두 다르기 때문에 이렇게 권한에 따른 액세스 문제가 발생할 수 있습니다.  
-Argo가 설치된 Namespace에서만 Workflow를 실행할 수 있도록 설정을 변경할 수 있고, helm chart에서는 `singleNamespace` 옵션으로 이를 제어할 수 있습니다. 또한 Workflow를 실행할 Namespace를 지정할 수 있는 Managed Namespace 옵션도 존재합니다.  
+Argo가 설치된 Namespace에서만 Workflow를 실행할 수 있도록 설정을 변경할 수 있고, Helm chart에서는 `singleNamespace` 옵션으로 이를 제어할 수 있습니다. 또한 Workflow를 실행할 Namespace를 지정할 수 있는 Managed Namespace 옵션도 존재합니다.  
 자세한 내용은 아래 링크를 참조해 주세요.  
 
 https://argoproj.github.io/argo-workflows/installation/#installation-options
