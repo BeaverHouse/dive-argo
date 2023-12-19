@@ -4,11 +4,11 @@ sidebar_position: 4
 
 # Hello, Argo Workflows!
 
-이 문서에서는 helm chart로 기본 Argo Workflows 앱을 배포해 보겠습니다.
+이 문서에서는 Helm chart로 기본 Argo Workflows 앱을 배포해 보겠습니다.
 
-## Argo helm chart 다운로드
+## Argo Helm chart 다운로드
 
-다음 Repository에서 helm chart를 다운로드합니다.  
+다음 Repository에서 Helm chart를 다운로드합니다.  
 https://github.com/argoproj/argo-helm/tree/main
 
 다운로드받은 Chart를 적당한 곳에 위치시킵니다. 여기서는 다음과 같이 배치했습니다.
@@ -21,7 +21,7 @@ k3s-argo-helm
 |- ...
 ```
 
-## helm chart로 설치하기
+## Helm chart로 설치하기
 
 이제 Argo Workflows를 배포해 봅시다.  
 Chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.

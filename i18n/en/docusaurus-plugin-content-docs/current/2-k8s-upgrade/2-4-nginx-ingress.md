@@ -5,7 +5,7 @@ sidebar_position: 4
 # Install Ingress NGINX Controller
 
 In this section, we'll install Ingress NGINX Controller on our environment and test its functionality.  
-Ingress NGINX Controller enable us to use NGINX as a reverse and load-balancer on K8S environment. It can receive client's response and route to connected services stably so it's effective for building a Microservice Architecture(MSA).
+Ingress NGINX Controller enable us to use NGINX as a reverse proxy and load-balancer on K8S environment. It can receive client's response and route to connected services stably so it's effective for building a Microservice Architecture(MSA).
 
 ## Download and install Helm chart
 

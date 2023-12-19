@@ -4,11 +4,11 @@ sidebar_position: 4
 
 # Hello, Argo Workflows!
 
-In this section, we'll deploy basic Argo Workflows application by using official helm chart.
+In this section, we'll deploy basic Argo Workflows application by using official Helm chart.
 
-## Download Argo helm chart
+## Download Argo Helm chart
 
-Download helm chart from following link:  
+Download Helm chart from following link:  
 https://github.com/argoproj/argo-helm/tree/main
 
 Move the chart to the folder you want. For example:
@@ -21,7 +21,7 @@ k3s-argo-helm
 |- ...
 ```
 
-## Install helm chart
+## Install Helm chart
 
 Now let's deploy Argo Workflows.  
 Type the command below on the folder where chart exists.

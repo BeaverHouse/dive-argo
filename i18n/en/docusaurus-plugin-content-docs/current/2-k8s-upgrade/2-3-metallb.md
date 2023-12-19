@@ -7,9 +7,9 @@ sidebar_position: 3
 MetalLB is a Load-Balancer for bare metal K8S cluster environments.    
 We can expose our services with MetalLB, without support of other cloud providers like GCP, AWS, and so on.
 
-## Download MetalLB helm chart
+## Download MetalLB Helm chart
 
-Download helm chart from following link:  
+Download Helm chart from following link:  
 https://github.com/metallb/metallb/tree/main
 
 ## Create namespace
@@ -35,9 +35,9 @@ After the file is ready, type following command to create namespace.
 kubectl apply -f ./metallb-ns.yaml
 ```
 
-## Install helm chart
+## Install Helm chart
 
-First we need to set version of MetalLB on helm chart.  
+First we need to set version of MetalLB on Helm chart.  
 As we see the chart, we need version tag for pulling controller and speaker images,  
 and it uses `appVersion` on `Chart.yaml` as a default.  
 Let's change this with `v0.13.12`, the recent version.
@@ -62,7 +62,7 @@ version: 1.0.0
 appVersion: v0.13.12
 ```
 
-Now install MetalLB with helm chart.
+Now install MetalLB with Helm chart.
 
 ```
 helm install metallb -n metallb-system ./metallb
@@ -79,7 +79,7 @@ For next, we will set up Layer 2 config to setup some external IP on our service
 
 :::caution
 Layer 2 mode in MetalLB selects one leader between speakers and allocate external IP. The traffic concentrates to one node so it cannot be "true" Load Balancing. When the leader node die, failover mechanism is fired and new leader node take over ownership of the IP.  
-If you need MetalLB as a "true" Load Balancer, you need to configure BGP mode and additional router settings.  
+If you need MetalLB as a "true" load balancer, you need to configure BGP mode and additional router settings.  
 Find more information at below:
 
 https://metallb.universe.tf/concepts/layer2/
