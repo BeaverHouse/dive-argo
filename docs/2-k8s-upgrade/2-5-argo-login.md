@@ -16,17 +16,17 @@ sidebar_position: 5
    여기서는 `myargo` 로 설정하겠습니다.
 
 2. Master node에 배포하기 위해 `nodeSelector` 옵션을 변경합니다.  
-   `controller.nodeSelector` 와 `server.nodeSelector`에 다음 label을 추가합니다.  
+   `controller.nodeSelector` 와 `server.nodeSelector`에 다음 Label을 추가합니다.  
    - `node-role.kubernetes.io/master: "true"`
 
-   이외에 다른 label 설정으로 변경하셔도 됩니다.  
-   Node에 설정된 label은 다음 명령어로 확인할 수 있습니다.
+   이외에 다른 Label 설정으로 변경하셔도 됩니다.  
+   Node에 설정된 Label은 다음 명령어로 확인할 수 있습니다.
 
    ```
    kubectl get nodes --show-labels
    ```
 
-   라벨 설정과 관련된 내용은 여기서 다루지 않겠습니다.
+   Label 설정과 관련된 내용은 여기서 다루지 않겠습니다.
 
 3. 접근을 위한 Load-Balancer 설정을 위해 다음과 같이 `values.yaml` 을 수정합니다.
 
