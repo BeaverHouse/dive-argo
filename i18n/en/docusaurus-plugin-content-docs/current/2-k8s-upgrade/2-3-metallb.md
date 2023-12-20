@@ -79,7 +79,7 @@ For next, we will set up Layer 2 config to setup some external IP on our service
 
 :::caution
 Layer 2 mode in MetalLB selects one leader between speakers and allocate external IP. The traffic concentrates to one node so it cannot be "true" Load Balancing. When the leader node die, failover mechanism is fired and new leader node take over ownership of the IP.  
-If you need MetalLB as a "true" load balancer, you need to configure BGP mode and additional router settings.  
+If you need MetalLB as a "true" load-balancer, you need to configure BGP mode and additional router settings.  
 Find more information at below:
 
 https://metallb.universe.tf/concepts/layer2/
