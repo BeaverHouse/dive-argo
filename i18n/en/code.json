@@ -3,7 +3,7 @@
     "message": "Dive to Argo"
   },
   "subtitle": {
-    "message": "Argo Practice on my computer"
+    "message": "Argo practice on my computer"
   },
   "subject-1": {
     "message": "Setting up K8S",
@@ -17,7 +17,7 @@
     "description": "Title for subject 2"
   },
   "subject-description-2": {
-    "message": "Try some powerful features of Argo, especially focused with ArgoWorkflow & ArgoCD."
+    "message": "Try some powerful features of Argo, especially focused with Argo Workflows & Argo CD."
   },
   "theme.ErrorPageContent.title": {
     "message": "This page crashed.",

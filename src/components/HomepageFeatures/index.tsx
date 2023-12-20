@@ -15,7 +15,7 @@ const sub1Desc =
   "Argo 앱을 기동하고 접근하기 위한 기본적인 Kubernetes 환경을 구성해 봅니다.";
 const sub2Title = "Argo 체험하기";
 const sub2Desc =
-  "ArgoWorkflow와 ArgoCD를 중심으로 Argo의 여러 기능을 실제로 사용해 봅니다.";
+  "Argo Workflows와 Argo CD를 중심으로 Argo의 여러 기능을 실제로 사용해 봅니다.";
 
 const FeatureList: FeatureItem[] = [
   {
