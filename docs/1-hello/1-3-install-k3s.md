@@ -2,13 +2,13 @@
 sidebar_position: 3
 ---
 
-# Install K3S
+# K3S 설치하기
 
-In this section, we'll create VM with Multipass and install `k3s` on it.
+이 문서에서는 Multipass로 VM을 생성하고, VM에 K3S를 설치해 보겠습니다.
 
-## Create Ubuntu VM
+## Ubuntu VM 생성하기
 
-Type following command to check installable Ubuntu image on Multipass.
+다음 명령어를 실행해 Multipass에서 사용 가능한 Ubuntu 이미지를 확인합니다.
 
 ```
 > multipass find
@@ -24,8 +24,8 @@ core22                                        20230717         Ubuntu Core 22
 ...
 ```
 
-We'll use Ubuntu 22.04 here.  
-Create VM instance with following command:
+여기서는 22.04 버전을 사용하겠습니다.  
+다음 명령어를 실행해 VM 인스턴스를 생성합니다.
 
 ```
 # multipass launch [alias] --name [your-name]
@@ -34,7 +34,7 @@ Create VM instance with following command:
 multipass launch jammy --name k3s-master --memory 2G --disk 10G --cpus 2
 ```
 
-You can use `multipass list` command to list your instance.
+`multipass list` 명령어로 현재 인스턴스 상태를 확인할 수 있습니다.
 
 ```
 > multipass list
@@ -44,17 +44,17 @@ k3s-master              Running           172.17.178.221   Ubuntu 22.04 LTS
 
 <br/>
 
-:::note How to modify an instance
-To modify instance, try the following steps:
+:::note 인스턴스 설정을 변경해야 할 때
+인스턴스 설정을 변경하려면 다음과 같이 진행합니다.
 
-1. Stop target instance if it is running.
+1. 인스턴스가 실행중이라면 중지합니다.
 
    ```
    multipass stop k3s-master
    ```
 
-2. Change instance setting. You can check values with `multipass get` command, and change to new value using `multipass set` command.  
-   For here we'll change all values: CPU, Memory & Disk.
+2. 인스턴스 설정값을 변경합니다. `multipass get` 명령어로 값을 확인할 수 있고, `multipass set` 명령어로 값을 변경할 수 있습니다.  
+   여기서는 CPU, 메모리, 디스크 사양을 모두 변경해 보겠습니다.
 
    ```
    > multipass get local.k3s-master.cpus
@@ -71,7 +71,7 @@ To modify instance, try the following steps:
    > multipass set local.k3s-master.memory=4.0GiB
    ```
 
-3. After change is complete, restart your instance.
+3. 변경 후 다시 인스턴스를 실행합니다.
 
    ```
    multipass start k3s-master
@@ -79,47 +79,47 @@ To modify instance, try the following steps:
 
 :::
 
-## Install k3s on VM
+## VM에 접속하여 K3S 설치하기
 
-`k3s` is a lightweight Kubernetes distribution made by Rancher.  
-It's useful for test environment because of it's simple setup and small resource requirements, and you can also use `k3s` on production environment too.
+[K3S][k3s]는 Rancher에서 만든 경량화 쿠버네티스 설치 도구입니다.  
+가볍고 설치가 간편하여 테스트 환경에 적합하고, 실무에서도 사용이 가능합니다.
 
-To install `k3s`, we need to access VM Shell.
+VM에서 K3S를 설치하기 위해 VM Shell에 접속합니다.
 
 ```
 multipass shell k3s-master
 ```
 
-![multipass shell](./img/1-3-shell.png)
+![Access to VM Shell](./img/1-3-vm-shell.png)
 
-You can see the shell prompt of an instance.  
-Now we can install `k3s`. We'll use default install script[^1] without customization.
+정상적으로 VM Shell에 접속이 된 것을 확인할 수 있습니다.  
+이제 K3S를 설치하면 됩니다. 여기서는 기본 옵션[^1]으로 설치하겠습니다.
 
 ```
 curl -sfL https://get.k3s.io | sh -
 ```
 
-You can type `k3s --version` for check installation, and also you can use `kubectl` for checking Kubernetes.
+이후 `k3s --version` 명령어로 설치를 확인하고, `kubectl` 을 사용할 수도 있습니다.
 
 ```
 # Get Namespace for example
 sudo k3s kubectl get ns
 ```
 
-![multipass k3s](./img/1-3-k3s.png)
+![Check K3S installation](./img/1-3-check-k3s.png)
 
-## Control K8S environment on host computer
+## VM의 K8S 환경을 호스트에서 제어하기
 
-We successfully installed `k3s`, but it's able to access only internally.  
-It's pretty inconvenient, so let's configure settings to control the VM's K8S on host.
+K3S를 설치했지만, 현재는 VM 내부에서만 접근이 가능합니다.  
+편리한 작업을 위해 이를 호스트 컴퓨터에서 제어할 수 있도록 설정해 보겠습니다.
 
-If you're logged out, access the VM Shell again.
+VM 외부에 있다면 다시 VM Shell에 접속합니다.
 
 ```
 multipass shell k3s-master
 ```
 
-`k3s` kubeconfig file is stored at `/etc/rancher/k3s/k3s.yaml`.[^2] Copy this file to host computer.
+K3S 설정파일은 `/etc/rancher/k3s/k3s.yaml` 에 있습니다.[^2] 이 파일을 호스트로 복사합니다.
 
 ```cmd
 ubuntu@k3s-master:~$ sudo chmod 777 /etc/rancher/k3s/k3s.yaml
@@ -132,8 +132,8 @@ logout
 > multipass copy-files k3s-master:/etc/rancher/k3s/k3s.yaml Downloads/k3s-master.yaml
 ```
 
-You can find `k3s-master.yaml` on your destination folder.  
-This `.yaml` file should looks like this:
+도착지로 설정한 폴더로 이동하면 `k3s-master.yaml` 파일이 있습니다.  
+파일을 텍스트 편집기 등으로 열면 다음과 같이 되어 있습니다.
 
 ```yaml title="k3s-master.yaml" {5}
 apiVersion: v1
@@ -155,8 +155,8 @@ users:
     user: (REDACTED...)
 ```
 
-We need to change `127.0.0.1` value to our VM's IP address.  
-You can check it from `multipass list` command.
+여기서 `127.0.0.1` 로 되어 있는 부분을 VM의 IP로 변경해야 합니다.  
+VM의 IP는 `multipass list` 명령어를 통해 확인할 수 있습니다.
 
 ```cmd {3}
 C:\Users\HU>multipass list
@@ -166,7 +166,7 @@ k3s-master              Running           172.17.186.245   Ubuntu 22.04 LTS
                                           10.42.0.1
 ```
 
-Change some namings like `cluster`, `name`, and `context` if you want. The result looks like:
+여기서는 추가로 IP 외에 `cluster`, `user`, `context` 이름도 변경하겠습니다.
 
 ```yaml title="k3s-master.yaml" {5-6,9-12,16}
 apiVersion: v1
@@ -188,14 +188,17 @@ users:
     user: (REDACTED...)
 ```
 
-Move the file content to `${HOME}/.kube/config` and restart terminal.  
-(If you cannot find a file, then make a new one)
+수정한 내용을 `${HOME}/.kube/config` 파일로 옮기고 터미널을 재실행합니다.  
+(만약 파일이 없다면 새로 생성합니다)
 
-Now we can control VM Kubernetes with host `kubectl` command.
+이제 호스트에서 `kubectl` 로 VM의 K8S 환경을 제어할 수 있습니다.
 
-![k3s host](./img/1-3-k3s-host.png)
+![Control VM w/ host](./img/1-3-control-vm-with-host.png)
 
 <br/>
 
+[k3s]: https://k3s.io
 [^1]: https://docs.k3s.io/quick-start#install-script
 [^2]: https://docs.k3s.io/cluster-access
+
+<!--Re-edited on 231221-->
