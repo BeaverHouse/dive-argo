@@ -90,7 +90,7 @@ VM에서 K3S를 설치하기 위해 VM Shell에 접속합니다.
 multipass shell k3s-master
 ```
 
-![multipass shell](./img/1-3-shell.png)
+![Access to VM Shell](./img/1-3-vm-shell.png)
 
 정상적으로 VM Shell에 접속이 된 것을 확인할 수 있습니다.  
 이제 K3S를 설치하면 됩니다. 여기서는 기본 옵션[^1]으로 설치하겠습니다.
@@ -106,7 +106,7 @@ curl -sfL https://get.k3s.io | sh -
 sudo k3s kubectl get ns
 ```
 
-![multipass k3s](./img/1-3-k3s.png)
+![Check K3S installation](./img/1-3-check-k3s.png)
 
 ## VM의 K8S 환경을 호스트에서 제어하기
 
@@ -193,7 +193,7 @@ users:
 
 이제 호스트에서 `kubectl` 로 VM의 K8S 환경을 제어할 수 있습니다.
 
-![k3s host](./img/1-3-k3s-host.png)
+![Control VM w/ host](./img/1-3-control-vm-with-host.png)
 
 <br/>
 

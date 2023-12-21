@@ -90,7 +90,7 @@ To install `k3s`, we need to access VM Shell.
 multipass shell k3s-master
 ```
 
-![multipass shell](./img/1-3-shell.png)
+![Access to VM Shell](./img/1-3-vm-shell.png)
 
 You can see the shell prompt of an instance.  
 Now we can install `k3s`. We'll use default install script[^1] without customization.
@@ -106,7 +106,7 @@ You can type `k3s --version` for check installation, and also you can use `kubec
 sudo k3s kubectl get ns
 ```
 
-![multipass k3s](./img/1-3-k3s.png)
+![Check K3S installation](./img/1-3-check-k3s.png)
 
 ## Control K8S environment on host computer
 
@@ -193,7 +193,7 @@ Move the file content to `${HOME}/.kube/config` and restart terminal.
 
 Now we can control VM Kubernetes with host `kubectl` command.
 
-![k3s host](./img/1-3-k3s-host.png)
+![Control VM w/ host](./img/1-3-control-vm-with-host.png)
 
 <br/>
 
