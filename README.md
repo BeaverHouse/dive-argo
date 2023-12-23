@@ -1,4 +1,4 @@
-# Dive to Argo
+# 📚 Dive to Argo
 
 ### ✅ This repository is deployed for production
 
@@ -21,7 +21,7 @@ It's licensed under the MIT License. see: https://github.com/facebook/docusaurus
 
 ## Description
 
-**Dive to Argo** is my first documentation project.  
+_Dive to Argo_ is my first documentation project.  
 I started it to learn some [Argo][argo] application by hands-on practice and share with others.
 
 It's powered with [Docusaurus 3][docusaurus], well-known and powerful tools for documentation made by Facebook.
