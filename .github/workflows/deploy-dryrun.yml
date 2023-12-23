@@ -6,15 +6,12 @@ on:
     paths-ignore:
       - "README.md"
 
-permissions:
-  contents: write
-
 jobs:
-  deploy:
+  dryrun:
     name: Dry-run for Deployment
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -22,5 +19,8 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+      # - name: ESLint check
+      #   run: yarn lint
       - name: Build website
         run: yarn build
+# Standard dry-run workflow for Github

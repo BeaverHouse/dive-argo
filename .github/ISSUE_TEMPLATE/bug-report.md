@@ -1,7 +1,7 @@
 ---
-name: 'Bug Report'
+name: "Bug Report"
 about: Create a report to help us improve
-title: 'Bug: '
+title: "Bug: "
 ---
 
 **Describe the bug**  
@@ -36,3 +36,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**  
 Add any other context about the problem here.
+
+<!--
+Default template from github, minimum for active repository
+-->
