@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Install K3S
 
-In this section, we'll create VM with Multipass and install `k3s` on it.
+In this document, we'll create VM with Multipass and install K3S on it.
 
 ## Create Ubuntu VM
 
@@ -71,7 +71,7 @@ To modify instance, try the following steps:
    > multipass set local.k3s-master.memory=4.0GiB
    ```
 
-3. After change is complete, restart your instance.
+3. After change is complete, then restart your instance.
 
    ```
    multipass start k3s-master
@@ -79,12 +79,12 @@ To modify instance, try the following steps:
 
 :::
 
-## Install k3s on VM
+## Install K3S on VM
 
-`k3s` is a lightweight Kubernetes distribution made by Rancher.  
-It's useful for test environment because of it's simple setup and small resource requirements, and you can also use `k3s` on production environment too.
+[K3S][k3s] is a lightweight Kubernetes distribution made by Rancher.  
+It's useful for test environment because of it's simple setup and small resource requirements, and you can also use K3S on production environment too.
 
-To install `k3s`, we need to access VM Shell.
+To install K3S, we need to access VM Shell.
 
 ```
 multipass shell k3s-master
@@ -93,13 +93,13 @@ multipass shell k3s-master
 ![Access to VM Shell](./img/1-3-vm-shell.png)
 
 You can see the shell prompt of an instance.  
-Now we can install `k3s`. We'll use default install script[^1] without customization.
+Now we can install K3S. We'll install with default install script[^1] now.
 
 ```
 curl -sfL https://get.k3s.io | sh -
 ```
 
-You can type `k3s --version` for check installation, and also you can use `kubectl` for checking Kubernetes.
+You can check installation with `k3s --version` command, and also you can use `kubectl` to check K8S environment.
 
 ```
 # Get Namespace for example
@@ -110,7 +110,7 @@ sudo k3s kubectl get ns
 
 ## Control K8S environment on host computer
 
-We successfully installed `k3s`, but it's able to access only internally.  
+We successfully installed K3S, but it's able to access only inside the VM.  
 It's pretty inconvenient, so let's configure settings to control the VM's K8S on host.
 
 If you're logged out, access the VM Shell again.
@@ -119,7 +119,7 @@ If you're logged out, access the VM Shell again.
 multipass shell k3s-master
 ```
 
-`k3s` kubeconfig file is stored at `/etc/rancher/k3s/k3s.yaml`.[^2] Copy this file to host computer.
+K3S config file is stored at `/etc/rancher/k3s/k3s.yaml`.[^2] Copy this file to host computer.
 
 ```cmd
 ubuntu@k3s-master:~$ sudo chmod 777 /etc/rancher/k3s/k3s.yaml
@@ -132,8 +132,8 @@ logout
 > multipass copy-files k3s-master:/etc/rancher/k3s/k3s.yaml Downloads/k3s-master.yaml
 ```
 
-You can find `k3s-master.yaml` on your destination folder.  
-This `.yaml` file should looks like this:
+You can find `k3s-master.yaml` file on your destination folder.  
+This file should looks like this:
 
 ```yaml title="k3s-master.yaml" {5}
 apiVersion: v1
@@ -166,7 +166,7 @@ k3s-master              Running           172.17.186.245   Ubuntu 22.04 LTS
                                           10.42.0.1
 ```
 
-Change some namings like `cluster`, `name`, and `context` if you want. The result looks like:
+Change some other namings like `cluster`, `user`, and `context` if you want. The result looks like:
 
 ```yaml title="k3s-master.yaml" {5-6,9-12,16}
 apiVersion: v1
@@ -188,14 +188,17 @@ users:
     user: (REDACTED...)
 ```
 
-Move the file content to `${HOME}/.kube/config` and restart terminal.  
+Move the modified content to `${HOME}/.kube/config` file and restart terminal.  
 (If you cannot find a file, then make a new one)
 
-Now we can control VM Kubernetes with host `kubectl` command.
+Now we can control VM Kubernetes with `kubectl` command on host.
 
 ![Control VM w/ host](./img/1-3-control-vm-with-host.png)
 
 <br/>
 
+[k3s]: https://k3s.io
 [^1]: https://docs.k3s.io/quick-start#install-script
 [^2]: https://docs.k3s.io/cluster-access
+
+<!--Re-edited on 231223-->
