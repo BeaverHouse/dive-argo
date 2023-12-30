@@ -198,6 +198,7 @@ Now we can control VM Kubernetes with `kubectl` command on host.
 <br/>
 
 [k3s]: https://k3s.io
+
 [^1]: https://docs.k3s.io/quick-start#install-script
 [^2]: https://docs.k3s.io/cluster-access
 
