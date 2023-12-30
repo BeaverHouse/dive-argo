@@ -1,11 +1,10 @@
 name: Dry-run (Yarn)
 
 on:
-  workflow_dispatch:
-# push:
-#   branches: ["**"]
-#   paths-ignore:
-#     - "README.md"
+  push:
+    branches: ["**"]
+    paths-ignore:
+      - "README.md"
 
 jobs:
   dryrun:
