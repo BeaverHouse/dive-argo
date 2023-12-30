@@ -98,6 +98,7 @@ Sensor 객체에서는 실제로 어떤 이벤트를 받아서, 어떤 작업을
 
 Sensors 메뉴에서 **CREATE NEW SENSOR**를 클릭하고 아래 내용을 붙여넣습니다.
 
+<!-- prettier-ignore -->
 ```yaml {41-46}
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor

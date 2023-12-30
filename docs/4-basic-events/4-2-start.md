@@ -9,7 +9,7 @@ sidebar_position: 2
 ## Argo Workflows와 Argo Events
 
 Argo Workflows v3.0 이상일 경우 UI에서 Argo Events도 함께 제어 가능합니다.[^1]  
-이후에 Argo Workflow와 연동해서 사용도 할 것이기 때문에, 편의상 Argo Events도 같은 `argo-wf` Namespace에 설치하겠습니다.  
+이후에 Argo Workflow와 연동해서 사용도 할 것이기 때문에, 편의상 Argo Events도 같은 `argo-wf` Namespace에 설치하겠습니다.
 
 Argo Events의 `fullnameOverride` 항목도 Argo Workflows와 같게 통일하겠습니다.  
 여기서는 동일하게 `myargo` 로 설정했습니다.
@@ -22,6 +22,7 @@ ServiceAccount를 분리할 수도 있겠지만, 하나의 계정으로 모든 U
 아래와 같이 Argo Events 관련 Role을 생성합니다.  
 여기서는 모든 권한을 부여했는데, 필요에 따라 조정해도 무방합니다.
 
+<!-- prettier-ignore -->
 ```yaml title="event-admin.yaml"
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -54,6 +55,7 @@ rules:
 
 그리고 추가 Role 부여를 위해 RoleBinding도 생성합니다.
 
+<!-- prettier-ignore -->
 ```yaml title="rb-admin-event.yaml"
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

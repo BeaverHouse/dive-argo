@@ -13,7 +13,7 @@ retentionPolicy, ttlStrategy, podGC
 ```yaml {3-6}
 controller:
   (...)
-  workflowDefaults: 
+  workflowDefaults:
     spec:
       ttlStrategy:
         secondsAfterCompletion: 5
