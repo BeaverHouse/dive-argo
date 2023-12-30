@@ -68,7 +68,7 @@ kubectl expose pod nginx -n example --name=lb-nginx --port=80
 ```
 
 현재 `lb-nginx` Service는 일반적인 방법으로는 외부에서 액세스가 불가능한 상태입니다.  
-목표는 해당 Service를 `/example` 주소로 할당하는 것입니다.  
+목표는 해당 Service를 `/example` 주소로 할당하는 것입니다.
 
 `lb-nginx` Service를 Ingress Controller에 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
 `ExternalName` type을 사용하면 다른 Namespace의 Service도 연결할 수 있습니다.[^1]

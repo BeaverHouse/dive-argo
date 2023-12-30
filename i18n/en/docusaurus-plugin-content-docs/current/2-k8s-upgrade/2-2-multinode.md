@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Set up Multi-node cluster
 
-We already created `k3s-master` node previously.   
+We already created `k3s-master` node previously.  
 For now we'll make 2 worker nodes to setup multi-node cluster, with `k3s-master` as a master node.
 
 ## Check master node token
@@ -15,18 +15,18 @@ Access to our `k3s-master` VM Shell.
 multipass shell k3s-master
 ```
 
-To create worker node we need 2 variables: master node's IP address and node token.[^1]   
+To create worker node we need 2 variables: master node's IP address and node token.[^1]  
 We already know IP address[^2], and token can be checked by following command:
 
 ```
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 
-Store this token for later use as your way. 
+Store this token for later use as your way.
 
 ## Create worker nodes
 
-We'll create each worker node on another VM.   
+We'll create each worker node on another VM.  
 Launch new VM for worker node with Multipass and access to VM Shell.
 
 ```
@@ -56,7 +56,7 @@ k3s-master     Ready    control-plane,master   23m     v1.27.7+k3s2
 
 <br/>
 
-[^1]: https://docs.k3s.io/quick-start#install-script  
+[^1]: https://docs.k3s.io/quick-start#install-script
 [^2]: See [1. Hello Argo! - Install K3S][step1-3].
 
 [step1-3]: https://beaverhouse.github.io/dive-argo/en/docs/hello/1-3-k3s#control-k8s-environment-on-host-computer

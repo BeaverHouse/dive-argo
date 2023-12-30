@@ -68,7 +68,7 @@ kubectl expose pod nginx -n example --name=lb-nginx --port=80
 ```
 
 Currently `lb-nginx` service cannot be accessed from external client.  
-Our goal is to allocate our service to `/example` endpoint.  
+Our goal is to allocate our service to `/example` endpoint.
 
 To connect `lb-nginx` service on ingress controller, we need to write new config file for service & ingress.  
 With `ExternalName` type we can connect service from other namespace.[^1]
