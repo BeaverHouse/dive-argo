@@ -16,7 +16,8 @@ For now we'll change some properties in the chart.
    For example: `myargo`.
 
 2. To deploy application to master node, we need to change `nodeSelector` options.  
-   Add following option to `controller.nodeSelector` and `server.nodeSelector`.  
+   Add following option to `controller.nodeSelector` and `server.nodeSelector`.
+
    - `node-role.kubernetes.io/master: "true"`
 
    You can change with other settings if you want.  
@@ -77,6 +78,7 @@ You can change the account name `huadmin` as you want. It'll be awesome to seper
 Also, cluster-role from default Helm chart was used here.  
 If you want extra role, write one more `yaml` file about it and bind with role-binding.
 
+<!-- prettier-ignore -->
 ```yaml title="rb-admin.yaml"
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -92,6 +94,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
+<!-- prettier-ignore -->
 ```yaml title="sa-admin.yaml"
 apiVersion: v1
 kind: ServiceAccount
@@ -102,6 +105,7 @@ secrets:
   - name: huadmin-sa
 ```
 
+<!-- prettier-ignore -->
 ```yaml title="secret-admin-token.yaml"
 apiVersion: v1
 kind: Secret
@@ -116,14 +120,14 @@ type: kubernetes.io/service-account-token
 ## Deploy and login to application
 
 Configuration is complete, so let's deploy Argo Workflows again.  
-Helm chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.  
+Helm chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.
 
 ```
 helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
 ```
 
 Then we need to check access token. You can check it from following command.  
-You can check directly when you're using Linux, or you can also check it with master node's VM Shell when you're on Windows.  
+You can check directly when you're using Linux, or you can also check it with master node's VM Shell when you're on Windows.
 
 ```
 ARGO_TOKEN="Bearer $(sudo k3s kubectl get secret huadmin-secret -n argo-wf -o=jsonpath='{.data.token}' | base64 --decode)"

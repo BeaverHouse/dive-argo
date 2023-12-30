@@ -21,7 +21,8 @@ sidebar_position: 1
   `yaml` 파일을 읽고 작성할 수 있어야 하고, K8S 기본 구성 요소에 대한 숙지가 필요합니다.
 - Helm의 Concept과 기본적인 명령어, chart 분석이 가능한 상태인 것이 좋습니다.
 - 기본적인 Linux 명령어나, 간단한 코드를 해석할 수 있는 능력이 있어야 합니다.
-  :::
+
+:::
 
 [esbook]: https://esbook.kimjmin.net/
 [mlops]: https://mlops-for-all.github.io/

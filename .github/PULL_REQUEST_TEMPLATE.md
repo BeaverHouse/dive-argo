@@ -1,9 +1,7 @@
-# Summary
-Please summarize what you did.
+### Self Check
 
-**reference**  
-Please attach correct reference if you opened Pull Request related to content error.  
+- [ ] I checked & tested my PR and it works well
 
-<!--
-Owner will check for your Pull Request and accept if it's reasonable.
--->
+## Content of PR
+
+<!-- Describe what you did in detail. -->

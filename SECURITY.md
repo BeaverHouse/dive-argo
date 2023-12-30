@@ -6,5 +6,5 @@ please contact to email below right away.
 #### E-mail : haulrest@gmail.com
 
 <!--
-Template from https://github.com/facebook/react/security
+Original template from https://github.com/facebook/react/security
 -->

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Install MetalLB
 
-MetalLB is a Load-Balancer for bare metal K8S cluster environments.    
+MetalLB is a Load-Balancer for bare metal K8S cluster environments.  
 We can expose our services with MetalLB, without support of other cloud providers like GCP, AWS, and so on.
 
 ## Download MetalLB Helm chart

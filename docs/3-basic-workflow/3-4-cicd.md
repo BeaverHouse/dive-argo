@@ -7,15 +7,15 @@ sidebar_position: 4
 기본적인 Workflow 구성법을 익혔으니, 실제 App에 대한 CI 과정을 구성해 보겠습니다.  
 CI 과정에서는 보통 Code 작업, Build와 Test까지 포함되지만[^1] 여기서는 Build에 집중할 것이고 Code 작업과 Test에 대해서는 설명하지 않겠습니다.
 
-최종적인 목표는 `git push` 를 하면 자동으로 Workflow를 감지하여 이미지를 빌드하고 업로드하는 것이지만, `git push` 감지는 Argo Workflows 외에 Argo Events라는 다른 앱이 필요합니다. 그러니 우선은 Workflow만 구성해 보겠습니다. 
-
+최종적인 목표는 `git push` 를 하면 자동으로 Workflow를 감지하여 이미지를 빌드하고 업로드하는 것이지만, `git push` 감지는 Argo Workflows 외에 Argo Events라는 다른 앱이 필요합니다. 그러니 우선은 Workflow만 구성해 보겠습니다.
 
 ## Workflow Overview
+
 0. Git 주소를 변수로 받습니다.
 1. `git clone` 을 합니다.
 2. 루트 폴더에서 `Dockerfile` 을 사용해 이미지를 빌드합니다. 여기서는 Kaniko를 사용합니다.
 3. 만든 이미지를 Docker Hub에 Push합니다.  
-Harbor 등의 다른 Repository 서비스에 업로드도 가능하지만 논점을 벗어나므로 여기서는 다루지 않겠습니다.
+   Harbor 등의 다른 Repository 서비스에 업로드도 가능하지만 논점을 벗어나므로 여기서는 다루지 않겠습니다.
 
 [Kaniko][kaniko]는 Docker daemon을 사용하지 않기 때문에 Docker의 문제점 중 하나인 권한 문제를 해결하면서 빠르게 이미지를 빌드할 수 있습니다.
 
@@ -59,6 +59,7 @@ imageCredentials:
 
 3. `templates` 폴더 아래에 다음과 같이 Secret 설정 파일을 작성합니다.
 
+<!-- prettier-ignore -->
 ```yaml title="docker-secret.yaml"
 apiVersion: v1
 kind: Secret
@@ -90,6 +91,7 @@ helm upgrade my-argowf ./argo-workflows -n argo-wf
 Git Clone은 Artifact 기능을 사용하여 구현할 수 있습니다.  
 다음과 같이 Workflow Template을 생성하여 저장합니다.
 
+<!-- prettier-ignore -->
 ```yaml title="git-clone.yaml"
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -124,9 +126,8 @@ spec:
 
 ![git clone failed](img/3-4-git-clone-fail.png)
 
-하지만 Workflow를 실행해 보면 Artifact Storage가 없어 실패했다는 메시지가 발생하게 됩니다.   
+하지만 Workflow를 실행해 보면 Artifact Storage가 없어 실패했다는 메시지가 발생하게 됩니다.  
 Artifact 기능을 사용하려면 Argo Workflows 외에 별도의 저장공간이 필요합니다. Argo Workflows는 이러한 Storage로 S3 계열 스토리지를 지원하는데, 저희는 이 중에 MinIO를 K8S 환경에 구성하여 사용해 보겠습니다.
-
 
 ### MinIO 설치
 
@@ -157,8 +158,8 @@ export ROOT_PASSWORD=$(kubectl get secret --namespace argo-wf minio -o jsonpath=
 
 ![minio login](img/3-4-minio.png)
 
-로그인에 성공했다면 `argo-bucket` 이라는 이름으로 Bucket을 하나 생성합니다.   
-이제 생성한 Bucket을 사용할 수 있도록 Argo Workflows Helm chart를 변경해 주어야 합니다. 
+로그인에 성공했다면 `argo-bucket` 이라는 이름으로 Bucket을 하나 생성합니다.  
+이제 생성한 Bucket을 사용할 수 있도록 Argo Workflows Helm chart를 변경해 주어야 합니다.
 
 ```yaml title="values.yaml" {9-18}
 artifactRepository:
@@ -181,14 +182,15 @@ artifactRepository:
     endpoint: minio:9000
 ```
 
-MinIO에 액세스할 수 있도록 계정 정보가 담긴 Secret을 연결하고, 주소와 Bucket 이름도 지정합니다.   
+MinIO에 액세스할 수 있도록 계정 정보가 담긴 Secret을 연결하고, 주소와 Bucket 이름도 지정합니다.  
 현재 TLS가 적용되지 않았기 때문에 `insecure` 옵션도 활성화시킵니다.
 
 ### 새로운 권한 설정하기
 
-MinIO와 함께 추가로 설정해야 할 내용이 있습니다. 기존에 우리가 로그를 보기 위해 설정했던 `pod-reader` Role에는 Pod를 조회하는 내용만 포함되어 있었습니다. 하지만 이제 CI 작업을 위해서는 추가로  Pod를 제어할 수 있도록 `patch` 권한이 필요합니다.  
+MinIO와 함께 추가로 설정해야 할 내용이 있습니다. 기존에 우리가 로그를 보기 위해 설정했던 `pod-reader` Role에는 Pod를 조회하는 내용만 포함되어 있었습니다. 하지만 이제 CI 작업을 위해서는 추가로 Pod를 제어할 수 있도록 `patch` 권한이 필요합니다.  
 이를 위해 기존 Role 이름을 `pod-controller` 로 변경하고, `patch` 권한을 추가하겠습니다.
 
+<!-- prettier-ignore -->
 ```yaml title="pod-controller.yaml" {5,9}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -201,6 +203,7 @@ rules:
     verbs: ["get", "watch", "list", "patch"]
 ```
 
+<!-- prettier-ignore -->
 ```yaml title="rb-admin-pod.yaml" {11}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -228,6 +231,7 @@ helm upgrade my-argowf ./argo-workflows -n argo-wf
 
 추가로 Workflow도 수정이 필요합니다. Workflow는 ServiceAccount를 명시하지 않을 경우 기본으로 생성되는 `default` ServiceAccount를 사용해 작업을 수행하는데, 충분한 권한을 가지고 있지 않기 때문에 직접 ServiceAccount를 설정해 명시해 주는 것이 좋습니다. 앞에서는 간단한 Workflow를 실행한 것이기 때문에 별도의 설정 없이도 잘 작동했지만, 이제부터는 직접 ServiceAccount를 명시하도록 하겠습니다.
 
+<!-- prettier-ignore -->
 ```yaml title="git-clone.yaml" {6}
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -262,10 +266,11 @@ spec:
 
 ### Kaniko build
 
-위에서도 설명했듯이, Kaniko는 docker daemon 없이 안정적이고 빠르게 이미지를 빌드할 수 있는 도구입니다. Kaniko 외에도 Buildah나 Buildkit 같은 다른 도구들이 비슷한 기능을 수행할 수 있지만, 가장 범용적으로 사용하기 좋다고 판단하여 선택하게 되었습니다.  
+위에서도 설명했듯이, Kaniko는 docker daemon 없이 안정적이고 빠르게 이미지를 빌드할 수 있는 도구입니다. Kaniko 외에도 Buildah나 Buildkit 같은 다른 도구들이 비슷한 기능을 수행할 수 있지만, 가장 범용적으로 사용하기 좋다고 판단하여 선택하게 되었습니다.
 
 이미지 빌드 부분에 대한 Workflow Template는 다음과 같습니다.
 
+<!-- prettier-ignore -->
 ```yaml title="image-build.yaml"
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
@@ -309,18 +314,20 @@ spec:
 
 input parameter에서 다른 변수들은 계정이나 이미지 이름, 태그를 설정하는 변수입니다. 나머지 `FROM_ARGO` 변수에 대해 의문을 가지실 수 있는데 이 부분은 샘플로 만든 FastAPI 앱에 전달할 변수로 이후에 설명하겠습니다.  
 Kaniko로 이미지를 빌드하고 Docker Hub로 푸시하기 위해 실행할 명령어와 Argument들을 지정해 주어야 합니다.
-주요 내용을 살펴보면 다음과 같습니다. 
+주요 내용을 살펴보면 다음과 같습니다.
+
 - 이전에 Git Clone한 Artifact를 사용하기 위해 추가 input으로 받습니다.
 - `workingDir` 옵션으로 작업할 폴더를 지정해 줍니다.
 - `--dockerfile` 옵션과 함께 `Dockerfile` 경로를 지정해 줍니다. 이미 `workingDir` 옵션이 설정되어 있기 때문에 남은 경로만 입력해 주면 됩니다.
-- `--context` 옵션은 빌드할 때 참조하게 될 폴더를 지정하는데 역시  `workingDir` 옵션을 설정했기 때문에 그냥 root 폴더를 지정하기 위해 `.` 를 입력하면 됩니다.
-- `--destination` 옵션은 Docker Hub에 저장할 목적지를 설정하는 부분입니다. 현재 개인 Docker Repository를 대상으로 하고 있기 때문에 `user_name` 은 사용자 계정 이름으로 고정이고, 이름과 태그는 자유롭게 설정하시면 됩니다.  
+- `--context` 옵션은 빌드할 때 참조하게 될 폴더를 지정하는데 역시 `workingDir` 옵션을 설정했기 때문에 그냥 root 폴더를 지정하기 위해 `.` 를 입력하면 됩니다.
+- `--destination` 옵션은 Docker Hub에 저장할 목적지를 설정하는 부분입니다. 현재 개인 Docker Repository를 대상으로 하고 있기 때문에 `user_name` 은 사용자 계정 이름으로 고정이고, 이름과 태그는 자유롭게 설정하시면 됩니다.
 - Docker Hub 접근을 위해 앞에서 생성했던 Secret 정보를 Kaniko에 마운트해 줍니다.
 
 ### 실제 Workflow 구성하기
 
 이제 Git Clone과 Kaniko build-push, 2개의 Template이 준비되었습니다. 이 둘을 합쳐 실제로 실행할 Workflow를 구성합니다.
 
+<!-- prettier-ignore -->
 ```yaml title="argo-ci.yaml"
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
@@ -404,7 +411,7 @@ spec:
 ```
 kubectl apply -f fastapi-sample.yaml
 
-kubectl expose pod fastapi-test --name=lb-fastapi --port=8000  
+kubectl expose pod fastapi-test --name=lb-fastapi --port=8000
 
 kubectl port-forward svc/lb-fastapi 8000:8000
 ```
@@ -438,12 +445,13 @@ def read_git():
     return outer_value
 ```
 
-정말 간단하게 2개의 API를 구성해 두었습니다.  
+정말 간단하게 2개의 API를 구성해 두었습니다.
+
 - `GET /value/git` API는 `git_value`로 정의되어 있는 변수를 반환합니다.  
-이 값은 지금은 고정이지만, 나중에 Argo CD와 Argo Events를 도입한 다음 해당 변수를 바꾸어 가면서 Push 후 결과를 확인할 것입니다.  
+  이 값은 지금은 고정이지만, 나중에 Argo CD와 Argo Events를 도입한 다음 해당 변수를 바꾸어 가면서 Push 후 결과를 확인할 것입니다.
 - `GET /value/argo` API는 `outer_value`로 정의되어 있는 변수를 반환합니다.  
-현재 샘플 앱에는 별도의 기본 환경변수 설정이 없기 때문에 아무 설정 없이 배포한다면 변수의 값은 `not from argo` 입니다.  
-하지만 이미지를 빌드하면서 환경변수를 주입하여 값을 변경할 수 있고, 그래서 위의 Kaniko build 과정에서 `FROM_ARGO` 값을 받아 환경 변수로 설정합니다.  
+  현재 샘플 앱에는 별도의 기본 환경변수 설정이 없기 때문에 아무 설정 없이 배포한다면 변수의 값은 `not from argo` 입니다.  
+  하지만 이미지를 빌드하면서 환경변수를 주입하여 값을 변경할 수 있고, 그래서 위의 Kaniko build 과정에서 `FROM_ARGO` 값을 받아 환경 변수로 설정합니다.
 
 <br/>
 
@@ -459,7 +467,7 @@ def read_git():
 
 ![argo api](img/3-4-api-argo.png)
 
-`GET /value/argo` API를 호출했을 때는 기본값이 아닌,   
+`GET /value/argo` API를 호출했을 때는 기본값이 아닌,  
 Argo Workflows에서 변수로 전달했던 `argo test` 가 출력되는 것을 확인할 수 있습니다.
 
 <br/>

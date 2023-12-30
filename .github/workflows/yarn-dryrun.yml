@@ -1,4 +1,4 @@
-name: Dry-run for Deployment
+name: Dry-run (Yarn)
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   dryrun:
-    name: Dry-run for Deployment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,9 +17,9 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       # - name: ESLint check
       #   run: yarn lint
       - name: Build website
         run: yarn build
-# Standard dry-run workflow for Github
+# Standard dry-run workflow for frontend repository

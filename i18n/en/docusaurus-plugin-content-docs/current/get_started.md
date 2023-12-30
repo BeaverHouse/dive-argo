@@ -21,7 +21,8 @@ So let's start _Dive to Argo_.
   You should be able to read/write some `yaml` files and understand basic components of K8S.
 - It's recommended to know Helm's basic concept and commands, and have ability to understand Helm charts.
 - Also you need some other basic skills: Linux commands, basic shell scripts, basic coding ability... and so on.
-  :::
+
+:::
 
 [esbook]: https://esbook.kimjmin.net/
 [mlops]: https://mlops-for-all.github.io/
