@@ -21,18 +21,19 @@ k3s-argo-helm
 |- ...
 ```
 
-## Helm chart로 설치하기
+## Helm chart 설치하기
 
 이제 Argo Workflows를 배포해 봅시다.  
-Chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.
+Chart가 위치한 폴더에서 다음 명령어를 실행합니다.
 
 ```
 helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
 ```
 
-![helm install](./img/1-4-helm-install.png)
+![Helm install result](./img/1-4-helm-install.png)
 
-정상적으로 설치가 되었습니다. `kubectl get all -n argo-wf` 명령어로 리소스를 확인합니다.
+정상적으로 설치가 되었습니다.  
+`kubectl get all -n argo-wf` 명령어로 리소스를 확인합니다.
 
 ```
 C:\Users\HU\DevWin\k3s-argo-helm>kubectl get all -n argo-wf
@@ -52,15 +53,16 @@ replicaset.apps/my-argowf-argo-workflows-workflow-controller-ffc5b5c4d   1      
 replicaset.apps/my-argowf-argo-workflows-server-774d4bf6dd               1         1         1       2m21s
 ```
 
-Argo Workflows 앱에 접근도 해 봅시다. 짧게 확인하기 위해 `kubectl port-forward` 명령어를 사용하겠습니다.
+Argo Workflows 앱에 접근도 해 봅시다.  
+간단하게 확인하기 위해 `kubectl port-forward` 명령어를 사용하겠습니다.
 
 ```
 kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
 ```
 
-이제 브라우저를 열고 `localhost:8000`에 접속해 봅니다.
+이제 브라우저를 열고 `localhost:8000` 주소로 접속해 봅니다.
 
-![Argo access](./img/1-4-argo.png)
+![Argo Workflows login screen](./img/1-4-argo-screen.png)
 
 지금은 로그인을 할 수 없지만, 잘 실행되었습니다!  
 배포된 앱을 삭제하려면 다음 명령어를 실행합니다.
@@ -68,3 +70,5 @@ kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
 ```
 helm uninstall my-argowf -n argo-wf
 ```
+
+<!--Re-edited on 240101-->

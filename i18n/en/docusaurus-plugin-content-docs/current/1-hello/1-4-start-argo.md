@@ -30,9 +30,10 @@ Type the command below on the folder where chart exists.
 helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
 ```
 
-![helm install](./img/1-4-helm-install.png)
+![Helm install result](./img/1-4-helm-install.png)
 
-It is installed successfully. Check K8S objects with `kubectl get all -n argo-wf`.
+It is installed successfully.  
+Check K8S objects with `kubectl get all -n argo-wf`.
 
 ```
 C:\Users\HU\DevWin\k3s-argo-helm>kubectl get all -n argo-wf
@@ -52,7 +53,8 @@ replicaset.apps/my-argowf-argo-workflows-workflow-controller-ffc5b5c4d   1      
 replicaset.apps/my-argowf-argo-workflows-server-774d4bf6dd               1         1         1       2m21s
 ```
 
-Let's get access to Argo Workflows application too. We'll use `kubectl port-forward` this time for short check.
+Let's access to Argo Workflows application too.  
+We'll use `kubectl port-forward` command this time for short check.
 
 ```
 kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
@@ -60,7 +62,7 @@ kubectl port-forward svc/my-argowf-argo-workflows-server -n argo-wf 8000:2746
 
 Now open the browser and navigate to `localhost:8000`.
 
-![Argo access](./img/1-4-argo.png)
+![Argo Workflows login screen](./img/1-4-argo-screen.png)
 
 By now we cannot log in to Argo, but it works!  
 To undeploy Argo, type the command below.
@@ -68,3 +70,5 @@ To undeploy Argo, type the command below.
 ```
 helm uninstall my-argowf -n argo-wf
 ```
+
+<!--Re-edited on 240101-->
