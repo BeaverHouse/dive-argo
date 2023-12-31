@@ -10,7 +10,7 @@
     "description": "Title for subject 1"
   },
   "subject-description-1": {
-    "message": "Set up basic Kubernetes environments to create and access Argo app."
+    "message": "Set up basic Kubernetes environments to deploy and access Argo app."
   },
   "subject-2": {
     "message": "Experience Argo",
