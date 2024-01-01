@@ -33,7 +33,7 @@ helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
 ![Helm install result](./img/1-4-helm-install.png)
 
 It is installed successfully.  
-Check K8S objects with `kubectl get all -n argo-wf`.
+Check K8S objects with `kubectl get all -n argo-wf` command.
 
 ```
 C:\Users\HU\DevWin\k3s-argo-helm>kubectl get all -n argo-wf

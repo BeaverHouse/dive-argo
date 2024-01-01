@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-On previous chapter we advanced our K8S environment and successfully logged into Argo Workflows.  
+On the previous chapter we advanced our K8S environment and successfully logged into Argo Workflows.  
 Now let's get down to experience Argo Workflows.
 
 In this chapter, we'll try to:
