@@ -15,3 +15,5 @@ In this chapter, we'll try to:
 - Expose service with MetalLB & NGINX Ingress Controller
 - Configure Helm chart and deploy Argo Workflows to master node
 - Log in to Argo Workflows
+
+<!--Re-edited on 240101-->

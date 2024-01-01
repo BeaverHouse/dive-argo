@@ -15,3 +15,5 @@ sidebar_position: 1
 - MetalLB와 NGINX Ingress Controller로 서비스 노출하기
 - Helm chart를 간단히 변경하고, Argo Workflows를 Master node에 배포하기
 - Argo Workflows에 로그인하기
+
+<!--Re-edited on 240101-->
