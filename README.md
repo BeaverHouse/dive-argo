@@ -34,6 +34,8 @@ Feel free to give me a feedback. Please make a Pull Request to contribute to thi
 
 <!-- Write more content if you want. -->
 
+<br>
+
 ## On local environment
 
 **Install dependencies**
@@ -62,12 +64,9 @@ yarn start --locale en
 | ----------- | --- | --- |
 | Home        | ⭕  | ⭕  |
 | Get Started | ⭕  | ⭕  |
-| 1-1         | ⭕  | ⭕  |
-| 1-2         | ⭕  | ⭕  |
-| 1-3         | ⭕  | ⭕  |
-| 1-4         | ⏩  | ⏩  |
-| 2-1         | ⏩  | ⏩  |
-| 2-2         | ⏩  | ⏩  |
+| Chapter 1   | ⭕  | ⭕  |
+| 2-1         | ⭕  | ⭕  |
+| 2-2         | ⭕  | ⭕  |
 | 2-3         | ⏩  | ⏩  |
 | 2-4         | ⏩  | ⏩  |
 | 2-5         | ⏩  | ⏩  |
@@ -75,6 +74,7 @@ yarn start --locale en
 | 3-2         | ⏩  | ➖  |
 | 3-3         | ⏩  | ➖  |
 | 3-4         | ⏩  | ➖  |
+| Chapter 4   | ⏩  | ➖  |
 
 <!--
 You can find some emojis at https://emojipedia.org/

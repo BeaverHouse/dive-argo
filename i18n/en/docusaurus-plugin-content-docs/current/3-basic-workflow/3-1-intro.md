@@ -11,10 +11,10 @@ In this chapter, we'll try to:
 
 - Create and execute basic workflow
 - Take a look at frequently used workflows and experience them
-- Set up CI workflow to build/push container image
+- Implement CI workflow to build/push container image
 
 Most of the content are based on [Argo Workflows official document][docs] and examples.
 
 [docs]: https://argoproj.github.io/argo-workflows/
 
-<!--Re-edited on 231223-->
+<!--Re-edited on 240101-->

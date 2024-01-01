@@ -5,11 +5,11 @@ sidebar_position: 2
 # Set up Multi-node cluster
 
 We already created `k3s-master` node previously.  
-For now we'll make 2 worker nodes to setup multi-node cluster, with `k3s-master` as a master node.
+In this document, we'll make 2 worker nodes to setup multi-node cluster, with k3s-master as a master node.
 
 ## Check master node token
 
-Access to our `k3s-master` VM Shell.
+Access to our VM Shell of `k3s-master`.
 
 ```
 multipass shell k3s-master
@@ -26,8 +26,8 @@ Store this token for later use as your way.
 
 ## Create worker nodes
 
-We'll create each worker node on another VM.  
-Launch new VM for worker node with Multipass and access to VM Shell.
+We'll create each worker node on individual VM.  
+Create new VM for worker node with Multipass, and access to it's VM Shell.
 
 ```
 multipass launch jammy --name k3s-worker-1 --memory 2G --disk 50G --cpus 2
@@ -35,7 +35,7 @@ multipass launch jammy --name k3s-worker-1 --memory 2G --disk 50G --cpus 2
 multipass shell k3s-worker-1
 ```
 
-Type this command to install `k3s`. Provide master node's IP address and node token stored before as a variable.
+Type command below to install K3S. Provide master node's IP address and node token stored before as a variable.
 
 ```
 curl -sfL https://get.k3s.io | K3S_URL=https://<master-ip>:6443 \
@@ -45,7 +45,7 @@ INSTALL_K3S_EXEC="--node-name k3s-worker-1"  sh -
 
 Also we can make another worker node `k3s-worker-2` with exactly same process.
 
-You can type `kubectl get nodes` to check whether the multi-node is configured successfully.
+Type `kubectl get nodes` command to check whether the multi-node is configured successfully.
 
 ```
 NAME           STATUS   ROLES                  AGE     VERSION
@@ -59,4 +59,6 @@ k3s-master     Ready    control-plane,master   23m     v1.27.7+k3s2
 [^1]: https://docs.k3s.io/quick-start#install-script
 [^2]: See [1. Hello Argo! - Install K3S][step1-3].
 
-[step1-3]: https://beaverhouse.github.io/dive-argo/en/docs/hello/1-3-k3s#control-k8s-environment-on-host-computer
+[step1-3]: https://dive-argo.haulrest.me/en/docs/hello/1-3-install-k3s#control-k8s-environment-on-host-computer
+
+<!--Re-edited on 240101-->
