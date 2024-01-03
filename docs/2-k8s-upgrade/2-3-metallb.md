@@ -68,7 +68,7 @@ appVersion: v0.13.12
 helm install metallb -n metallb-system ./metallb
 ```
 
-![speaker](./img/2-3-speaker.png)
+![MetalLB speaker pod check](./img/2-3-metallb-speaker.png)
 
 기본적으로 speaker는 모든 노드를 대상으로 한 DaemonSet으로 설정되어 있습니다.  
 위 설정처럼 노드 개수만큼 speaker pod가 생성되면 정상적으로 MetalLB가 설치된 것입니다.
@@ -142,11 +142,11 @@ kubectl expose pod nginx --type=LoadBalancer --name=lb-nginx --port=80
 kubectl get svc
 ```
 
-![expose check](./img/2-3-expose-test.png)
+![kubectl expose check](./img/2-3-expose-test-kubectl.png)
 
 정상적으로 External IP가 할당되었습니다.  
 브라우저로 해당 주소에 접속해 보면, NGINX 페이지를 확인할 수 있습니다.
 
-![browser access](./img/2-3-expose-test2.png)
+![Test on browser](./img/2-3-expose-test-browser.png)
 
 [^1]: https://metallb.universe.tf/installation/#installation-with-helm

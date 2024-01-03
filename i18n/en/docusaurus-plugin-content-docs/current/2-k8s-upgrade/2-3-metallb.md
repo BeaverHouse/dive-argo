@@ -68,7 +68,7 @@ Now install MetalLB with Helm chart.
 helm install metallb -n metallb-system ./metallb
 ```
 
-![speaker](./img/2-3-speaker.png)
+![MetalLB speaker pod check](./img/2-3-metallb-speaker.png)
 
 Basically speaker is deployed by DaemonSet, targeted for all nodes.  
 If we can see speaker pods with number equal to node count like above, we can confirm that MetalLB is installed successfully.
@@ -142,11 +142,11 @@ kubectl expose pod nginx --type=LoadBalancer --name=lb-nginx --port=80
 kubectl get svc
 ```
 
-![expose check](./img/2-3-expose-test.png)
+![kubectl expose check](./img/2-3-expose-test-kubectl.png)
 
 External IP is successfully allocated.  
 When we navigate to IP on browser, we can see NGINX page.
 
-![browser access](./img/2-3-expose-test2.png)
+![Test on browser](./img/2-3-expose-test-browser.png)
 
 [^1]: https://metallb.universe.tf/installation/#installation-with-helm
