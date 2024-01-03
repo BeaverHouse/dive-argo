@@ -138,3 +138,5 @@ kubectl apply -f ./custom-ingress.yaml
 [ref1]: https://github.com/nginxinc/kubernetes-ingress
 
 [^1]: https://stackoverflow.com/a/59845018
+
+<!--Re-edited on 240103-->

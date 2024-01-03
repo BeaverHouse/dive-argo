@@ -7,7 +7,7 @@ sidebar_position: 2
 현재 이미 우리는 `k3s-master` 노드를 생성한 상태입니다.  
 이 `k3s-master` 노드를 Master node로 하고, 2개의 Worker node를 추가로 구성하여 Multi-node 클러스터를 구축해 보겠습니다.
 
-## Master node의 토큰 확인하기
+## Master node의 token 확인하기
 
 `k3s-master` VM Shell에 접속합니다.
 

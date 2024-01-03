@@ -151,4 +151,4 @@ We can see the UI after login!
 
 <br />
 
-[^1]: https://argoproj.github.io/argo-workflows/access-token/
+[^1]: https://argo-workflows.readthedocs.io/en/latest/access-token/
