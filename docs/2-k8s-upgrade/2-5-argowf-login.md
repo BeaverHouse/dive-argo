@@ -9,7 +9,7 @@ sidebar_position: 5
 
 ## Helm chart 수정하기
 
-이전 챕터에서는 따로 수정 없이 기본 옵션으로 Helm chart를 배포했습니다.  
+이전 챕터에서는 기본 옵션으로 Helm chart를 배포했습니다.  
 이번에는 간단하게 chart를 수정해 보겠습니다.
 
 1. `fullnameOverride` 값을 원하는 이름으로 변경합니다.  
