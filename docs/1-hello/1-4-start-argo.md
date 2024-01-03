@@ -9,7 +9,7 @@ sidebar_position: 4
 ## Argo Helm chart 다운로드
 
 다음 Repository에서 Helm chart를 다운로드합니다.  
-https://github.com/argoproj/argo-helm/tree/main
+https://github.com/argoproj/argo-helm
 
 다운로드받은 Chart를 적당한 곳에 위치시킵니다. 여기서는 다음과 같이 배치했습니다.
 

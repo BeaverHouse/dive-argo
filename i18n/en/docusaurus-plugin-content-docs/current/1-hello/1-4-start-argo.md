@@ -9,7 +9,7 @@ In this section, we'll deploy basic Argo Workflows application by using official
 ## Download Argo Helm chart
 
 Download Helm chart from following link:  
-https://github.com/argoproj/argo-helm/tree/main
+https://github.com/argoproj/argo-helm
 
 Move the chart to the folder you want. For example:
 
