@@ -24,13 +24,13 @@ helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 `ingress-nginx-controller` Service는 기본으로 `LoadBalancer` type으로 설정되어 있기 때문에,  
 해당 유형으로 생성되면서 External IP까지 할당받은 것을 확인할 수 있습니다.
 
-![nginx-ingress-svc](./img/2-4-svc.png)
+![Ingress controller service check](./img/2-4-ingress-controller-svc.png)
 
 :::note 고정 IP 설정하기
 
-`values.yaml`에서 `controller.service.loadBalancerIP` 값을 MetalLB에서 설정했던 범위 내 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 같은 값을 입력합니다.
+`values.yaml` 파일에서 `controller.service.loadBalancerIP` 값을 MetalLB에서 설정했던 범위 내 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 등을 입력합니다.
 
-이후 `helm upgrade` 명령어로 변경사항을 반영할 수 있습니다.
+이후 `helm upgrade` 명령어로 변경사항을 반영합니다.
 
 ```
 helm upgrade ingress-nginx -n ingress-nginx ./ingress-nginx
@@ -38,7 +38,7 @@ helm upgrade ingress-nginx -n ingress-nginx ./ingress-nginx
 
 :::
 
-## Ingress 생성하고 테스트하기
+## Ingress 생성 & 테스트하기
 
 테스트를 위해 다시 NGINX 앱을 생성하고 노출하겠습니다.  
 대신 이번에는 `example` 이라는 새로운 Namespace에 생성하고, Service에 `LoadBalancer` type도 설정하지 않았습니다.
@@ -68,7 +68,7 @@ kubectl expose pod nginx -n example --name=lb-nginx --port=80
 ```
 
 현재 `lb-nginx` Service는 일반적인 방법으로는 외부에서 액세스가 불가능한 상태입니다.  
-목표는 해당 Service를 `/example` 주소로 할당하는 것입니다.
+목표는 해당 Service를 `/example` 경로에 할당하는 것입니다.
 
 `lb-nginx` Service를 Ingress Controller에 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
 `ExternalName` type을 사용하면 다른 Namespace의 Service도 연결할 수 있습니다.[^1]
@@ -124,17 +124,19 @@ kubectl apply -f ./custom-ingress.yaml
 
 <br />
 
-브라우저로 `ingress-nginx-controller` Service에 할당된 IP에 접속합니다.  
+브라우저에서 `ingress-nginx-controller` Service에 할당된 IP에 접속합니다.  
 접속은 가능하지만, 홈 주소에 연결된 항목이 없기 때문에 404 Not Found가 출력됩니다.
 
-![ing-test-1](./img/2-4-ingress-test.png)
+![Browser test 1](./img/2-4-ingress-test-1.png)
 
 이제 위에서 설정한 `/example` 주소로 이동하면, NGINX 페이지를 확인할 수 있습니다.
 
-![ing-test-2](./img/2-4-ingress-test2.png)
+![Browser test 2](./img/2-4-ingress-test-2.png)
 
 <br />
 
 [ref1]: https://github.com/nginxinc/kubernetes-ingress
 
 [^1]: https://stackoverflow.com/a/59845018
+
+<!--Re-edited on 240103-->

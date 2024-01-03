@@ -7,7 +7,7 @@ sidebar_position: 5
 필요한 K8S 환경 설정은 완료되었습니다.  
 이제 Argo Workflows 설정을 수정하여 재배포하고 로그인까지 수행해 보겠습니다.
 
-## Helm chart 수정
+## Helm chart 수정하기
 
 이전 챕터에서는 따로 수정 없이 기본 옵션으로 Helm chart를 배포했습니다.  
 이번에는 간단하게 chart를 수정해 보겠습니다.
@@ -20,7 +20,7 @@ sidebar_position: 5
 
    - `node-role.kubernetes.io/master: "true"`
 
-   이외에 다른 Label 설정으로 변경하셔도 됩니다.  
+   이외에 원하는 다른 Label 설정으로 변경하셔도 됩니다.  
    Node에 설정된 Label은 다음 명령어로 확인할 수 있습니다.
 
    ```
@@ -68,12 +68,12 @@ sidebar_position: 5
 SSO 방식을 사용해 타 OAuth 서비스와 연동하여 로그인을 구성할 수도 있지만,  
 여기서는 token 로그인 방식[^1]을 적용하겠습니다.
 
-token은 새로 ServiceAccount(SA)를 만들어 발행하겠습니다.  
+token은 새로 ServiceAccount를 만들어 발행하겠습니다.  
 (기본 생성되는 계정에서도 가능할 수 있지만, 이 문서에서는 설명하지 않습니다)
 
 새로운 ServiceAccount 설정을 위해 Helm chart template에 추가 파일을 작성합니다.  
 RoleBinding, ServiceAccount, Secret 총 3개의 설정 파일을 작성해야 합니다.  
-제가 설정한 이름 `huadmin` 은 알맞게 변경해 주세요. `values.yaml` 에 따로 분리하는 것도 좋습니다.
+제가 설정한 이름 `huadmin` 은 알맞게 변경해 주세요. `values.yaml` 파일에 분리하는 것도 좋습니다.
 
 그리고 여기서는 Helm chart에서 기본 생성하는 ClusterRole을 사용하였습니다.  
 Role도 추가로 생성하고 싶다면 `yaml` 파일을 하나 더 작성하고 RoleBinding에서 연결해 주시면 됩니다.
@@ -117,7 +117,7 @@ metadata:
 type: kubernetes.io/service-account-token
 ```
 
-## 배포 후 접속하기
+## 배포 후 로그인하기
 
 설정이 끝났으니 다시 Argo Workflows를 배포해 봅시다.  
 Helm chart가 위치한 폴더로 이동해 다음 명령어를 실행합니다.
@@ -127,7 +127,7 @@ helm install my-argowf ./argo-workflows -n argo-wf --create-namespace
 ```
 
 이제 로그인을 위한 token을 확인해야 합니다. 아래의 명령어로 token을 확인할 수 있습니다.  
-Linux는 그대로 확인하면 되고, Windows의 경우 Master node가 설치된 VM Shell에 들어가서 확인하시면 됩니다.
+Windows의 경우 Master node가 설치된 VM Shell에서 확인하시면 됩니다.
 
 ```
 ARGO_TOKEN="Bearer $(sudo k3s kubectl get secret huadmin-secret -n argo-wf -o=jsonpath='{.data.token}' | base64 --decode)"
@@ -136,19 +136,21 @@ echo $ARGO_TOKEN
 
 token 값은 로그인에 필요하기 때문에 저장해 둡니다.
 
-![kubectl check](./img/2-5-kubectl.png)
+![kubectl check](./img/2-5-kubectl-check.png)
 
-`kubectl` 로 조회해 보면 정상적으로 IP가 할당되었고, Helm chart에서 바꾼 이름 `myargo` 를 기반으로 리소스가 생성된 것을 확인할 수 있습니다.  
-이제 브라우저로 해당 IP에 접속하면 로그인 화면이 나옵니다.
+`kubectl` 로 조회해 보면 정상적으로 IP가 할당되었고, Helm chart에서 설정한 이름 `myargo` 를 기반으로 리소스가 생성된 것을 확인할 수 있습니다.  
+이제 브라우저에서 해당 IP에 접속하면 로그인 화면이 나옵니다.
 
-![login page](./img/2-5-argo-1.png)
+![Login page](./img/2-5-argo-login-1.png)
 
-여기서 아까 저장해 두었던 토큰을 이용해 로그인을 진행합니다.
+여기서 저장해 두었던 token을 이용해 로그인을 진행합니다.
 
-![login success](./img/2-5-argo-2.png)
+![Login success](./img/2-5-argo-login-2.png)
 
 정상적으로 로그인되었습니다!
 
 <br />
 
-[^1]: https://argoproj.github.io/argo-workflows/access-token/
+[^1]: https://argo-workflows.readthedocs.io/en/latest/access-token/
+
+<!--Re-edited on 240103-->
