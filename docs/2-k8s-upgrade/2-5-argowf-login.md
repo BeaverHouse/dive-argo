@@ -5,22 +5,22 @@ sidebar_position: 5
 # Argo Workflows 재배포 + 로그인하기
 
 필요한 K8S 환경 설정은 완료되었습니다.  
-이제 Argo Workflows 설정을 수정하여 재배포하고 로그인까지 수행해 보겠습니다.
+이제 Argo Workflows Helm chart를 수정하여 재배포하고 로그인까지 수행해 보겠습니다.
 
 ## Helm chart 수정하기
 
 이전 챕터에서는 따로 수정 없이 기본 옵션으로 Helm chart를 배포했습니다.  
 이번에는 간단하게 chart를 수정해 보겠습니다.
 
-1. `fullnameOverride` 를 원하는 이름으로 변경합니다.  
+1. `fullnameOverride` 값을 원하는 이름으로 변경합니다.  
    여기서는 `myargo` 로 설정하겠습니다.
 
-2. Master node에 배포하기 위해 `nodeSelector` 옵션을 변경합니다.  
-   `controller.nodeSelector` 와 `server.nodeSelector`에 다음 Label을 추가합니다.
+2. Master node에 배포하기 위해 `nodeSelector` 항목을 변경합니다.  
+   `controller.nodeSelector` 와 `server.nodeSelector` 항목에 다음 Label을 추가합니다.
 
    - `node-role.kubernetes.io/master: "true"`
 
-   이외에 원하는 다른 Label 설정으로 변경하셔도 됩니다.  
+   이외에 원하는 Label 설정으로 변경하셔도 됩니다.  
    Node에 설정된 Label은 다음 명령어로 확인할 수 있습니다.
 
    ```
@@ -29,7 +29,7 @@ sidebar_position: 5
 
    Label 설정과 관련된 내용은 여기서 다루지 않겠습니다.
 
-3. 접근을 위한 Load-Balancer 설정을 위해 다음과 같이 `values.yaml` 을 수정합니다.
+3. 접근을 위한 Load-Balancer 설정을 위해 다음과 같이 `values.yaml` 파일을 수정합니다.
 
    ```yaml title="values.yaml" {5,7,11,28}
    (...)
