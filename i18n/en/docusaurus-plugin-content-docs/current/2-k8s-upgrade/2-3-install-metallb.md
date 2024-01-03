@@ -10,7 +10,7 @@ We can expose our services with MetalLB, without support of other cloud provider
 ## Download MetalLB Helm chart
 
 Download Helm chart from following link:  
-https://github.com/metallb/metallb/tree/main
+https://github.com/metallb/metallb
 
 ## Create namespace
 

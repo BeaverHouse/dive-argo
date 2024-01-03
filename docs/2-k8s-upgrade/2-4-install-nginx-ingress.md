@@ -22,7 +22,7 @@ helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 ```
 
 `ingress-nginx-controller` Service는 기본으로 `LoadBalancer` type으로 설정되어 있기 때문에,  
-해당 유형으로 생성되면서 External IP까지 할당받은 것을 확인할 수 있습니다.
+해당 type으로 생성되면서 External IP까지 할당받은 것을 확인할 수 있습니다.
 
 ![Ingress controller service check](./img/2-4-ingress-controller-svc.png)
 
@@ -67,7 +67,7 @@ kubectl apply -f ./nginx-sample.yaml -n example
 kubectl expose pod nginx -n example --name=lb-nginx --port=80
 ```
 
-현재 `lb-nginx` Service는 일반적인 방법으로는 외부에서 액세스가 불가능한 상태입니다.  
+현재 `lb-nginx` Service는 일반적인 방법으로는 외부에서 접근이 불가능한 상태입니다.  
 목표는 해당 Service를 `/example` 경로에 할당하는 것입니다.
 
 `lb-nginx` Service를 Ingress Controller에 연결하기 위해 새로운 Service와 Ingress 파일을 작성합니다.  
