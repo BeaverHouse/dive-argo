@@ -24,7 +24,7 @@ helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 `ingress-nginx-controller` service is set to `LoadBalancer` type by default,  
 so we can see that external IP is allocated when service is created.
 
-![nginx-ingress-svc](./img/2-4-svc.png)
+![Ingress controller service check](./img/2-4-ingress-controller-svc.png)
 
 :::note Configure static IP
 
@@ -127,11 +127,11 @@ kubectl apply -f ./custom-ingress.yaml
 Navigate to external IP allocated to `ingress-nginx-controller` service.  
 It can be accessed basically, but returns 404 Not Found because we didn't configure any service on the root.
 
-![ing-test-1](./img/2-4-ingress-test.png)
+![Browser test 1](./img/2-4-ingress-test-1.png)
 
 Now when we navigate to `/example` endpoint, we can see NGINX page like before.
 
-![ing-test-2](./img/2-4-ingress-test2.png)
+![Browser test 2](./img/2-4-ingress-test-2.png)
 
 <br />
 
