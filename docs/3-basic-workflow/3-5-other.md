@@ -6,7 +6,7 @@ sidebar_position: 5
 
 ## Workflow 삭제 조건 설정하기
 
-retentionPolicy, ttlStrategy, podGC
+`retentionPolicy`, `ttlStrategy`, `podGC`
 
 ![too many wf](img/3-5-too-many-wf.png)
 
@@ -19,4 +19,4 @@ controller:
         secondsAfterCompletion: 5
 ```
 
-이러면 실행 완료 후 5초 뒤에 사라짐
+이렇게 설정하면 실행 완료 후 5초 뒤에 Workflow 내역이 삭제됩니다.
