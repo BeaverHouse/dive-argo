@@ -25,7 +25,7 @@ Multipass에서는 이와 관련된 [공식 가이드][ref1]을 제공하고 있
    Shell에서 `ip a` 명령어를 입력하면 새로 생성된 mac 주소를 확인할 수 있습니다.  
    (제 Window의 경우, `eth1`로 생성되었습니다.)
 
-   ![vm-mac](./img/vm-mac.png)
+   ![Check VM MAC address](./img/vm-mac-address.png)
 
 4. 다음 명령어를 실행합니다.
 
