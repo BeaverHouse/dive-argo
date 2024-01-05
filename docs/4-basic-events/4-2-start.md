@@ -4,7 +4,10 @@ sidebar_position: 2
 
 # Argo Events 설치, 권한 설정
 
-이 문서에서는 Argo Event를 설치하고, UI를 통해 제어할 수 있도록 설정해 보겠습니다.
+이 문서에서는 Argo Event를 배포하고, UI를 통해 제어할 수 있도록 설정해 보겠습니다.
+
+아직 Helm Chart를 다운로드받지 않았다면 다음 Repository에서 다운로드합니다.  
+https://github.com/argoproj/argo-helm
 
 ## Argo Workflows와 Argo Events
 
