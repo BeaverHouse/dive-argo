@@ -136,7 +136,7 @@ echo $ARGO_TOKEN
 
 Store token value, because we'll use it when we try to log in.
 
-![kubectl check](./img/2-5-kubectl-check.png)
+![Argo kubectl check](./img/2-5-argo-kubectl-check.png)
 
 With `kubectl`, we can see that external IP is allocated, and all the resources are created with name `myargo`, as we inserted on Helm chart.  
 Navigate to the external IP, then you can see login page.
