@@ -36,7 +36,7 @@ spec:
             print(sum)
 ```
 
-![script](img/3-3-script.png)
+![Python script workflow](img/3-3-python-script.png)
 
 ## Workflow에서 변수 전달하기
 
@@ -75,9 +75,12 @@ spec:
             print(sum)
 ```
 
-![input as 5](img/3-3-script-w-variable.png)
+아래는 변수를 5로 전달해 실행한 화면입니다.  
+5개의 무작위 정수가 출력되고, 그 합이 출력되는 것을 확인할 수 있습니다.
 
-![result](img/3-3-script-w-variable-result.png)
+![Submit script workflow w/ input 5](img/3-3-script-w-variable.png)
+
+![Workflow result](img/3-3-script-w-variable-result.png)
 
 ## Suspend와 Step
 
@@ -133,9 +136,11 @@ spec:
         echo {{inputs.parameters.number}}
 ```
 
-![sleep 20](img/3-3-suspend-time.png)
+아래는 실제로 20을 입력하고 실행한 결과입니다.
 
-![log result](img/3-3-suspend-log.png)
+![Suspended for 20s](img/3-3-suspend-time.png)
+
+![Total workflow result](img/3-3-suspend-log.png)
 
 ## DAG
 
@@ -217,5 +222,5 @@ spec:
 간단하게 설명하면 Step A에서 `start`를 출력하고, 2개의 분기로 나뉘어 Step B와 Step C를 수행합니다. 두 쪽이 모두 완료되었을 때 Step D에서 `end of all workflow` 를 출력하고 프로세스가 끝납니다.  
 실제로 실행해보면 Suspend를 양쪽에서 각각 2분, 3분으로 설정했지만 동시에 작업이 진행되기 때문에, `bash` 세팅 시간을 포함해서 2 + 3 = 5분 이상이 아닌 3~4분 정도만 소요되는 것을 확인할 수 있습니다.
 
-![dag result](img/3-3-dag.png)
-![dag result2](img/3-3-dag2.png)
+![DAG Workflow detail](img/3-3-dag-detail.png)
+![DAG Workflow log](img/3-3-dag-log.png)

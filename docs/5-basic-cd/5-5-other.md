@@ -2,7 +2,7 @@
 sidebar-position: 5
 ---
 
-# 기타 편의기능
+# 그 외 기능들
 
 Argo CD에서는 언급한 내용 외에도, Application 생성 과정에서 여러 옵션을 설정할 수 있습니다.
 

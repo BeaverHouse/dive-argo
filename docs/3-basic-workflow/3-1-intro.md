@@ -15,6 +15,6 @@ sidebar_position: 1
 
 대부분의 내용은 [Argo Workflows 공식 문서][docs]와 여러 예제를 기반으로 합니다.
 
-[docs]: https://argoproj.github.io/argo-workflows/
+[docs]: https://argo-workflows.readthedocs.io/en/latest/
 
-<!--Re-edited on 231223-->
+<!--Re-edited on 240105-->

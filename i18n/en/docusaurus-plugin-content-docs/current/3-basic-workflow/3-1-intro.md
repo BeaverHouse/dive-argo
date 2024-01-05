@@ -15,6 +15,6 @@ In this chapter, we'll try to:
 
 Most of the content are based on [Argo Workflows official document][docs] and examples.
 
-[docs]: https://argoproj.github.io/argo-workflows/
+[docs]: https://argo-workflows.readthedocs.io/en/latest/
 
-<!--Re-edited on 240101-->
+<!--Re-edited on 240105-->

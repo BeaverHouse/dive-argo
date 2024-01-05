@@ -24,7 +24,7 @@ Argo Workflows가 이렇게 동작하는 것은 기본적으로 클러스터 내
 Argo가 설치된 Namespace에서만 Workflow를 실행할 수 있도록 설정을 변경할 수 있고, Helm chart에서는 `singleNamespace` 옵션으로 이를 제어할 수 있습니다. 또한 Workflow를 실행할 Namespace를 지정할 수 있는 Managed Namespace 옵션도 존재합니다.  
 자세한 내용은 아래 링크를 참조해 주세요.
 
-https://argoproj.github.io/argo-workflows/installation/#installation-options
+https://argo-workflows.readthedocs.io/en/latest/installation/
 :::
 
 ## 첫 Workflow 작성하기
@@ -40,7 +40,7 @@ Workflow Template로 Workflow의 일부 또는 전체를 저장할 수 있습니
 
 ![Create WorkflowTemplate](img/3-2-create-template.png)
 
-Argo 문서의 샘플을 약간 수정해서 사용하겠습니다.  
+Argo Workflows 문서의 샘플을 약간 수정해서 사용하겠습니다.  
 기존의 데이터를 지우고 아래 내용을 붙여넣습니다.
 
 ```yaml

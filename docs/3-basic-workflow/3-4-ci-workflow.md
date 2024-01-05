@@ -35,41 +35,41 @@ Argo Workflows Helm chart에서 다음 과정을 수행합니다.
 
 1. `values.yaml` 파일에 다음과 같이 계정 정보를 추가합니다.
 
-```yaml title="values.yaml" {3-7}
-(...)
-# Add this below
-imageCredentials:
-  registry: https://index.docker.io/v1/ # for Docker Hub
-  username: your-name
-  password: your-pw
-  email: your@mail.com
-```
+   ```yaml title="values.yaml" {3-7}
+   (...)
+   # Add this below
+   imageCredentials:
+     registry: https://index.docker.io/v1/ # for Docker Hub
+     username: your-name
+     password: your-pw
+     email: your@mail.com
+   ```
 
 2. `_helpers.tpl` 파일에 다음과 같이 추가 템플릿을 설정합니다.
 
-```tpl title="_helpers.tpl" {3-7}
-(...)
-# Add this below
-{{- define "imagePullSecret" }}
-{{- with .Values.imageCredentials }}
-{{- printf "{\"auths\":{\"%s\":{\"username\":\"%s\",\"password\":\"%s\",\"email\":\"%s\",\"auth\":\"%s\"}}}" .registry .username .password .email (printf "%s:%s" .username .password | b64enc) | b64enc }}
-{{- end }}
-{{- end }}
-```
+   ```tpl title="_helpers.tpl" {3-7}
+   (...)
+   # Add this below
+   {{- define "imagePullSecret" }}
+   {{- with .Values.imageCredentials }}
+   {{- printf "{\"auths\":{\"%s\":{\"username\":\"%s\",\"password\":\"%s\",\"email\":\"%s\",\"auth\":\"%s\"}}}" .registry .username .password .email (printf "%s:%s" .username .password | b64enc) | b64enc }}
+   {{- end }}
+   {{- end }}
+   ```
 
 3. `templates` 폴더 아래에 다음과 같이 Secret 설정 파일을 작성합니다.
 
-<!-- prettier-ignore -->
-```yaml title="docker-secret.yaml"
-apiVersion: v1
-kind: Secret
-metadata:
-  name: docker-secret
-  namespace: {{ .Release.Namespace | quote }}
-type: kubernetes.io/dockerconfigjson
-data:
-  .dockerconfigjson: {{ template "imagePullSecret" . }}
-```
+   <!-- prettier-ignore -->
+   ```yaml title="docker-secret.yaml"
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: docker-secret
+      namespace: {{ .Release.Namespace | quote }}
+    type: kubernetes.io/dockerconfigjson
+    data:
+      .dockerconfigjson: {{ template "imagePullSecret" . }}
+   ```
 
 설정이 완료되었으면 변경사항을 적용합니다.
 
@@ -79,7 +79,7 @@ helm upgrade my-argowf ./argo-workflows -n argo-wf
 
 `kubectl` 명령어로 만들어진 Secret을 확인할 수 있습니다.
 
-![docker secret check](img/3-4-docker-secret-check.png)
+![Docker secret check](img/3-4-docker-secret-check.png)
 
 ## Workflow 구성
 
@@ -124,7 +124,7 @@ spec:
 `inputs.artifacts` 에서 `git` 옵션을 사용해 clone을 하여 특정 경로에 저장을 할 수 있습니다. `repo` 와 `revision` 이라는 2가지 변수를 받는데, `repo` 에는 Git URL을 입력하시면 되고, `revision` 에는 해당 Repository에서 가져올 브랜치나 태그 이름 등을 입력합니다.  
 추가로 Clone한 파일들은 이후에 이미지를 빌드할 때도 사용해야 하기 때문에 output으로 내보내고, 제대로 파일이 들어왔는지 확인을 위해 container 작업으로 `ls` 명령어를 통해 확인해 보겠습니다.
 
-![git clone failed](img/3-4-git-clone-fail.png)
+![Git clone failed](img/3-4-git-clone-fail.png)
 
 하지만 Workflow를 실행해 보면 Artifact Storage가 없어 실패했다는 메시지가 발생하게 됩니다.  
 Artifact 기능을 사용하려면 Argo Workflows 외에 별도의 저장공간이 필요합니다. Argo Workflows는 이러한 Storage로 S3 계열 스토리지를 지원하는데, 저희는 이 중에 MinIO를 K8S 환경에 구성하여 사용해 보겠습니다.
@@ -156,7 +156,7 @@ export ROOT_USER=$(kubectl get secret --namespace argo-wf minio -o jsonpath="{.d
 export ROOT_PASSWORD=$(kubectl get secret --namespace argo-wf minio -o jsonpath="{.data.root-password}" | base64 -d)
 ```
 
-![minio login](img/3-4-minio.png)
+![MinIO login](img/3-4-minio-login.png)
 
 로그인에 성공했다면 `argo-bucket` 이라는 이름으로 Bucket을 하나 생성합니다.  
 이제 생성한 Bucket을 사용할 수 있도록 Argo Workflows Helm chart를 변경해 주어야 합니다.
@@ -263,6 +263,8 @@ spec:
 ```
 
 이제 Workflow를 실행하면 로그에 정상적으로 파일 목록이 출력되는 것을 확인할 수 있습니다.
+
+![Git clone success](img/3-4-git-clone-success.png)
 
 ### Kaniko build
 
@@ -375,17 +377,17 @@ spec:
 ```
 
 기존에 필요한 변수들은 모두 Argument로 값을 받아 Template에 넘기도록 했고,  
-Kaniko에서 사용할 Artifact는 Git Clone에서 생성된 output을 넘겨서 사용할 수 있도록 하였습니다.  
-관련된 예시 코드는 아래에서 확인 가능합니다.
+Kaniko에서 사용할 Artifact는 Git Clone에서 생성된 output을 넘겨서 사용할 수 있도록 하였습니다.
 
+관련된 예시 코드는 아래 링크에서 확인 가능합니다.  
 https://github.com/argoproj/argo-workflows/blob/main/examples/artifact-passing.yaml
 
 ## Workflow 실행 결과
 
 만들어진 Workflow를 사용하면 다음과 같이 실행되고, Docker Hub에 만들어진 이미지가 업로드된 것을 확인할 수 있습니다.
 
-![ci success](img/3-4-ci-success.png)
-![docker hub check](img/3-4-docker-hub.png)
+![CI workflow success](img/3-4-ci-wf-success.png)
+![Docker hub check](img/3-4-docker-hub-check.png)
 
 실제 생성된 이미지 확인을 위해 테스트용 Pod를 생성해 보겠습니다.
 
@@ -416,7 +418,7 @@ kubectl expose pod fastapi-test --name=lb-fastapi --port=8000
 kubectl port-forward svc/lb-fastapi 8000:8000
 ```
 
-![kubectl check](img/3-4-test-kubectl.png)
+![Test app check w/ kubectl](img/3-4-test-kubectl.png)
 
 결과를 확인하기 전에, 샘플 FastAPI 앱의 구조를 잠시 살펴 보겠습니다.
 
@@ -428,7 +430,7 @@ from fastapi.responses import RedirectResponse
 app = FastAPI()
 
 git_value = "github main branch"
-outer_value = os.environ.get("FROM_ARGO", "not from argo")
+outer_value = os.environ.get("FROM_ARGO", "Not from Argo")
 
 @app.get("/")
 def read_root():
@@ -450,22 +452,22 @@ def read_git():
 - `GET /value/git` API는 `git_value`로 정의되어 있는 변수를 반환합니다.  
   이 값은 지금은 고정이지만, 나중에 Argo CD와 Argo Events를 도입한 다음 해당 변수를 바꾸어 가면서 Push 후 결과를 확인할 것입니다.
 - `GET /value/argo` API는 `outer_value`로 정의되어 있는 변수를 반환합니다.  
-  현재 샘플 앱에는 별도의 기본 환경변수 설정이 없기 때문에 아무 설정 없이 배포한다면 변수의 값은 `not from argo` 입니다.  
+  현재 샘플 앱에는 별도의 기본 환경변수 설정이 없기 때문에 아무 설정 없이 배포한다면 변수의 값은 `Not from Argo` 입니다.  
   하지만 이미지를 빌드하면서 환경변수를 주입하여 값을 변경할 수 있고, 그래서 위의 Kaniko build 과정에서 `FROM_ARGO` 값을 받아 환경 변수로 설정합니다.
 
 <br/>
 
 이제 FastAPI에 할당된 주소로 접속해 보겠습니다.
 
-![fastapi swagger](img/3-4-test-swagger.png)
+![FastAPI swagger](img/3-4-test-swagger.png)
 
 그냥 IP로 접속해도 Redirect 설정을 해 두었기 때문에 자동으로 Swagger Docs로 이동합니다.
 
-![git api](img/3-4-api-git.png)
+![/value/git API](img/3-4-api-git.png)
 
 `GET /value/git` API를 호출했을 때는 코드에 있는 그대로 값이 출력됩니다.
 
-![argo api](img/3-4-api-argo.png)
+![/value/argo API](img/3-4-api-argo.png)
 
 `GET /value/argo` API를 호출했을 때는 기본값이 아닌,  
 Argo Workflows에서 변수로 전달했던 `argo test` 가 출력되는 것을 확인할 수 있습니다.
