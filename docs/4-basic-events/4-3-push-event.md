@@ -20,7 +20,7 @@ https://github.com/argoproj/argo-events/tree/master/examples/event-sources
 편의상 Argo Events와 Argo Workflows에 사용되는 Bucket을 서로 분리하겠습니다.  
 이벤트를 위한 새로운 Bucket `for-event` 를 생성합니다.
 
-![new bucket](img/4-3-new-bucket.png)
+![Create new bucket](img/4-3-new-bucket.png)
 
 ## EventBus 생성하기
 
@@ -87,7 +87,7 @@ spec:
 `eventBusName` 속성으로 위에서 생성한 EventBus를 지정해 줍니다.  
 나머지는 MinIO 관련 정보들을 넣으면 되고, 이벤트는 파일 추가/삭제 이벤트를 감지하도록 하였습니다.[^1]
 
-![Alt text](img/4-3-esource-create.png)
+![Create EventSource](img/4-3-esource-create.png)
 
 **CREATE** 버튼을 누르면 EventSource가 생성됩니다.  
 아직 이벤트를 받은 뒤의 행동을 설정하지 않았기 때문에, 이것만으로는 아무 변화가 없습니다.
@@ -159,7 +159,7 @@ Workflow 형식은 이전 챕터의 Workflow와 동일합니다.
 **CREATE** 버튼을 누르면 Sensor가 생성됩니다.  
 그 뒤에 Event Flow로 이동하면 Sensor와 EventSource가 링크된 것을 확인할 수 있습니다.
 
-![Alt text](img/4-3-event-flow.png)
+![Event flow](img/4-3-event-flow.png)
 (사진의 Workflow는 테스트입니다)
 
 ## Event Flow 테스트
@@ -167,17 +167,15 @@ Workflow 형식은 이전 챕터의 Workflow와 동일합니다.
 이제 실제로 이벤트를 발생시켜 보겠습니다.  
 `2.txt` 라는 파일을 `for-event` Bucket에 업로드해 보겠습니다.
 
-![Alt text](img/4-3-minio-input.png)
+![Upload file to MinIO](img/4-3-minio-event.png)
 
 그러면 아래와 같이 Event를 감지하여 새로운 Workflow가 실행됩니다.
 
-![Alt text](img/4-3-event-flow2.png)
+![New workflow is fired](img/4-3-wf-fired.png)
 
-정상적으로 Workflow가 실행되었고,  
 로그를 확인해 보면 우리가 업로드한 파일 이름 `2.txt` 가 출력되는 것을 확인할 수 있습니다.
 
-![Alt text](img/4-3-event-wf1.png)
-![Alt text](img/4-3-event-wf2.png)
+![Workflow log](img/4-3-wf-log.png)
 
 <br/>
 

@@ -387,7 +387,7 @@ https://github.com/argoproj/argo-workflows/blob/main/examples/artifact-passing.y
 만들어진 Workflow를 사용하면 다음과 같이 실행되고, Docker Hub에 만들어진 이미지가 업로드된 것을 확인할 수 있습니다.
 
 ![CI workflow success](img/3-4-ci-wf-success.png)
-![Docker hub check](img/3-4-docker-hub-check.png)
+![Docker Hub check](img/3-4-docker-hub-check.png)
 
 실제 생성된 이미지 확인을 위해 테스트용 Pod를 생성해 보겠습니다.
 

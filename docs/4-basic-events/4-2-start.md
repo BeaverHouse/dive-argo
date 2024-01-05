@@ -86,7 +86,7 @@ helm install my-argoevents ./argo-events -n argo-wf
 
 이제 UI에서 Argo Events를 제어할 수 있습니다.
 
-![event handle](img/4-2-event-handle.png)
+![Event UI](img/4-2-event-ui.png)
 
 <br/>
 
