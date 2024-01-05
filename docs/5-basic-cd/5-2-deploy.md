@@ -82,4 +82,4 @@ kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.pa
 
 Argo CD에 설정한 IP로 접속하여 로그인하면 다음과 같은 화면을 확인할 수 있습니다.
 
-![Alt text](img/argocd-login.png)
+![Argo CD UI](img/5-2-argocd-ui.png)

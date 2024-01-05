@@ -282,7 +282,7 @@ Workflow가 정상적으로 실행되는 것을 확인할 수 있습니다.
 
 Docker Hub에도 `1.0.0` 태그의 새로운 이미지가 업로드되었습니다.
 
-![Docker Hub check](img/4-4-docker-hub.png)
+![Docker Hub check](img/4-4-docker-hub-check.png)
 
 마지막으로 Github에도 태그가 `1.0.0` 값으로 반영된 것을 확인할 수 있습니다.
 
