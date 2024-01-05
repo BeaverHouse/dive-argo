@@ -23,12 +23,12 @@ Argo Workflows로 이미지를 빌드한 다음 변경된 이미지를 Helm char
 
 - 외부에 서비스를 오픈할 수 있습니다. 이미 MetalLB와 Ingress NGINX Controller를 설치해 두었기 때문에, 공용 네트워크와 도메인 등을 추가로 설정하면 서비스 개방이 가능합니다! 물론 보안 쪽은 잘 생각해야겠지요.
 - 사실 여기서는 Multi-node 클러스터를 구성만 해 두고 제대로 활용하지 않았습니다. 하지만 더 큰 서비스에서 이를 기반으로 효율적인 K8S 유지관리가 가능할 것입니다.
-- 여기서는 CI/CD를 구현했지만, Argo는 CI/CD 외에도 다른 많은 곳에 활용 가능합니다. 어떻게 쓰느냐는 여러분의 몫입니다.
-- 여기서 사용된 Tool들은 원하는 대로 변경하셔도 됩니다.
-  - Docker Hub 대신 개인 이미지 저장소를 사용하고 싶다면 Harbor를 사용해도 됩니다.
+- 여기서는 CI/CD를 구현했지만, Argo는 CI/CD 외에도 다른 많은 곳에 활용 가능합니다. 어떻게 활용하느냐는 여러분의 몫입니다.
+- 여기서 사용된 Tool들은 원하는 대로 변경하고, 추가하셔도 됩니다.
+  - Docker Hub 대신 개인 이미지 저장소를 사용하고 싶다면 [Harbor][harbor]를 사용해도 됩니다.
   - Github 대신 Gitlab 등의 다른 플랫폼, 또는 Private repository를 사용해도 됩니다.
   - 꼭 Argo를 써야 하는 것도 아닙니다.  
-    상황에 따라 Apache Airflow 등의 다른 도구를 사용할 수도 있을 것입니다.
+    상황에 따라 [Apache Airflow][airflow] 등의 다른 도구를 사용할 수도 있을 것입니다.
 
 ## 첫 문서를 작업하며
 
@@ -36,3 +36,6 @@ Argo Workflows로 이미지를 빌드한 다음 변경된 이미지를 Helm char
 그래도 첫 문서화 프로젝트이기에 아직 부족한 점이 많습니다. 너그럽게 이해해 주시고, 필요하다면 많은 피드백 부탁드립니다. 감사합니다.
 
 _2024, HU-Lee._
+
+[harbor]: https://goharbor.io/
+[airflow]: https://airflow.apache.org/
