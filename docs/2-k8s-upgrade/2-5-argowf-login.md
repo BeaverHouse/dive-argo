@@ -136,7 +136,7 @@ echo $ARGO_TOKEN
 
 token 값은 로그인에 필요하기 때문에 저장해 둡니다.
 
-![kubectl check](./img/2-5-kubectl-check.png)
+![Argo kubectl check](./img/2-5-argo-kubectl-check.png)
 
 `kubectl` 로 조회해 보면 정상적으로 IP가 할당되었고, Helm chart에서 설정한 이름 `myargo` 를 기반으로 리소스가 생성된 것을 확인할 수 있습니다.  
 이제 브라우저에서 해당 IP에 접속하면 로그인 화면이 나옵니다.
