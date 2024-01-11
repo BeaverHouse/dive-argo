@@ -49,7 +49,7 @@ Repository는 제한을 두지 않도록 `*` 으로 설정하겠습니다.
 
 이제 실제 Application을 생성하겠습니다.
 
-Applications 탭에서 **NEW APP** 을 누르고 다음과 같이 Application을 작성합니다.  
+**Applications** 탭에서 **NEW APP** 을 누르고 다음과 같이 Application을 작성합니다.  
 **EDIT AS YAML** 버튼을 누르고 아래 내용을 붙여넣으면 됩니다.
 
 ```yaml {7-9,11-13,17}
