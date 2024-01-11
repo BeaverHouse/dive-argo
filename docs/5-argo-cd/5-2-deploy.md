@@ -6,10 +6,10 @@ sidebar_position: 2
 
 이 문서에서는 Argo CD를 배포하고 로그인해 보겠습니다.
 
-아직 Helm Chart를 다운로드받지 않았다면 다음 Repository에서 다운로드합니다.  
+아직 Helm chart를 다운로드받지 않았다면 다음 Repository에서 다운로드합니다.  
 https://github.com/argoproj/argo-helm
 
-## Helm Chart 수정
+## Helm chart 수정
 
 역시 간단하게 chart를 수정해 보겠습니다.
 

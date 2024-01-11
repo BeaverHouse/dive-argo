@@ -2,17 +2,17 @@
 sidebar_position: 2
 ---
 
-# Argo Events 설치, 권한 설정
+# Argo Events 배포하기
 
-이 문서에서는 Argo Event를 배포하고, UI를 통해 제어할 수 있도록 설정해 보겠습니다.
+이 문서에서는 Argo Events를 배포하고, UI를 통해 제어할 수 있도록 설정해 보겠습니다.
 
-아직 Helm Chart를 다운로드받지 않았다면 다음 Repository에서 다운로드합니다.  
+아직 Helm chart를 다운로드받지 않았다면 다음 Repository에서 다운로드합니다.  
 https://github.com/argoproj/argo-helm
 
 ## Argo Workflows와 Argo Events
 
 Argo Workflows v3.0 이상일 경우 UI에서 Argo Events도 함께 제어 가능합니다.[^1]  
-이후에 Argo Workflow와 연동해서 사용도 할 것이기 때문에, 편의상 Argo Events도 같은 `argo-wf` Namespace에 설치하겠습니다.
+이후에 Argo Workflows와 연동해서 사용도 할 것이기 때문에, 편의상 Argo Events도 같은 `argo-wf` Namespace에 설치하겠습니다.
 
 Argo Events의 `fullnameOverride` 항목도 Argo Workflows와 같게 통일하겠습니다.  
 여기서는 동일하게 `myargo` 로 설정했습니다.

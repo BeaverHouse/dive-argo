@@ -73,7 +73,7 @@ spec:
 
 이제 Git clone - Kaniko build 수행 후 이미지 태그를 Helm chart에 자동으로 반영하도록 추가 Workflow를 작성하겠습니다.
 
-### 샘플 Helm Chart 작성
+### 샘플 Helm chart 작성
 
 우선, 샘플 앱에 대한 Helm chart가 없기 때문에 별도의 Repository에 생성하겠습니다.  
 Helm chart에 대한 세부 내용은 여기서 다루지 않습니다.

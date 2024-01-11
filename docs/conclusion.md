@@ -5,7 +5,7 @@ sidebar_position: 6
 # 마치며
 
 지금까지 Argo에 대해 간단하게 학습해 보았습니다.  
-Argo Workflows로 이미지를 빌드한 다음 변경된 이미지를 Helm chart에 반영하도록 하고, Argo Events로 이벤트를 감지하여 Workflow를 실행하도록 하였으며, 마지막으로 Argo CD로 Helm Chart를 연결하여 리소스가 자동으로 배포/관리되도록 하였습니다.
+Argo Workflows로 이미지를 빌드한 다음 변경된 이미지를 Helm chart에 반영하도록 하고, Argo Events로 이벤트를 감지하여 Workflow를 실행하도록 하였으며, 마지막으로 Argo CD로 Helm chart를 연결하여 리소스가 자동으로 배포/관리되도록 하였습니다.
 
 ## 개선해야 할 점
 
