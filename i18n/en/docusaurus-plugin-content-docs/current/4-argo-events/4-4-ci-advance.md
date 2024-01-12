@@ -2,27 +2,27 @@
 sidebar_position: 4
 ---
 
-# CI pipeline 발전시키기
+# Complete CI pipeline
 
-이 문서에서는 기존에 작성한 CI Workflow에 Argo Events를 추가하여 발전된 형태의 CI pipeline을 구축해 보겠습니다.
+In this document, we will build an complete CI pipeline by integrating Argo Events to the existing CI workflow.
 
 :::caution
-원래는 Github 등의 서비스에서 Push 등의 이벤트를 받는 것이 일반적이지만,  
-Github 등의 외부 서비스에서 이벤트를 수신하기 위해서는 서비스가 공개 IP 등으로 노출되어야 하는데 현재 테스트 환경은 보안 관련 설정이 없기 때문에 리스크가 존재합니다.
+Usually, we should receive events like "Push" from services such as GitHub.  
+The service must be exposed to public IPs to accomplish this, but since the current test environment has no security-related settings, there is a risk involved.
 
-그래서 이 문서에서는 Github push는 따로 진행하고, MinIO에 수동으로 파일을 추가하는 것으로 Event를 발생시키겠습니다.
+So in this document, we'll perform GitHub push separately and manually add files to MinIO to trigger the event.
 :::
 
-## Git clone 수정
+## Modify git clone step
 
-기존 Git clone 단계에서는 단순히 파일 확인만 수행했지만, 이번에는 가장 최근의 태그를 읽어 와서 이를 `version.txt` 파일에 저장하고 실제 태그 설정에 활용하겠습니다.  
-Github 등 다른 서비스를 연결할 경우, 다른 방식으로 변경할 수도 있을 것입니다.
+In the previous git clone step we only checked the files, but this time we'll read the latest tag and store it in the `version.txt` file to use it for setting image tags.  
+If you connect to other services such as GitHub, you can apply this part in another way.
 
-예시 Repository에는 다음과 같이 태그를 설정해 두었습니다.
+The example repository has tags set up as follows.
 
 ![Set tag to Github repo](img/4-4-github-tag.png)
 
-이제 기존 WorkflowTemplate을 다음과 같이 변경합니다.
+Then, change the existing template as follows.
 
 <!-- prettier-ignore -->
 ```yaml title="git-clone.yaml" {24-33}
@@ -61,57 +61,57 @@ spec:
           git describe --tags --abbrev=0 > version.txt
 ```
 
-변경된 Workflow를 실행 후 결과물을 확인해 보면 추가로 `version.txt` 파일이 생성되고, 최신 태그인 `1.0.0` 값이 적힌 것을 확인할 수 있습니다.
+After executing the modified workflow, the `version.txt` file is created, in which you can see the content: which is the latest tag value, `1.0.0`.
 
 ![Clone success](img/4-4-clone-success.png)
 
 ![Clone output file check](img/4-4-clone-output-check.png)
 
-이 값과 소스 코드는 Output으로 설정하여 이후 단계에서 활용할 수 있습니다.
+This value and source code is set as output for being used in the following steps.
 
-## Helm chart 이미지 태그 자동 변경
+## Auto-change image tag in Helm chart
 
-이제 Git clone - Kaniko build 수행 후 이미지 태그를 Helm chart에 자동으로 반영하도록 추가 Workflow를 작성하겠습니다.
+Now, we'll write an additional workflow to automatically push the image tag to the Helm chart repository after building an image.
 
-### 샘플 Helm chart 작성
+### Write sample Helm chart
 
-우선, 샘플 앱에 대한 Helm chart가 없기 때문에 별도의 Repository에 생성하겠습니다.  
-Helm chart에 대한 세부 내용은 여기서 다루지 않습니다.
+Firstly, currently there's no Helm chart for the sample app, so I created it in a separate repository.  
+The details of the Helm chart are not discussed here.
 
 https://github.com/BeaverHouse/dive-argo-fastapi-helm
 
 ![Sample Helm chart test](img/4-4-helm-sample-test.png)
 
-Ingress Controller를 통해 간이로 테스트까지 완료한 모습입니다.
+The image above is test deployment of the chart through the ingress controller.
 
 :::info
-여기서 사용된 샘플 앱과 Helm chart는 base path가 `/` 로 설정되어 있습니다.  
-만약 다른 base path에 배포하고 싶다면, 앱과 Helm chart 설정 변경이 필요할 수 있습니다.
+The sample app and Helm chart used here have the base path set to '/'.  
+If you want to deploy to a different base path, you have to change the settings.
 
-FastAPI의 경우에는 다음 링크를 참고해 주세요.  
+For FastAPI, please refer to the following link.  
 https://fastapi.tiangolo.com/advanced/behind-a-proxy/  
 https://stackoverflow.com/q/60397218
 :::
 
-### Github token 생성
+### Create GitHub token
 
-Github 소스를 수정하기 위해서는 권한이 필요합니다.  
-따로 계정을 설정하지 않고, token을 발급하여 소스를 제어할 수 있습니다.[^1]
+To modify GitHub source code, related permission is required.  
+You can control the source by using tokens, without setting up an account.[^1]
 
-아래 링크에서 token을 생성합니다.  
+You can generate token from the link below.  
 https://github.com/settings/tokens/new
 
-이름과 repo 권한을 설정해 주고 token을 발급합니다.
+Set up name and repository permission, then generate a token.
 
 ![Generate Github token](img/4-4-generate-token.png)
 
-이제 이 token 값을 Base64로 암호화합니다.
+We need to encrypt this token value with base64 encoding.
 
 ```
 echo -n <api-token-key> | base64
 ```
 
-이 암호화된 값을 활용해 Helm chart에 Secret 파일을 작성합니다.
+Use this encrypted value to write a secret in the Helm chart.
 
 ```yaml title="github-access.yaml"
 apiVersion: v1
@@ -123,11 +123,11 @@ data:
   token: <base64-encoded-api-token-from-previous-step>
 ```
 
-이후 `helm upgrade` 명령어로 변경사항을 반영합니다.
+Apply changes with `helm upgrade` command.
 
-### Workflow 작성
+### Write workflow
 
-이제 실제 Helm chart를 변경하는 부분을 작성하겠습니다.
+Now, let's write the actual step to modify the Helm chart.
 
 <!-- prettier-ignore -->
 ```yaml title="chart-push.yaml" {20-25,29,37}
@@ -175,19 +175,19 @@ spec:
           git push origin {{inputs.parameters.revision}}
 ```
 
-중요하게 보아야 할 곳은 크게 3군데입니다.
+We should focus on 3 points:
 
-- API token 값을 Secret에서 불러와야 합니다.
-- `git clone` 시 위와 같이 token 값을 활용해야 소스 제어를 할 수 있습니다.
-- `.yaml` 파일은 [yq][yq]를 통해 수정합니다.
+- The API token value should be retrieved from the secret.
+- When cloning with git, you need to use the token value in order to control the source code afterwards.
+- We edit the `.yaml` file using [yq][yq].
 
-Workflow를 저장한 후 테스트를 통해 정상적으로 태그가 변경되는지 확인합니다.
+Save the workflow and check if the tag is normally changed through testing.
 
 ![Repository push check](img/4-4-push-check.png)
 
-## Sensor로 전체 Workflow 실행하기
+## Run entire workflow with sensor
 
-이제 위의 모든 단계를 연결한 전체 Workflow를 Sensor에 작성합니다.
+Now, we'll write the entire workflow in sensor file, including all previous steps.
 
 <!-- prettier-ignore -->
 ```yaml {13-75}
@@ -266,29 +266,27 @@ spec:
         steps: 3
 ```
 
-이벤트 정보는 활용하지 않을 것이기 때문에 관련 내용은 삭제하고,  
-trigger된 Workflow는 바로 실행되어야 하므로 필요한 값을 미리 명시해 두었습니다.
+The event information will not be used so it was deleted.  
+Triggered workflow must be executed instantly, so we specify the required values in advance.
 
-저장을 한 뒤에 다음과 같은 Event Flow를 확인할 수 있습니다.
+After saving, you can check the following event flow.
 
 ![Event flow](img/4-4-event-flow.png)
 
-## CI pipeline 테스트
+## Test CI pipeline
 
-이제 다시 MinIO에서 파일을 통해 이벤트를 발생시킵니다.  
-Workflow가 정상적으로 실행되는 것을 확인할 수 있습니다.
+For testing, generate events through MinIO again.  
+We can see that the workflow runs normally.
 
 ![Workflow triggered](img/4-4-wf-trigger.png)
 
-Docker Hub에도 `1.0.0` 태그의 새로운 이미지가 업로드되었습니다.
+A new image with the tag `1.0.0` has been pushed to Docker Hub as well.
 
 ![Docker Hub check](img/4-4-docker-hub-check.png)
 
-마지막으로 Github에도 태그가 `1.0.0` 값으로 반영된 것을 확인할 수 있습니다.
+Lastly, we can also see the `1.0.0` value on Helm chart in Github repo.
 
 ![Repository push check (by event)](img/4-4-event-push-check.png)
-
-<br/>
 
 [^1]: https://argoproj.github.io/argo-events/eventsources/setup/github/
 

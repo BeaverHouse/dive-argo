@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Multipass의 VM은 따로 설정하지 않을 경우 재기동하거나, 호스트 컴퓨터를 재부팅했을 때 IP 주소가 새롭게 할당됩니다. 이로 인해 `kubectl` 의 `context` 에 접근이 되지 않을 수도 있고, Multi-node를 구성했을 경우 Master node의 IP가 변경되면서 Worker node의 연결이 끊길 수도 있습니다.
 
-고정 IP를 구성하지 않는다면 `kubectl` 설정 파일의 IP를 계속 변경해 주고, node도 재부팅 시마다 `k3s`를 새로 설정해야 합니다. 삭제 후 재설치를 하는 등 일련의 과정이 다시 필요합니다.  
+고정 IP를 구성하지 않는다면 `kubectl` 설정 파일의 IP를 계속 변경해 주고, node도 재부팅 시마다 K3S를 새로 설정해야 합니다. 삭제 후 재설치를 하는 등 일련의 과정이 다시 필요합니다.  
 이 과정을 없애기 위해 VM에 고정 IP를 할당할 수 있습니다.
 
 Multipass에서는 이와 관련된 [공식 가이드][ref1]을 제공하고 있습니다.  
@@ -22,7 +22,7 @@ Multipass에서는 이와 관련된 [공식 가이드][ref1]을 제공하고 있
    :::
 
 3. Multipass VM Shell에 접속합니다.  
-   Shell에서 `ip a` 명령어를 입력하면 새로 생성된 mac 주소를 확인할 수 있습니다.  
+   Shell에서 `ip a` 명령어를 입력하면 새로 생성된 MAC 주소를 확인할 수 있습니다.  
    (제 Window의 경우, `eth1`로 생성되었습니다.)
 
    ![Check VM MAC address](./img/vm-mac-address.png)
