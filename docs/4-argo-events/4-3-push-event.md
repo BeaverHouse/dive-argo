@@ -56,7 +56,7 @@ JetStream도 상대적으로 문서와 정보를 찾기 힘들었습니다.
 본격적으로 Event Flow를 구성해 보겠습니다.
 
 우선 Event를 감지할 EventSource를 생성합니다.  
-Event Sources 메뉴에서 **CREATE NEW EVENTSOURCE**를 클릭하고 아래 내용을 붙여넣습니다.
+**Event Sources** 메뉴에서 **CREATE NEW EVENTSOURCE**를 클릭하고 아래 내용을 붙여넣습니다.
 
 ```yaml title="minio-event-source.yaml"
 apiVersion: argoproj.io/v1alpha1
@@ -96,7 +96,7 @@ spec:
 
 Sensor 객체에서는 실제로 어떤 이벤트를 받아서, 어떤 작업을 실행할지를 정의합니다.
 
-Sensors 메뉴에서 **CREATE NEW SENSOR**를 클릭하고 아래 내용을 붙여넣습니다.
+**Sensors** 메뉴에서 **CREATE NEW SENSOR**를 클릭하고 아래 내용을 붙여넣습니다.
 
 <!-- prettier-ignore -->
 ```yaml {41-46}
@@ -157,7 +157,7 @@ Workflow 형식은 이전 챕터의 Workflow와 동일합니다.
 단, 위의 강조된 부분이 다른 부분인데 이벤트 정보의 일부를 Workflow의 parameter로 입력하는 내용이 있습니다. 여기서는 MinIO에서 감지한 파일의 이름을 `message` 변수로 설정합니다.
 
 **CREATE** 버튼을 누르면 Sensor가 생성됩니다.  
-그 뒤에 Event Flow로 이동하면 Sensor와 EventSource가 링크된 것을 확인할 수 있습니다.
+그 뒤에 **Event Flow** 메뉴로 이동하면 Sensor와 EventSource가 링크된 것을 확인할 수 있습니다.
 
 ![Event flow](img/4-3-event-flow.png)
 (사진의 Workflow는 테스트입니다)

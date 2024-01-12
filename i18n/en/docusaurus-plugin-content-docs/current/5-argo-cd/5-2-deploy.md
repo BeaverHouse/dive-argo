@@ -2,21 +2,21 @@
 sidebar_position: 2
 ---
 
-# Argo CD 배포하기
+# Deploy Argo CD
 
-이 문서에서는 Argo CD를 배포하고 로그인해 보겠습니다.
+In this document, we will deploy and log in to Argo CD.
 
-아직 Helm chart를 다운로드받지 않았다면 다음 Repository에서 다운로드합니다.  
+If you haven't downloaded the Helm chart yet, download it from following link:  
 https://github.com/argoproj/argo-helm
 
-## Helm chart 수정
+## Modify Helm chart
 
-역시 간단하게 chart를 수정해 보겠습니다.
+As we did previously, let's simply modify the chart.
 
-1. `fullnameOverride` 값을 원하는 이름으로 변경합니다.  
-   여기서는 `myargocd` 로 설정하겠습니다.
+1. Change `fullnameOverride` to the name what you want.  
+   For example: `myargocd`.
 
-2. 접근을 위한 Load-Balancer 설정을 위해 다음과 같이 `values.yaml` 파일을 수정합니다.
+2. To set up load-balancer, modify `values.yaml` like below:
 
    ```yaml title="values.yaml" {11,27}
    (...)
@@ -56,15 +56,15 @@ https://github.com/argoproj/argo-helm
        sessionAffinity: ""
    ```
 
-3. Argo CD chart는 Dependency가 있는데, 다운로드받으면 보통 `.tgz` 파일로 내려받습니다.  
-   `.helmignore` 파일에 `/*.tgz` 항목이 있는 경우 삭제합니다.
+3. Argo CD chart has a dependency, and it's usually downloaded as a `.tgz` file.  
+   If there is an item `/*.tgz` in the `.helmignore` file, delete this.
 
-## 배포 & 로그인하기
+## Deploy & Log in
 
-Argo CD는 UI도 분리되어 있고, 다른 Argo 앱들과 독립된 사용이 가능합니다.  
-여기서도 별도의 Namespace에 배포하도록 하겠습니다.
+Argo CD has a separated UI and can be used independently from other Argo apps.  
+So we'll deploy it in a separate namespace here as well.
 
-다음 명령어로 Argo CD를 배포합니다.
+Deploy Argo CD with the following command.
 
 ```
 helm dependency update ./argo-cd
@@ -72,14 +72,14 @@ helm dependency update ./argo-cd
 helm install my-argocd ./argo-cd -n argo-cd --create-namespace
 ```
 
-이제 로그인을 위한 정보가 필요합니다.  
-Argo CD는 로그인에 ID와 비밀번호를 요구합니다.  
-기본 ID는 `admin` 이고, 비밀번호는 아래 명령어로 확인할 수 있습니다.
+Now we need login information.  
+Argo CD requires ID/password for login.  
+The default ID is `admin`, and password can be checked with the following command.
 
 ```
 kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
-Argo CD에 설정한 IP로 접속하여 로그인하면 다음과 같은 화면을 확인할 수 있습니다.
+Access to the IP address set in Argo CD and log in, then you can check a screen like this.
 
 ![Argo CD UI](img/5-2-argocd-ui.png)
