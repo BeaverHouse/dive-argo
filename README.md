@@ -75,9 +75,10 @@ yarn start --locale en
 | 3-3         | ⏩  | ⏩  |
 | 3-4         | ⏩  | ⏩  |
 | 3-5         | ⏩  | ⏩  |
-| Chapter 4   | ⏩  | ➖  |
-| Chapter 5   | ⏩  | ➖  |
-| Conclusion  | ⏩  | ➖  |
+| Chapter 4   | ⏩  | ⏩  |
+| Chapter 5   | ⏩  | ⏩  |
+| Conclusion  | ⏩  | ⏩  |
+| Extra       | ⏩  | ⏩  |
 
 <!--
 You can find some emojis at https://emojipedia.org/
