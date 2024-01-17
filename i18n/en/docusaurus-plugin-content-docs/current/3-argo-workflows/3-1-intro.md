@@ -10,11 +10,11 @@ Now let's get down to experience Argo Workflows.
 In this chapter, we'll try to:
 
 - Create and execute basic workflow
-- Take a look at frequently used workflows and experience them
+- Take a look at frequently used workflow types and experience them
 - Implement CI workflow to build/push container image
 
-Most of the content are based on [Argo Workflows official document][docs] and examples.
+Most of the content are based on [Argo Workflows official docs][docs] and examples.
 
 [docs]: https://argo-workflows.readthedocs.io/en/latest/
 
-<!--Re-edited on 240105-->
+<!--Re-edited on 240117-->
