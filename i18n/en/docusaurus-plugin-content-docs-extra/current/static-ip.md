@@ -4,29 +4,28 @@ sidebar_position: 2
 
 # Static IP for VM
 
-Without any settings, Multipass's VM will be reallocated with a new IP address when VM is restarted or the host computer is rebooted. This may result in `kubectl` being unable to access its `context`. Also the connection between master node and worker node might be disconnected due to a change in the IP address, if you have configured multi-node environment.
+Without any settings, Multipass's VM will be reallocated with a new IP address when VM is restarted or the host computer is rebooted. This may result in host `kubectl` being unable to access its VM environment. Also if you have configured multi-node cluster, the connection between the nodes might be disconnected due to a change in the IP address.
 
-If you do not configure a static IP, you need to resolve issue by extra procedure, like changing the `kubectl` config file, reconfiguring K3S, etc..., on each VM restart.  
-To remove this process, you can assign a static IP to the VM.
+If you do not configure a static IP, you may need to change or re-configure the settings on each VM restart. If you're unable to maintain VM online all the time, it's better to assign a static IP.
 
-Multipass provides an [official guide][ref1] related to this.  
+Multipass provides an [official guide][ref1] related to static IP.  
 To simply explain this process:
 
 1. Create a switch or bridge for static IP.  
    Because the method varies depending on the OS, so we'll not discuss about it.
 2. Connect the created switch/bridge to the VM, and run it.
 
-:::info
-In Windows, it is difficult to find information related to step 1~2, but there is a some nice post about it including [this link][ref2], so I think you can refer to it.  
-:::
+   :::info
+   In Windows, it is difficult to find information related to step 1~2, but there is a some nice post about it including [this link][ref2], so I think you can refer to it.  
+   :::
 
-3. Connect to Multipass VM Shell.  
+3. Connect to the Multipass VM Shell.  
    You can check the newly created MAC address by `ip a` command.  
-   In my case(Windows), it was created as `eth1`.
+   In the following case, it was created under `eth1`.
 
-![Check VM MAC address](./img/vm-mac-address.png)
+   ![Check VM MAC address](./img/vm-mac-address.png)
 
-4. Execute the following command.
+4. Type the following command.
 
    ```
    sudo vi /etc/netplan/50-cloud-init.yaml
@@ -34,7 +33,7 @@ In Windows, it is difficult to find information related to step 1~2, but there i
 
    Or you can create a new `yaml` file in the `/etc/netplan` folder as well.  
    Please refer to the Multipass guide to write it down.  
-   For here we modified the file as follows.
+   For here we'll modify the existing file.
 
    ```yaml title="/etc/netplan/50-cloud-init.yaml" {13-17}
    # This file is generated from information provided by the datasource.  Changes
@@ -49,7 +48,7 @@ In Windows, it is difficult to find information related to step 1~2, but there i
          match:
            macaddress: 52:54:00:18:36:d5
          set-name: eth0
-       etc1:
+       eth1:
          dhcp4: no
          match:
            macaddress: "00:15:5d:db:11:09"
@@ -63,9 +62,11 @@ In Windows, it is difficult to find information related to step 1~2, but there i
    multipass exec -n <vm-name> -- sudo netplan apply
    ```
 
-6. Afterwards, use commands such as `ping` to test the connection.
+6. Afterwards, use commands such as `ping` to test the IP address.
 
 7. Repeat steps 2 through 6 for extra VM.
+
+<br />
 
 ```cmd {4,6,8}
 C:\Users\HU>multipass list
@@ -80,9 +81,11 @@ k3s-worker-2            Running           172.29.154.49    Ubuntu 22.04 LTS
 
 The configured static IP does not change even if you restart the VM.
 
-:::warning
-To communicate between nodes using a static IP, all nodes must be configured with static IP.
+:::caution
+In the multi-node cluster, to communicate between nodes using a static IP, all nodes must be configured with static IP with same bridge/switch.
 :::
 
 [ref1]: https://multipass.run/docs/configure-static-ips
 [ref2]: https://dev.to/madalinignisca/how-to-permanent-private-ip-on-multipass-on-windows-with-hyper-v-14k6
+
+<!--Re-edited on 240117-->
