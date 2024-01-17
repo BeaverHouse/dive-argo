@@ -21,7 +21,7 @@ sidebar_position: 5
    - `node-role.kubernetes.io/master: "true"`
 
    이외에 원하는 Label 설정으로 변경하셔도 됩니다.  
-   Node에 설정된 Label은 다음 명령어로 확인할 수 있습니다.
+   노드에 설정된 Label은 다음 명령어로 확인할 수 있습니다.
 
    ```
    kubectl get nodes --show-labels
