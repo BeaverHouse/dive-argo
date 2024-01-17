@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-In the previous chapter, we configured a CI workflow using Argo Workflows and built an image.  
+On the previous chapter, we configured a CI workflow using Argo Workflows and built an image.  
 But, workflow still needs to be fired manually.
 
 Now, let's detect events using the Argo Events and trigger workflow automatically.
