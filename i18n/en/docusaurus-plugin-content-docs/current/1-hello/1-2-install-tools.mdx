@@ -4,11 +4,11 @@ sidebar_position: 2
 
 # Install Tools
 
-In this document, we'll install `kubectl` and Helm to control Kubernetes. Also, we'll install Multipass to setup some Ubuntu-based VM environment.
+In this document, we'll install kubectl and Helm to control Kubernetes. Also, we'll install Multipass to setup some Ubuntu-based VM environment.
 
 ## Install kubectl
 
-`kubectl` is the Kubernetes command line tool(CLI) that lets you communicate and control K8S clusters.
+kubectl is the Kubernetes command line tool(CLI) that lets you check and control K8S clusters.
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -23,7 +23,7 @@ https://kubernetes.io/docs/tasks/tools/#kubectl
   <TabItem value="win" label="Windows">
 ```
 
-1. Download `kubectl` from following link:  
+1. Download kubectl from following link:  
    https://dl.k8s.io/release/v1.28.4/bin/windows/amd64/kubectl.exe
 2. Move downloaded `kubectl.exe` to the folder you want.
 3. Add folder from Step 2 to your `PATH` environment variable.
@@ -33,7 +33,7 @@ https://kubernetes.io/docs/tasks/tools/#kubectl
   <TabItem value="mac" label="macOS">
 ```
 
-1. You can install `kubectl` easily with Homebrew.  
+1. You can install kubectl easily with Homebrew.  
    ```
    brew install kubectl
    ```
@@ -51,7 +51,7 @@ Type `kubectl version --client` command to check installation.
 
 ## Install Helm
 
-Helm is a package manager for Kubernetes.
+Helm is the package manager for Kubernetes.
 
 :::info
 Follow the link below if you have some problem with installation guide.  
@@ -91,7 +91,7 @@ Type `helm version` command to check installation.
 
 ## Install Multipass
 
-Multipass is a tool to generate cloud-style Ubuntu VMs quickly, made by Canonical.
+Multipass is the tool to generate cloud-style Ubuntu VMs quickly, made by Canonical.
 
 :::info
 Follow the link below if you have some problem with installation guide.  
@@ -127,4 +127,4 @@ Type `multipass version` command to check installation.
 
 ![Check Multipass installation](./img/1-2-check-multipass.png)
 
-<!--Re-edited on 231223-->
+<!--Re-edited on 240119-->
