@@ -155,8 +155,8 @@ users:
     user: (REDACTED...)
 ```
 
-여기서 `127.0.0.1` 로 되어 있는 부분을 VM의 IP로 변경해야 합니다.  
-VM의 IP는 `multipass list` 명령어를 통해 확인할 수 있습니다.
+여기서 `127.0.0.1` 로 되어 있는 부분을 VM의 IP 주소로 변경해야 합니다.  
+VM의 IP 주소는 `multipass list` 명령어를 통해 확인할 수 있습니다.
 
 ```cmd {3}
 C:\Users\HU>multipass list
@@ -166,7 +166,7 @@ k3s-master              Running           172.17.186.245   Ubuntu 22.04 LTS
                                           10.42.0.1
 ```
 
-여기서는 추가로 IP 외에 `cluster`, `user`, `context` 이름도 변경하겠습니다.
+여기서는 추가로 IP 주소 외에 `cluster`, `user`, `context` 이름도 변경하겠습니다.
 
 ```yaml title="k3s-master.yaml" {5-6,9-12,16}
 apiVersion: v1
@@ -202,4 +202,4 @@ users:
 [^1]: https://docs.k3s.io/quick-start#install-script
 [^2]: https://docs.k3s.io/cluster-access
 
-<!--Re-edited on 231221-->
+<!--Re-edited on 240120-->

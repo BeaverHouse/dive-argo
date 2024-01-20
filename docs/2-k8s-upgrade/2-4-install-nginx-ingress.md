@@ -28,7 +28,7 @@ helm install ingress-nginx -n ingress-nginx ./ingress-nginx --create-namespaces
 
 :::note 고정 IP 설정하기
 
-`values.yaml` 파일에서 `controller.service.loadBalancerIP` 값을 MetalLB에서 설정했던 범위 내 고정값으로 변경하면 IP를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 등을 입력합니다.
+`values.yaml` 파일에서 `controller.service.loadBalancerIP` 값을 MetalLB에서 설정했던 범위 내 고정값으로 변경하면 IP 주소를 고정할 수 있습니다. 예를 들어, `192.168.0.222` 등을 입력합니다.
 
 이후 `helm upgrade` 명령어로 변경사항을 반영합니다.
 
@@ -124,7 +124,7 @@ kubectl apply -f ./custom-ingress.yaml
 
 <br />
 
-브라우저에서 `ingress-nginx-controller` Service에 할당된 IP에 접속합니다.  
+브라우저에서 `ingress-nginx-controller` Service에 할당된 IP 주소에 접속합니다.  
 접속은 가능하지만, 홈 주소에 연결된 항목이 없기 때문에 404 Not Found가 출력됩니다.
 
 ![Browser test 1](./img/2-4-ingress-test-1.png)
@@ -139,4 +139,4 @@ kubectl apply -f ./custom-ingress.yaml
 
 [^1]: https://stackoverflow.com/a/59845018
 
-<!--Re-edited on 240103-->
+<!--Re-edited on 240120-->

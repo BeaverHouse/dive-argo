@@ -461,7 +461,7 @@ def read_git():
 
 ![FastAPI swagger](img/3-4-test-swagger.png)
 
-그냥 IP로 접속해도 Redirect 설정을 해 두었기 때문에 자동으로 Swagger Docs로 이동합니다.
+그냥 IP 주소로 접속해도 Redirect 설정을 해 두었기 때문에 자동으로 Swagger Docs로 이동합니다.
 
 ![/value/git API](img/3-4-api-git.png)
 

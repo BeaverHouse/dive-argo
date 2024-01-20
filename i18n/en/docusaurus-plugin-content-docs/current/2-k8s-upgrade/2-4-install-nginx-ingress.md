@@ -28,7 +28,7 @@ so we can see that external IP is allocated when service is created.
 
 :::note Configure static IP
 
-In `values.yaml` if we configure `controller.service.loadBalancerIP` to IP value that is in range of MetalLB configuration, we can fix our external IP. For example: `192.168.0.222`.
+In `values.yaml` if we configure `controller.service.loadBalancerIP` to the IP address that is in range of MetalLB configuration, we can fix our external IP. For example: `192.168.0.222`.
 
 Then you can update the setting using `helm upgrade` command.
 

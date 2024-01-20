@@ -80,6 +80,6 @@ Argo CD는 로그인에 ID와 비밀번호를 요구합니다.
 kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
-Argo CD에 설정한 IP로 접속하여 로그인하면 다음과 같은 화면을 확인할 수 있습니다.
+Argo CD에 할당된 IP 주소로 접속하여 로그인하면 다음과 같은 화면을 확인할 수 있습니다.
 
 ![Argo CD UI](img/5-2-argocd-ui.png)

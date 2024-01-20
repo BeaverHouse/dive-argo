@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-In the previous chapter, we combined Argo Events and Argo Workflows to configure a complete CI pipeline.  
+On the previous chapter, we combined Argo Events and Argo Workflows to configure a complete CI pipeline.  
 Now, we will configure a CD pipeline through Argo CD and connect it with the CI workflow.
 
 In this chapter, we'll try to:

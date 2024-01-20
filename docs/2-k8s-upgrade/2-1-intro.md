@@ -11,9 +11,9 @@ sidebar_position: 1
 
 이 챕터에서는 다음 내용을 다룰 예정입니다.
 
-- Multi-node 클러스터 생성하기 (2 Worker node 추가)
+- Multi-node 클러스터 구축하기 (2 Worker node 추가)
 - MetalLB와 NGINX Ingress Controller로 서비스 노출하기
 - Helm chart를 간단히 변경하고, Argo Workflows를 Master node에 배포하기
 - Argo Workflows에 로그인하기
 
-<!--Re-edited on 240101-->
+<!--Re-edited on 240120-->

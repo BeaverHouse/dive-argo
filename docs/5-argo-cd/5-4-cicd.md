@@ -65,7 +65,7 @@ spec:
 ![Deploy w/ Argo CD](img/5-4-argocd-deploy.png)
 
 생성을 하고 기다리면 Helm chart에 설정한 대로 리소스가 생성됩니다.  
-Helm chart에 Ingress를 설정해 두었기 때문에, Ingress NGINX Controller의 IP인 `192.168.0.222` 로 접속해 보면 FastAPI 앱을 확인할 수 있습니다.
+Helm chart에 Ingress를 설정해 두었기 때문에, Ingress NGINX Controller의 IP 주소인 `192.168.0.222` 로 접속해 보면 FastAPI 앱을 확인할 수 있습니다.
 
 ![FastAPI app is created](img/5-4-fastapi-created.png)
 
