@@ -139,4 +139,4 @@ kubectl apply -f ./custom-ingress.yaml
 
 [^1]: https://stackoverflow.com/a/59845018
 
-<!--Re-edited on 240103-->
+<!--Re-edited on 240120-->

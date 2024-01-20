@@ -153,4 +153,4 @@ token 값은 로그인에 필요하기 때문에 저장해 둡니다.
 
 [^1]: https://argo-workflows.readthedocs.io/en/latest/access-token/
 
-<!--Re-edited on 240103-->
+<!--Re-edited on 240120-->
