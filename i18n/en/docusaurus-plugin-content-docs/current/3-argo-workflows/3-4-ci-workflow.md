@@ -455,7 +455,7 @@ Let's navigate to the address assigned to FastAPI.
 
 ![FastAPI swagger](img/3-4-test-swagger.png)
 
-Just by connecting with an IP, you are automatically redirected to Swagger Docs because the redirect setting has been configured.
+Just by connecting with the IP address, you are automatically redirected to Swagger Docs because the redirect setting has been configured.
 
 ![/value/git API](img/3-4-api-git.png)
 

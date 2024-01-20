@@ -35,7 +35,7 @@ multipass launch jammy --name k3s-worker-1 --memory 2G --disk 50G --cpus 2
 multipass shell k3s-worker-1
 ```
 
-VM Shell에서 다음 명령어로 K3S를 설치합니다. Master node의 IP와 token을 여기서 사용합니다.
+VM Shell에서 다음 명령어로 K3S를 설치합니다. Master node의 IP 주소와 token을 여기서 사용합니다.
 
 ```
 curl -sfL https://get.k3s.io | K3S_URL=https://<master-ip>:6443 \

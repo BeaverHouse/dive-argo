@@ -86,7 +86,7 @@ https://metallb.universe.tf/concepts/layer2/
 :::
 
 아래 링크를 참조하여 다음과 같은 설정 파일을 생성합니다.  
-IP는 허용 범위 내에서 자유롭게 변경하시면 됩니다.  
+IP 범위는 허용 범위 내에서 자유롭게 변경하시면 됩니다.  
 https://metallb.universe.tf/configuration/#layer-2-configuration
 
 <!-- TODO: 복기하면서 Helm chart에 통합 -->

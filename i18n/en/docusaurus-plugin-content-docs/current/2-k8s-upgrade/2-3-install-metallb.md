@@ -78,7 +78,7 @@ If we can see speaker pods with number equal to node count like above, we can co
 For next, we will set up Layer 2 config to setup some external IP on our service.
 
 :::caution
-Layer 2 mode in MetalLB selects one leader between speakers and allocate external IP. The traffic concentrates to one node so it cannot be "true" Load Balancing. When the leader node die, failover mechanism is fired and new leader node take over ownership of the IP.  
+Layer 2 mode in MetalLB selects one leader between speakers and allocate external IP. The traffic concentrates to one node so it cannot be "true" Load Balancing. When the leader node die, failover mechanism is fired and new leader node take over ownership of the IP address.  
 If you need MetalLB as a "true" load-balancer, you need to configure BGP mode and additional router settings.  
 Find more information at below:
 
@@ -86,7 +86,7 @@ https://metallb.universe.tf/concepts/layer2/
 :::
 
 Make a new config file according to the link below.  
-You can configure IP on your own, in available range.  
+You can configure IP range on your own, in available range.  
 https://metallb.universe.tf/configuration/#layer-2-configuration
 
 ```yaml title="metallb-ipconfig.yaml"
@@ -145,7 +145,7 @@ kubectl get svc
 ![kubectl expose check](./img/2-3-expose-test-kubectl.png)
 
 External IP is successfully allocated.  
-When we navigate to IP on browser, we can see NGINX page.
+When we navigate to the IP address on browser, we can see NGINX page.
 
 ![Test on browser](./img/2-3-expose-test-browser.png)
 

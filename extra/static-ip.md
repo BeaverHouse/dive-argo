@@ -63,7 +63,7 @@ Multipass에서 고정 IP와 관련된 [공식 가이드][ref1]을 제공하고 
    multipass exec -n <vm-name> -- sudo netplan apply
    ```
 
-6. 이후 `ping` 명령어 등으로 IP를 테스트합니다.
+6. 이후 `ping` 명령어 등으로 IP 주소를 테스트합니다.
 
 7. 추가로 고정 IP를 할당할 VM에 대해 2 ~ 6의 과정을 반복합니다.
 
