@@ -86,6 +86,24 @@ k3s-worker-2            Running           172.29.154.49    Ubuntu 22.04 LTS
 Multi-node 클러스터에서 고정 IP로 노드끼리 통신하기 위해서는 연결할 노드들이 모두 같은 Switch/Bridge의 고정 IP를 가지고 있어야 합니다.
 :::
 
+:::info
+고정 IP 설정 후 호스트에서 VM 환경에 접근하려 할 때 다음과 같은 오류가 발생할 수 있습니다.
+
+```
+couldn't get current server API group list: Get "https://<your-ip>:6443/api?timeout=32s":
+tls: failed to verify certificate: x509: certificate is valid for ..., not <your-ip>
+```
+
+![Certificate error](./img/static-ip-cert-error.png)
+
+이 경우 K3S를 다음 명령어로 재설치합니다.
+
+```
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san <your-ip>" sh -s -
+```
+
+:::
+
 [ref1]: https://multipass.run/docs/configure-static-ips
 [ref2]: https://netmarble.engineering/multipass-ubuntu-static-ip-configuration-on-hyper-v/
 

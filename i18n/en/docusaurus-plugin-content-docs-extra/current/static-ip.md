@@ -85,6 +85,24 @@ The configured static IP does not change even if you restart the VM.
 In the multi-node cluster, to communicate between nodes using a static IP, all nodes must be configured with static IP with same bridge/switch.
 :::
 
+:::info
+After static IP is set, certificate error can be occured when you try to control the VM's K8S on host.
+
+```
+couldn't get current server API group list: Get "https://<your-ip>:6443/api?timeout=32s":
+tls: failed to verify certificate: x509: certificate is valid for ..., not <your-ip>
+```
+
+![Certificate error](./img/static-ip-cert-error.png)
+
+In this case, reinstall K3S by using following command.
+
+```
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san <your-ip>" sh -s -
+```
+
+:::
+
 [ref1]: https://multipass.run/docs/configure-static-ips
 [ref2]: https://dev.to/madalinignisca/how-to-permanent-private-ip-on-multipass-on-windows-with-hyper-v-14k6
 
