@@ -96,7 +96,7 @@ tls: failed to verify certificate: x509: certificate is valid for ..., not <your
 
 ![Certificate error](./img/static-ip-cert-error.png)
 
-이 경우 K3S를 다음 명령어로 재설치합니다.
+이 경우 K3S를 다음 명령어로 재설치합니다.[^1]
 
 ```
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san <your-ip>" sh -s -
@@ -106,5 +106,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san <your-ip>" sh -s -
 
 [ref1]: https://multipass.run/docs/configure-static-ips
 [ref2]: https://netmarble.engineering/multipass-ubuntu-static-ip-configuration-on-hyper-v/
+
+[^1]: https://github.com/k3s-io/k3s/issues/1381
 
 <!--Re-edited on 240117-->

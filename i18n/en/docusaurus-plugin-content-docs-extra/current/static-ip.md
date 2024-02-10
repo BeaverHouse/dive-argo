@@ -95,7 +95,7 @@ tls: failed to verify certificate: x509: certificate is valid for ..., not <your
 
 ![Certificate error](./img/static-ip-cert-error.png)
 
-In this case, reinstall K3S by using following command.
+In this case, reinstall K3S by using following command.[^1]
 
 ```
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san <your-ip>" sh -s -
@@ -105,5 +105,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san <your-ip>" sh -s -
 
 [ref1]: https://multipass.run/docs/configure-static-ips
 [ref2]: https://dev.to/madalinignisca/how-to-permanent-private-ip-on-multipass-on-windows-with-hyper-v-14k6
+
+[^1]: https://github.com/k3s-io/k3s/issues/1381
 
 <!--Re-edited on 240117-->
