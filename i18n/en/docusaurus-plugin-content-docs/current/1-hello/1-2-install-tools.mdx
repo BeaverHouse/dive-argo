@@ -1,0 +1,130 @@
+---
+sidebar_position: 2
+---
+
+# Install Tools
+
+In this document, we'll install kubectl and Helm to control Kubernetes. Also, we'll install Multipass to setup some Ubuntu-based VM environment.
+
+## Install kubectl
+
+kubectl is the Kubernetes command line tool(CLI) that lets you check and control K8S clusters.
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+:::info
+Follow the link below if you have some problem with installation guide.  
+https://kubernetes.io/docs/tasks/tools/#kubectl
+:::
+
+```mdx-code-block
+<Tabs groupId="operating-systems">
+  <TabItem value="win" label="Windows">
+```
+
+1. Download kubectl from following link:  
+   https://dl.k8s.io/release/v1.28.4/bin/windows/amd64/kubectl.exe
+2. Move downloaded `kubectl.exe` to the folder you want.
+3. Add folder from Step 2 to your `PATH` environment variable.
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="mac" label="macOS">
+```
+
+1. You can install kubectl easily with Homebrew.  
+   ```
+   brew install kubectl
+   ```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+<br />
+
+Type `kubectl version --client` command to check installation.
+
+![Check kubectl installation](./img/1-2-check-kubectl.png)
+
+## Install Helm
+
+Helm is the package manager for Kubernetes.
+
+:::info
+Follow the link below if you have some problem with installation guide.  
+https://helm.sh/docs/intro/install/
+:::
+
+```mdx-code-block
+<Tabs groupId="operating-systems">
+  <TabItem value="win" label="Windows">
+```
+
+1. Download desired version of Helm from following link:  
+   https://github.com/helm/helm/releases
+2. Unzip and move `helm.exe` to the folder you want.
+3. Add folder from Step 2 to your `PATH` environment variable.
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="mac" label="macOS">
+```
+
+1. You can install Helm easily with Homebrew.  
+   ```
+   brew install helm
+   ```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+<br />
+
+Type `helm version` command to check installation.
+
+![Check Helm installation](./img/1-2-check-helm.png)
+
+## Install Multipass
+
+Multipass is the tool to generate cloud-style Ubuntu VMs quickly, made by Canonical.
+
+:::info
+Follow the link below if you have some problem with installation guide.  
+https://multipass.run/install
+:::
+
+```mdx-code-block
+<Tabs groupId="operating-systems">
+  <TabItem value="win" label="Windows">
+```
+
+1. Download installation file from following link and execute:  
+   https://multipass.run/download/windows
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="mac" label="macOS">
+```
+
+1. You can install Multipass easily with Homebrew.  
+   ```
+   brew install --cask multipass
+   ```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+<br />
+
+Type `multipass version` command to check installation.
+
+![Check Multipass installation](./img/1-2-check-multipass.png)
+
+<!--Re-edited on 240119-->

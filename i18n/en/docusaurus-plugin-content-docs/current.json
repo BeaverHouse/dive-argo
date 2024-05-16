@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.1. Hello Argo!": {
+    "message": "1. Hello Argo!",
+    "description": "The label for category 1. Hello Argo! in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.2. K8S 환경 고도화하기": {
+    "message": "2. Advance K8S Environment",
+    "description": "The label for category 2. K8S 환경 고도화하기 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.3. Argo Workflows": {
+    "message": "3. Argo Workflows",
+    "description": "The label for category 3. Argo Workflows in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.4. Argo Events": {
+    "message": "4. Argo Events",
+    "description": "The label for category 4. Argo Events in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.5. Argo CD": {
+    "message": "5. Argo CD",
+    "description": "The label for category 5. Argo CD in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.6. 마치며": {
+    "message": "6. Conclusion",
+    "description": "The label for category 6. 마치며 in sidebar tutorialSidebar"
+  }
+}
